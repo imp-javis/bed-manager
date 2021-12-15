@@ -11,10 +11,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1440, 847)
+class Ui_MainWindow2(object):
+    def setupUi(self, MainWindow2):
+        MainWindow2.setObjectName("MainWindow2")
+        MainWindow2.resize(1440, 847)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -151,8 +151,8 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-        MainWindow.setPalette(palette)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        MainWindow2.setPalette(palette)
+        self.centralwidget = QtWidgets.QWidget(MainWindow2)
         self.centralwidget.setObjectName("centralwidget")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.layoutWidget.setGeometry(QtCore.QRect(430, 30, 601, 761))
@@ -4231,32 +4231,32 @@ class Ui_MainWindow(object):
         self.pushButton.setCheckable(False)
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout.addWidget(self.groupBox)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        MainWindow2.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow2)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 24))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        MainWindow2.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow2)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        MainWindow2.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(MainWindow2)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow2)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, MainWindow2):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Bed Manager"))
-        self.groupBox.setTitle(_translate("MainWindow", "Overview"))
-        self.label.setText(_translate("MainWindow", "AMU Bed Live Monitoring"))
-        self.bay1bed1.setWhatsThis(_translate("MainWindow", "Bay 1 Bed 1"))
+        MainWindow2.setWindowTitle(_translate("MainWindow2", "Bed Manager"))
+        self.groupBox.setTitle(_translate("MainWindow2", "Overview"))
+        self.label.setText(_translate("MainWindow2", "AMU Bed Live Monitoring"))
+        self.bay1bed1.setWhatsThis(_translate("MainWindow2", "Bay 1 Bed 1"))
 import icons
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    MainWindow2 = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow2()
+    ui.setupUi(MainWindow2)
+    MainWindow2.show()
     sys.exit(app.exec_())

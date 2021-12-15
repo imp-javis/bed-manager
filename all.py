@@ -9,19 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from monitor import Ui_MainWindow2
+
 
 class Ui_LoginWindow(object):
-    def openMonitor(self):
-        self.monitor = QtWidgets.QMainWindow()
-        self.ui = Ui_MainWindow2()
-        self.ui.setupUi(self.monitor)
-        self.monitor.show()
-        LoginWindow.hide()
-
     def setupUi(self, LoginWindow):
         LoginWindow.setObjectName("LoginWindow")
-        LoginWindow.resize(1440, 847)
+        LoginWindow.resize(1440, 900)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -42,9 +35,6 @@ class Ui_LoginWindow(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         LoginWindow.setPalette(palette)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("hospital-bed.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        LoginWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(LoginWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
@@ -205,20 +195,17 @@ class Ui_LoginWindow(object):
         self.label.setObjectName("label")
         self.lineEdit = QtWidgets.QLineEdit(self.groupBox)
         self.lineEdit.setGeometry(QtCore.QRect(20, 110, 681, 21))
-        self.lineEdit.setDragEnabled(False)
-        self.lineEdit.setClearButtonEnabled(False)
         self.lineEdit.setObjectName("lineEdit")
         self.label_2 = QtWidgets.QLabel(self.groupBox)
         self.label_2.setGeometry(QtCore.QRect(20, 170, 81, 16))
         font = QtGui.QFont()
         font.setFamily("Avenir")
-        font.setPointSize(18)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.lineEdit_2 = QtWidgets.QLineEdit(self.groupBox)
         self.lineEdit_2.setGeometry(QtCore.QRect(20, 200, 681, 21))
         self.lineEdit_2.setObjectName("lineEdit_2")
-        self.pushButton = QtWidgets.QPushButton(self.groupBox, clicked = lambda: self.openMonitor())
+        self.pushButton = QtWidgets.QPushButton(self.groupBox)
         self.pushButton.setGeometry(QtCore.QRect(300, 310, 141, 32))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(152, 236, 160, 175))
@@ -259,7 +246,7 @@ class Ui_LoginWindow(object):
         self.nhslogo.setObjectName("nhslogo")
         LoginWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(LoginWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 24))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 22))
         self.menubar.setObjectName("menubar")
         LoginWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(LoginWindow)
@@ -274,7 +261,6 @@ class Ui_LoginWindow(object):
         LoginWindow.setWindowTitle(_translate("LoginWindow", "Bed Manager"))
         self.groupBox.setTitle(_translate("LoginWindow", "Login"))
         self.label.setText(_translate("LoginWindow", "Username:"))
-        self.lineEdit.setPlaceholderText(_translate("LoginWindow", "ID"))
         self.label_2.setText(_translate("LoginWindow", "Password:"))
         self.pushButton.setText(_translate("LoginWindow", "Login"))
         self.label_3.setText(_translate("LoginWindow", "Acute Medical Unit Management Systems"))
