@@ -91,6 +91,12 @@
       <height>401</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="palette">
      <palette>
       <active>
@@ -702,10 +708,10 @@
    <widget class="QLabel" name="nhslogo">
     <property name="geometry">
      <rect>
-      <x>1050</x>
+      <x>1080</x>
       <y>680</y>
-      <width>361</width>
-      <height>201</height>
+      <width>351</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="text">
