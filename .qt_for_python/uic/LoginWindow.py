@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'LoginWindow.ui'
+# Form implementation generated from reading ui file '/Users/nureizzatyhamzaid/Documents/javis_pro/bed-manager/LoginWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -9,23 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from monitor import Ui_MainWindow2
-from amu_database import login
+
 
 class Ui_LoginWindow(object):
-    def openMonitor(self):
-        self.monitor = QtWidgets.QMainWindow()
-        self.ui = Ui_MainWindow2()
-        self.ui.setupUi(self.monitor)
-        self.monitor.show()
-        LoginWindow.hide()
-
-    def loginclicked(self):
-        if (login(self.userEdit.text(), self.passEdit.text()) == 2):
-            self.openMonitor()
-        else: 
-            self.validity.setText("Invalid username or password")
-
     def setupUi(self, LoginWindow):
         LoginWindow.setObjectName("LoginWindow")
         LoginWindow.setWindowModality(QtCore.Qt.NonModal)
@@ -56,7 +42,7 @@ class Ui_LoginWindow(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         LoginWindow.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("hospital-bed.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("/Users/nureizzatyhamzaid/Documents/javis_pro/bed-manager/hospital-bed.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         LoginWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(LoginWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -303,7 +289,6 @@ class Ui_LoginWindow(object):
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.pushButton = QtWidgets.QPushButton(self.layoutWidget)
-        self.pushButton.clicked.connect(self.loginclicked)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -347,7 +332,7 @@ class Ui_LoginWindow(object):
         self.nhslogo = QtWidgets.QLabel(self.centralwidget)
         self.nhslogo.setGeometry(QtCore.QRect(1080, 680, 351, 121))
         self.nhslogo.setText("")
-        self.nhslogo.setPixmap(QtGui.QPixmap("imperial-college-healthcare-nhs-trust-logo-vector.png"))
+        self.nhslogo.setPixmap(QtGui.QPixmap("/Users/nureizzatyhamzaid/Documents/javis_pro/bed-manager/imperial-college-healthcare-nhs-trust-logo-vector.png"))
         self.nhslogo.setScaledContents(True)
         self.nhslogo.setObjectName("nhslogo")
         LoginWindow.setCentralWidget(self.centralwidget)
@@ -371,13 +356,3 @@ class Ui_LoginWindow(object):
         self.pushButton.setText(_translate("LoginWindow", "Login"))
         self.pushButton.setShortcut(_translate("LoginWindow", "Return"))
         self.label_3.setText(_translate("LoginWindow", "Acute Medical Unit Management Systems"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    LoginWindow = QtWidgets.QMainWindow()
-    ui = Ui_LoginWindow()
-    ui.setupUi(LoginWindow)
-    LoginWindow.show()
-    sys.exit(app.exec_())
