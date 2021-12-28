@@ -26,19 +26,20 @@ def login(email, password):
     else: 
         return 2
 
-# c.execute("INSERT INTO registered_user VALUES ('zatyhan', '1234zaty')")
-# conn.commit() #commit changes
+c.execute("INSERT INTO registered_user VALUES ('javis', '1234javis')")
+conn.commit() #commit changes
 # user1= User('zatyhan', '1234zaty')
 
-# c.execute("DELETE FROM registered_user")
-# items = c.fetchall()
+# c.execute("DELETE FROM registered_user WHERE email='javis2'")
+conn.commit()
+# print(c.fetchall())
 
 # for item in items:
 #     print(item)
 
 # print(login('zatyhan', '1234zaty'))
+c.execute("SELECT * FROM registered_user")
+print(c.fetchall()) # only returns one row
 
-# # print(c.fetchone()) # only returns one row
-
-# conn.close() #close connections
+conn.close() #close connections
 
