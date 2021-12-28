@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>imperial-college-healthcare-nhs-trust-logo-vector.png</file>
     <file>Graphics_Monitor/1.png</file>
     <file>Graphics_Monitor/output-onlinepngtools(1).png</file>
     <file>Graphics_Monitor/output-onlinepngtools(2).png</file>
