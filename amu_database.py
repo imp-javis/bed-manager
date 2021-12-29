@@ -8,7 +8,6 @@ c = conn.cursor()
 # c.execute("""CREATE TABLE waiting_list ( 
 #     first text, 
 #     last text,
-#     reg_number integer,
 #     age integer,
 #     gender text,
 #     diagnosis text)""") 
@@ -25,6 +24,9 @@ def login(email, password):
         return 1
     else: 
         return 2
+
+def addtowaitlist(first, last, age, gender, diagnosis):
+    c.execute("INSERT INTO waiting_list VALUES (:first, :last, :age, :gender, :diagnosis)", {'first': first, 'last': last, 'age': age, 'gender': gender, 'diagnosis': diagnosis})
 
 # c.execute("INSERT INTO registered_user VALUES ('javis', '1234javis')")
 # conn.commit() #commit changes

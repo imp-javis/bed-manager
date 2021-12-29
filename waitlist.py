@@ -9,12 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from reg import Ui_register_2
 from regform import Ui_registerform
+
 
 class Ui_waitlist(object):
     def addPatient(self):
-        self.window = QtWidgets.QMainWindow()
+        self.window = QtWidgets.QGroupBox()
         self.ui = Ui_registerform()
         self.ui.setupUi(self.window, waitlist)
         self.window.show()
