@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1440</width>
+    <height>771</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QLabel" name="title">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>630</x>
       <y>10</y>
       <width>171</width>
       <height>51</height>
@@ -35,8 +35,8 @@
      <rect>
       <x>40</x>
       <y>70</y>
-      <width>731</width>
-      <height>471</height>
+      <width>1351</width>
+      <height>641</height>
      </rect>
     </property>
     <property name="wordWrap">
@@ -64,17 +64,27 @@
     </column>
     <column>
      <property name="text">
-      <string>Check Up</string>
+      <string>To be discharged</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Discharge</string>
+      <string>Discharge Summary</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Medication</string>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Downstream</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Death</string>
      </property>
     </column>
     <column>
@@ -86,9 +96,9 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>251</width>
+      <x>1170</x>
+      <y>10</y>
+      <width>151</width>
       <height>41</height>
      </rect>
     </property>
@@ -108,13 +118,26 @@
      <string>Number of beds taken: </string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>20</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1440</width>
      <height>24</height>
     </rect>
    </property>
