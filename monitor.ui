@@ -12810,23 +12810,6 @@ background-repeat:none;</string>
          <string>Overview</string>
         </property>
        </widget>
-       <widget class="QWidget" name="widget_3" native="true">
-        <property name="geometry">
-         <rect>
-          <x>410</x>
-          <y>60</y>
-          <width>61</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: transparent;
-border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(10).png);
-background: none;
-border:none;
-background-repeat:none;</string>
-        </property>
-       </widget>
        <widget class="QWidget" name="widget_7" native="true">
         <property name="geometry">
          <rect>
@@ -12892,56 +12875,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Patient Waitlist&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>130</y>
-          <width>171</width>
-          <height>61</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>15</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 15pt &quot;.AppleSystemUIFont&quot;;</string>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Downstream Allocation/&lt;/p&gt;&lt;p&gt;Patient Transfer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>210</x>
-          <y>140</y>
-          <width>121</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>15</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 15pt &quot;.AppleSystemUIFont&quot;;</string>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bed Allocation &lt;/p&gt;&lt;p&gt;or Management&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
        <widget class="QWidget" name="widget_12" native="true">
         <property name="geometry">
          <rect>
@@ -12975,6 +12908,48 @@ background: none;
 border:none;
 background-repeat:none;</string>
         </property>
+        <widget class="QLabel" name="label_5">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>80</y>
+           <width>121</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>15</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 15pt &quot;.AppleSystemUIFont&quot;;</string>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Patient Status&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+        <widget class="QWidget" name="widget_3" native="true">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>10</y>
+           <width>61</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(10).png);
+background: none;
+border:none;
+background-repeat:none;</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="widget_13" native="true">
         <property name="geometry">
@@ -12992,7 +12967,44 @@ background: none;
 border:none;
 background-repeat:none;</string>
         </property>
+        <widget class="QLabel" name="label_4">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>80</y>
+           <width>121</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>15</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 15pt &quot;.AppleSystemUIFont&quot;;</string>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bed Allocation &lt;/p&gt;&lt;p&gt;or Management&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
        </widget>
+       <zorder>widget_13</zorder>
+       <zorder>widget_14</zorder>
+       <zorder>bedframe</zorder>
+       <zorder>toolButton</zorder>
+       <zorder>label</zorder>
+       <zorder>widget_2</zorder>
+       <zorder>widget</zorder>
+       <zorder>label_2</zorder>
+       <zorder>widget_7</zorder>
+       <zorder>widget_5</zorder>
+       <zorder>label_3</zorder>
+       <zorder>widget_12</zorder>
       </widget>
      </item>
     </layout>
