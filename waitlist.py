@@ -9,16 +9,28 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from regform import Ui_registerform
-
+# from regform import Ui_registerform
+import regform
+from amu_database import getListSize, getLast
 
 class Ui_waitlist(object):
     def addPatient(self):
         self.window = QtWidgets.QGroupBox()
-        self.ui = Ui_registerform()
+        self.ui = regform.Ui_registerform()
         self.ui.setupUi(self.window, waitlist)
         self.window.show()
+    
+    def loadData(self):
+        size= getListSize()
+        self.tableWidget.setRowCount(size)
+        row= size-1
+        names= getLast(size)
+        # for list in lists:
+        self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem(names[0]))
+        self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(names[1]))
+            # row= row +1
 
+        
     def setupUi(self, waitlist):
         waitlist.setObjectName("waitlist")
         waitlist.resize(800, 600)
@@ -63,6 +75,7 @@ class Ui_waitlist(object):
         self.statusbar.setObjectName("statusbar")
         waitlist.setStatusBar(self.statusbar)
         self.newpatient.clicked.connect(self.addPatient)
+        self.loadData
 
         self.retranslateUi(waitlist)
         QtCore.QMetaObject.connectSlotsByName(waitlist)
