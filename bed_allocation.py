@@ -20,6 +20,13 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+# also attempt to make columns 0-2 read only
+# class tableBed(QtWidgets.QTableWidget):
+    # def __init__(self):
+        # delegate = ReadOnlyDelete(self)
+        # for i in range(3):
+            # self.setItemDelegateForColumn(i, delegate)
+
 class Ui_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -56,6 +63,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(3, item)
 
+        # attempt to make columns 0-2 read only
+        #item = QtWidgets.QTableWidgetItem()
+        #item.setFlags(item.flags() ^ ItemIsEditable);
 
         self.titleBA = QtWidgets.QLabel(self.centralwidget)
         self.titleBA.setGeometry(QtCore.QRect(640, 20, 201, 41))
@@ -1508,9 +1518,25 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         
     def chooseBed(self):
         bedIndex = self.sender()
-        row = self.tableWidget.currentRow()
-        #if bedIndex.text() != datainanyotherrow
-        self.tableWidget.setItem(row,3,QtWidgets.QTableWidgetItem(bedIndex.text()))
+        currRow = self.tableWidget.currentRow()
+
+        # checking for bed assignment duplicates in other rows
+        column = 3
+        noDuplicates = True
+        for row in range(self.tableWidget.rowCount()): 
+            _item = self.tableWidget.item(row, column)          # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
+            if _item:            
+                item = self.tableWidget.item(row, column).text()       # gets cell item name
+                if item == bedIndex.text():
+                    noDuplicates = False
+
+        # checking for current bed status availability
+        bedAvailable = True
+
+
+        # officially assigning bed to patient
+        if noDuplicates and bedAvailable:
+            self.tableWidget.setItem(currRow,3,QtWidgets.QTableWidgetItem(bedIndex.text()))     
 
         # self.sender().setStyleSheet("background-color: white;")
         # if add colour, need to find way to revert the original back if another bed is chosen
