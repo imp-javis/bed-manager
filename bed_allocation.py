@@ -29,6 +29,14 @@ from amu_database import getContent, getListSize, getDetails, deletePat
             # self.setItemDelegateForColumn(i, delegate)
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
+    def showMonitor(self, main_win):
+        from monitor import Ui_MainWindow2
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindow2()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        main_win.close()
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1370, 772)
@@ -1436,7 +1444,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.buttAssign.setFont(font)
         self.buttAssign.setObjectName("buttAssign")
 
-        self.buttBack = QtWidgets.QPushButton(self.centralwidget)
+        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showMonitor(MainWindow))
         self.buttBack.setGeometry(QtCore.QRect(20, 20, 141, 41))
         font = QtGui.QFont()
         font.setPointSize(12)

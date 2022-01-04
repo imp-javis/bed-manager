@@ -22,7 +22,12 @@ class Ui_MainWindow2(object):
         monitor.close()
 
     def showBed(self, monitor):
-        pass
+        from bed_allocation import Ui_MainWindow
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        monitor.close()
 
     def showPatientinBed(self, monitor):
         pass 
