@@ -30,16 +30,8 @@ def reset():
 #         )""") 
 
 # reset()
-# c.execute("""CREATE TABLE dummy_table (
-#     first text, 
-#     last text,
-#     age integer,
-#     gender text,
-#     diagnosis text)""")
- 
-# c.execute("INSERT INTO dummy_table VALUES ('mel', 'kasim', 20, 'fem', 'crazy')")
-# conn.commit()
 
+ 
 # c.execute("""CREATE TABLE registered_user (
 #     email text,
 #     password text)""")
@@ -76,39 +68,11 @@ def getContent():
     return items
 
 def deletePat(first, last):
-    print("hey{}you".format(first))
-    print(last)
-    # c.execute("DELETE FROM waiting_list WHERE first LIKE :first AND last LIKE :last", {'first': first, 'last': last})
     c.execute("DELETE FROM waiting_list WHERE first= '{}' AND last= '{}'".format(first, last))
-    # c.execute("DELETE FROM waiting_list WHERE first= 'seo joon AND last = park")
     conn.commit()
-    c.execute("SELECT * FROM waiting_list")
-    items= c.fetchall() #c.fetchone()
-    print(items)
-    # print('done')
 
-
-
-# deletePat('nur ', 'jamadk')
-
-# print(getContent())
 # c.execute("SELECT * FROM waiting_list")
 # print(c.fetchall())
-
-# c.execute("SELECT COUNT(*) FROM dummy_table")
-# res= c.fetchone()
-# row= res[0]
-# c.execute("SELECT rowid, * FROM dummy_table WHERE rowid LIKE :row", {'row': row})
-# print(c.fetchall())
-
-
-
-# def addwait(rownumber):
-#     c.execute("SELECT * FROM waiting_list where ")
-    # print(res[0])
-# c.execute("INSERT INTO registered_user VALUES ('javis', '1234javis')")
-# conn.commit() #commit changes
-
 
 # conn.close() #close connections
 
