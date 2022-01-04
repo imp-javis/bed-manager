@@ -17,6 +17,14 @@ import time
 
 
 class Ui_waitlist(object):
+    def back(self, waitlist):
+        from monitor import Ui_MainWindow2
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindow2()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        waitlist.close()
+
     def addPatient(self, waitlist):
         self.window = QtWidgets.QGroupBox()
         self.ui = regform.Ui_registerform()
@@ -57,17 +65,7 @@ class Ui_waitlist(object):
             row= row+1
         
         #try using dictionary to improve looping
-    
-    # def getTimeElapsed(self, starttime, row):
-    #     timenow= time.time()
-    #     t= QtWidgets.QLabel()
-    #     timeelapsed= timenow-starttime
-    #     hours, mins, secs= self.timing(timeelapsed)
-    #     timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
-    #     t.setText(timeelapsed)
-    #     self.tableWidget.setCellWidget(row, 6, t)
 
-    
     
     def displayList(self):
         size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
@@ -138,6 +136,9 @@ class Ui_waitlist(object):
         self.delpatient = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.deletePatient())
         self.delpatient.setGeometry(QtCore.QRect(510, 30, 113, 32))
         self.delpatient.setObjectName("delpatient")
+        self.backButton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.back(waitlist))
+        self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 32))
+        self.backButton.setObjectName("backButton")
         # self.delpatient.clicked.connect(self.deletePatient)
         self.title = QtWidgets.QLabel(self.centralwidget)
         self.title.setGeometry(QtCore.QRect(290, 30, 171, 51))
@@ -210,6 +211,7 @@ class Ui_waitlist(object):
         item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("waitlist", "Timer"))
         self.delpatient.setText(_translate("waitlist", "Delete Patient"))
+        self.backButton.setText(_translate("waitlist", "Back"))
         
 
 
