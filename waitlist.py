@@ -38,6 +38,21 @@ class Ui_waitlist(object):
             hours, mins, secs= self.timing(timeelapsed)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
             t.setText(timeelapsed)
+            
+            green= 0
+            yellow= 0
+            red= 0
+            black= 0
+
+            if hours < 2:
+                green= green+1
+            elif hours > 2 and hours < 3:
+                yellow= yellow+1
+            elif hours > 3 and hours < 4:
+                red= red+1
+            elif hours > 4:
+                black = black+1
+            
             self.tableWidget.setCellWidget(row, 6, t)
             row= row+1
         
