@@ -58,11 +58,6 @@ def updatecolour(green, yellow, red, black):
     c.execute("INSERT INTO colourcount VALUES (:green, :yellow, :red, :black)", {'green': green, 'yellow': yellow, 'red': red, 'black': black })
     conn.commit()
 
-# def getTime():
-#     c.execute("SELECT timer FROM waiting_list WHERE rowid LIKE :row", {'row': row})
-#     times= c.fetchall()
-#     return times
-
 def getDetails(row):
     c.execute("SELECT first, last FROM waiting_list WHERE rowid LIKE :row", {'row': row})
     lists= c.fetchone()
@@ -82,8 +77,6 @@ def deletePat(first, last):
     c.execute("DELETE FROM waiting_list WHERE first= '{}' AND last= '{}'".format(first, last))
     conn.commit()
 
-# c.execute("SELECT * FROM waiting_list")
-# print(c.fetchall())
 
 # conn.close() #close connections
 

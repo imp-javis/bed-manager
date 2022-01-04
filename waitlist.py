@@ -50,19 +50,27 @@ class Ui_waitlist(object):
             hours, mins, secs= self.timing(timeelapsed)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
             t.setText(timeelapsed)
-            
+
             if hours < 2:
                 green= green+1
+                t.setStyleSheet("background-color:  rgb(33, 255, 6)") #set timer backgroudn to green
+
             elif hours > 2 and hours < 3:
                 yellow= yellow+1
+                t.setStyleSheet("background-color:  rgb(255, 255, 10)") #set timer backgroudn to green
+
             elif hours > 3 and hours < 4:
                 red= red+1
+                t.setStyleSheet("background-color:  rgb(252, 1, 7)") #set timer backgroudn to green
+
             elif hours > 4:
                 black = black+1
+                t.setStyleSheet("background-color:  black; color: white") #set timer backgroudn to green
+
             
             self.tableWidget.setCellWidget(row, 6, t)
             row= row+1
-            updatecolour(green, yellow, red, black)    
+            updatecolour(green, yellow, red, black)    # insert waiting list tiemr status into database
 
         #try using dictionary to improve looping
 

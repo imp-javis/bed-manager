@@ -12,12 +12,19 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from waitlist import Ui_waitlist
 
 class Ui_MainWindow2(object):
+
     def showWaitlist(self, monitor):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_waitlist()
         self.ui.setupUi(self.window)
         self.window.show()
         monitor.close()
+
+    def showBed(self, monitor):
+        pass
+
+    def showPatientinBed(self, monitor):
+        pass 
 
     def setupUi(self, MainWindow2):
         MainWindow2.setObjectName("MainWindow2")
@@ -4275,7 +4282,7 @@ class Ui_MainWindow2(object):
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setWordWrap(True)
         self.label_4.setObjectName("label_4")
-        self.allocationbutton = QtWidgets.QPushButton(self.groupBox)
+        self.allocationbutton = QtWidgets.QPushButton(self.groupBox, clicked= lambda: self.showBed(MainWindow2))
         self.allocationbutton.setGeometry(QtCore.QRect(160, 70, 151, 191))
         self.allocationbutton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
@@ -4285,7 +4292,7 @@ class Ui_MainWindow2(object):
 "")
         self.allocationbutton.setText("")
         self.allocationbutton.setObjectName("allocationbutton")
-        self.patientinbedbutton = QtWidgets.QPushButton(self.groupBox)
+        self.patientinbedbutton = QtWidgets.QPushButton(self.groupBox, clicked= lambda: self.showPatientinBed(MainWindow2))
         self.patientinbedbutton.setGeometry(QtCore.QRect(290, 70, 151, 191))
         self.patientinbedbutton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
