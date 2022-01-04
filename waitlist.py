@@ -133,8 +133,8 @@ class Ui_waitlist(object):
 
     def deletePatient(self):
         currow= self.tableWidget.currentRow()
-        first = self.tableWidget.item(currow, 0).text()
-        last = self.tableWidget.item(currow, 1).text()
+        first = self.tableWidget.item(currow, 1).text()
+        last = self.tableWidget.item(currow, 2).text()
         deletePat(first, last)
         self.displayList()
 
