@@ -16,6 +16,10 @@ def reset():
         timer blob,
         isolation integer)""") 
 
+c.execute("""CREATE TABLE savehours (
+hours integer)""") 
+
+
 # c.execute("""CREATE TABLE patient_inBed(
 #         first text, 
 #         last text,

@@ -37,6 +37,16 @@ class Ui_waitlist(object):
             timeelapsed= timenow-patient[5]
             hours, mins, secs= self.timing(timeelapsed)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
+
+            if hours < 2:
+                t.setStyleSheet("background-color:  rgb(33, 255, 6)")
+            elif hours>2 and hours <3:
+                t.setStyleSheet("background-color:  rgb(255, 255, 10)")
+            elif hours>3 and hours <4:
+                t.setStyleSheet("background-color:  rgb(252, 1, 7)")
+            else: 
+                t.setStyleSheet("background-color:  black; color: white")
+
             t.setText(timeelapsed)
             self.tableWidget.setCellWidget(row, 6, t)
             row= row+1
@@ -167,7 +177,7 @@ class Ui_waitlist(object):
         #start timer and update every second
         self.timer.start(1000)
 
-        #call the function
+        # #call the function
         self.getTimeElapsed()
 
         waitlist.setCentralWidget(self.centralwidget)

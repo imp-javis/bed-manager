@@ -13,30 +13,21 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>30</y>
-     <width>581</width>
-     <height>471</height>
+     <x>220</x>
+     <y>180</y>
+     <width>151</width>
+     <height>71</height>
     </rect>
    </property>
-   <column>
-    <property name="text">
-     <string>First Name</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Last Name</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Delete</string>
-    </property>
-   </column>
+   <property name="styleSheet">
+    <string notr="true">background-color: red</string>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
   </widget>
  </widget>
  <resources/>
