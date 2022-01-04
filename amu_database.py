@@ -16,6 +16,13 @@ def reset():
         timer blob,
         isolation integer)""") 
 
+def coloursys():
+    c.execute("""CREATE TABLE colourcount (
+        green integer, 
+        yellow integer,
+        red integer,
+        black integer)""")
+
 # c.execute("""CREATE TABLE patient_inBed(
 #         first text, 
 #         last text,
@@ -45,6 +52,10 @@ def login(email, password):
 
 def addtowaitlist(first, last, age, gender, diagnosis, time, isolate):
     c.execute("INSERT INTO waiting_list VALUES (:first, :last, :age, :gender, :diagnosis, :time, :isolate)", {'first': first, 'last': last, 'age': age, 'gender': gender, 'diagnosis': diagnosis, 'time': time, 'isolate': isolate })
+    conn.commit()
+
+def updatecolour(green, yellow, red, black):
+    c.execute("INSERT INTO colourcount VALUES (:green, :yellow, :red, :black)", {'green': green, 'yellow': yellow, 'red': red, 'black': black })
     conn.commit()
 
 # def getTime():
