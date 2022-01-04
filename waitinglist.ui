@@ -30,8 +30,8 @@
    <widget class="QLabel" name="title">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>10</y>
+      <x>290</x>
+      <y>30</y>
       <width>171</width>
       <height>51</height>
      </rect>
@@ -40,29 +40,33 @@
      <string notr="true">font: 25pt &quot;Avenir Next&quot;;</string>
     </property>
     <property name="text">
-     <string>Waitlist</string>
+     <string>Waiting List</string>
     </property>
    </widget>
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>70</y>
+      <x>30</x>
+      <y>90</y>
       <width>731</width>
-      <height>471</height>
+      <height>441</height>
      </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>false</bool>
+    </property>
+    <property name="gridStyle">
+     <enum>Qt::SolidLine</enum>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
     </property>
     <row>
      <property name="text">
-      <string>1</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>2</string>
+      <string/>
      </property>
     </row>
     <column>
@@ -77,12 +81,22 @@
     </column>
     <column>
      <property name="text">
-      <string>Jr. Doctor</string>
+      <string>Details</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Consultant</string>
+      <string>Isolation</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Diagnosis</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>discharge summary</string>
      </property>
     </column>
     <column>
@@ -91,29 +105,17 @@
      </property>
     </column>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QPushButton" name="delpatient">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>251</width>
-      <height>41</height>
+      <x>510</x>
+      <y>30</y>
+      <width>113</width>
+      <height>32</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>.AppleSystemUIFont</family>
-      <pointsize>13</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 13pt &quot;.AppleSystemUIFont&quot;;</string>
-    </property>
     <property name="text">
-     <string>Number of Patients Waiting:</string>
+     <string>Delete Patient</string>
     </property>
    </widget>
   </widget>
