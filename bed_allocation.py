@@ -19,6 +19,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from amu_database import getContent, getListSize, getDetails, deletePat
 
 # also attempt to make columns 0-2 read only
 # class tableBed(QtWidgets.QTableWidget):
@@ -38,12 +39,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.tableWidget.setGeometry(QtCore.QRect(20, 80, 600, 580))
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(4)
-        self.tableWidget.setRowCount(2)         # need to = wailist length
-        self.tableWidget.setColumnWidth(0,285)
-        self.tableWidget.setColumnWidth(1,90)
+        self.tableWidget.setColumnCount(5)
+        # row length set in displayList() function
+        self.tableWidget.setColumnWidth(0,185)
+        self.tableWidget.setColumnWidth(1,100)
         self.tableWidget.setColumnWidth(2,90)
-        self.tableWidget.setColumnWidth(3,118)
+        self.tableWidget.setColumnWidth(3,90)
+        self.tableWidget.setColumnWidth(4,118)
 
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -65,16 +67,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setPointSize(12)
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        item.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(4, item)
 
-        # attempt to make columns 0-2 read only
-        #item = QtWidgets.QTableWidgetItem()
-        #item.setFlags(item.flags() ^ ItemIsEditable);
-
-        ## TEMPORARY CONTENT
-
-        self.tableWidget.setItem(0,2,QtWidgets.QTableWidgetItem("Y"))
-        self.tableWidget.setItem(1,2,QtWidgets.QTableWidgetItem("N"))
-
+        # display waiting list patient info on table
+        self.displayList()
 
         self.titleBA = QtWidgets.QLabel(self.centralwidget)
         self.titleBA.setGeometry(QtCore.QRect(640, 20, 201, 41))
@@ -1456,7 +1456,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
 
-        ## Button connections
+        ## BUTTON CONNECTIONS ##
 
         # bed buttons to choose bed
         self.A1.clicked.connect(self.chooseBed)
@@ -1493,12 +1493,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Name"))
+        item.setText(_translate("MainWindow", "First Name"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "Gender"))
+        item.setText(_translate("MainWindow", "Last Name"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Isolation"))
+        item.setText(_translate("MainWindow", "Gender"))
         item = self.tableWidget.horizontalHeaderItem(3)
+        item.setText(_translate("MainWindow", "Isolation"))
+        item = self.tableWidget.horizontalHeaderItem(4)
         item.setText(_translate("MainWindow", "Assigned Bed"))
         self.titleBA.setText(_translate("MainWindow", "Bed Allocation"))
         self.R1.setText(_translate("MainWindow", "R1"))
@@ -1524,24 +1526,56 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.buttAssign.setText(_translate("MainWindow", "Assign"))
         self.buttBack.setText(_translate("MainWindow", "Back"))
 
+
+        ## FUNCTION TO DISPLAY WAITING LIST ON TABLE ##
+
+    def displayList(self):
+
+        firstNameColumn = 0
+        lastNameColumn = 1
+        genderColumn = 2
+        isoColumn = 3
+        bedColumn = 4
+
+        size = getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
+        self.tableWidget.setRowCount(size) #setting the table row size
+        row = 0
+        listnow = getContent() # get the waitlist in the database as a list
+        
+        for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
+            
+            isoStatus = ""
+            if patient[6] == 0:
+                isoStatus = "N"
+            elif patient[6] == 1:
+                isoStatus = "Y"
+
+            self.tableWidget.setItem(row, firstNameColumn, QtWidgets.QTableWidgetItem("{}".format(patient[0]))) #first name
+            self.tableWidget.setItem(row, lastNameColumn, QtWidgets.QTableWidgetItem("{}".format(patient[1]))) #last name
+            self.tableWidget.setItem(row, genderColumn, QtWidgets.QTableWidgetItem(("{}").format(patient[3]))) #gender
+            self.tableWidget.setItem(row, isoColumn, QtWidgets.QTableWidgetItem(isoStatus)) # isolation
+
+            row = row+1
+
         
     def chooseBed(self):
+        firstNameColumn = 1
+        lastNameColumn = 2
+        isoColumn = 3
+        bedColumn = 4
+
         bedIndex = self.sender()
         currRow = self.tableWidget.currentRow()
-
 
         # checking for current bed status availability              ## IT WORKS
         bedAvailable = self.bedStatusCheck(bedIndex)
 
         # checking for bed assignment duplicates in other rows      ## IT WORKS
-        bedColumn = 3
         noDuplicates = self.duplicateCheck(bedColumn, bedIndex)
         
         # checking for isolation requirement
-        isoColumn = 2
+        
         isolation = self.isolationCheck(currRow, isoColumn)
-
-        # checking for monitor requirement
 
 
         # officially assigning bed to patient
