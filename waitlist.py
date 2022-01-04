@@ -50,30 +50,38 @@ class Ui_waitlist(object):
             timeelapsed= timenow-patient[5]
             hours, mins, secs= self.timing(timeelapsed)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
-            t.setText(timeelapsed)
+            # t.setText(timeelapsed)
 
             if hours < 2:
                 green= green+1
-                c.setStyleSheet("background-color:  rgb(33, 255, 6)") #set timer background to green
+                brush = QtGui.QBrush(QtGui.QColor(33, 255, 6)) # set background to green
+                brush.setStyle(QtCore.Qt.SolidPattern)
 
             elif hours > 2 and hours < 3:
                 yellow= yellow+1
-                c.setStyleSheet("background-color:  rgb(255, 255, 10)") #set timer background to yellow
+                brush = QtGui.QBrush(QtGui.QColor(255, 255, 10)) # set background to yellow
+                brush.setStyle(QtCore.Qt.SolidPattern)
 
             elif hours > 3 and hours < 4:
                 red= red+1
-                c.setStyleSheet("background-color:  red") #set timer background to red
-
+                brush = QtGui.QBrush(QtGui.QColor(252, 1, 7)) # set background to red
+                brush.setStyle(QtCore.Qt.SolidPattern)
             elif hours > 4:
                 black = black+1
-                c.setStyleSheet("background-color:  black; color: white") #set timer background to black
-            
-            self.tableWidget.setCellWidget(row, 6, t)
-            self.tableWidget.setCellWidget(row, 0, c)
-            row= row+1
-            updatecolour(green, yellow, red, black)    # insert waiting list tiemr status into database
+                brush = QtGui.QBrush(QtGui.QColor(0, 0, 0)) # set background to black
+                brush.setStyle(QtCore.Qt.SolidPattern)
 
-        #try using dictionary to improve looping
+            item = QtWidgets.QTableWidgetItem()
+            item.setTextAlignment(QtCore.Qt.AlignCenter)
+            item.setText(timeelapsed)
+            self.tableWidget.setItem(row, 6, item)
+            item = QtWidgets.QTableWidgetItem()
+            item.setBackground(brush)
+            self.tableWidget.setItem(row, 0, item)
+
+            row= row+1
+
+        updatecolour(green, yellow, red, black)    # insert waiting list tiemr status into database
 
     
     def displayList(self):
@@ -82,52 +90,18 @@ class Ui_waitlist(object):
         row= 0 
         listnow= getContent() # get the waitlist in the database as a list
         for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
-            checkBox = QtWidgets.QCheckBox()
-            checkBox.setGeometry(QtCore.QRect(260, 230, 21, 20))
-            checkBox.setChecked(patient[6])
-            btn = QtWidgets.QPushButton()
-            btn.setText("Delete")
-
-            dest= QtWidgets.QComboBox()
-            dest.setFocusPolicy(QtCore.Qt.StrongFocus)
-            dest.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
-            dest.setEditable(False)
-            dest.addItem("Select")
-            dest.addItem("Discharge Lounge")
-            dest.addItem("Downstream Ward")
-
-            ward= QtWidgets.QLineEdit()
-            ward.setPlaceholderText("ward location")
-
-            self.w= QtWidgets.QWidget()
-            self.w.layout = QtWidgets.QVBoxLayout()
-            
-            self.w.layout.addWidget(dest)
-            self.w.layout.addWidget(ward)
-            self.w.setLayout(self.w.layout)
-
-            self.isolate= QtWidgets.QWidget()
-            self.isolate.layout = QtWidgets.QHBoxLayout()
-            self.isolate.layout.addWidget(checkBox)
-            self.isolate.setLayout(self.isolate.layout)
+            checkBox = QtWidgets.QTableWidgetItem()
+            checkBox.setTextAlignment(QtCore.Qt.AlignCenter)
+            checkBox.setCheckState(patient[6])
             
             self.tableWidget.setRowHeight(row, 70)
 
             self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem("{}".format(patient[0]))) #first name
             self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem("{}".format(patient[1]))) #last name
             self.tableWidget.setItem(row, 3, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[2],patient[3]))) #age and gender
-            self.tableWidget.setCellWidget(row, 4, self.isolate) # isolate
+            self.tableWidget.setItem(row, 4, checkBox)
             self.tableWidget.setItem(row, 5, QtWidgets.QTableWidgetItem(patient[4])) #diagnosis
-            # self.tableWidget.setCellWidget(row, 6, self.w) #ward
 
-            # self.timer= QTimer()
-            # self.timer.timeout.connect(lambda: self.getTimeElapsed(patient[5], row))
-
-            # #start timer and update every second
-            # self.timer.start(1000)
-
-            # #call the function
-            # self.getTimeElapsed(patient[5], row)
             row = row+1
 
     def deletePatient(self):
@@ -153,7 +127,6 @@ class Ui_waitlist(object):
         self.backButton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.back(waitlist))
         self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 32))
         self.backButton.setObjectName("backButton")
-        # self.delpatient.clicked.connect(self.deletePatient)
         self.title = QtWidgets.QLabel(self.centralwidget)
         self.title.setGeometry(QtCore.QRect(630, 10, 231, 61))
         self.title.setStyleSheet("font: 40pt \"Times\";")
@@ -193,7 +166,7 @@ class Ui_waitlist(object):
         self.tableWidget.setColumnWidth(2,200) #last name
         self.tableWidget.setColumnWidth(3,180) #details
         self.tableWidget.setColumnWidth(4,51) #isolation
-        self.tableWidget.setColumnWidth(5,450) #diagnosis
+        self.tableWidget.setColumnWidth(5,435) #diagnosis
         self.tableWidget.setColumnWidth(6,150) #timer
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers) # does not allow editing to the table
         self.displayList()

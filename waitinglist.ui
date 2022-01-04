@@ -138,10 +138,31 @@
      <property name="textAlignment">
       <set>AlignCenter</set>
      </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>33</red>
+        <green>255</green>
+        <blue>6</blue>
+       </color>
+      </brush>
+     </property>
     </item>
     <item row="0" column="1">
+     <property name="text">
+      <string/>
+     </property>
      <property name="textAlignment">
       <set>AlignCenter</set>
+     </property>
+     <property name="background">
+      <brush brushstyle="NoBrush">
+       <color alpha="255">
+        <red>33</red>
+        <green>255</green>
+        <blue>6</blue>
+       </color>
+      </brush>
      </property>
     </item>
    </widget>
