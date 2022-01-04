@@ -9,7 +9,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-# from regform import Ui_registerform
 import regform
 from amu_database import getContent, getListSize, getDetails, deletePat, updatecolour
 from PyQt5.QtCore import QTimer, QTime, Qt
@@ -18,7 +17,7 @@ import time
 
 class Ui_waitlist(object):
     def back(self, waitlist):
-        from monitor import Ui_MainWindow2
+        from monitor import Ui_MainWindow2 # function is imported here to prevent runtime callback (circular import)
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow2()
         self.ui.setupUi(self.window)
@@ -141,25 +140,18 @@ class Ui_waitlist(object):
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(5, item)
         item = QtWidgets.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(6, item)
         self.tableWidget.setColumnWidth(0,125) #status
         self.tableWidget.setColumnWidth(1,200) #first name
