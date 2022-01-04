@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 # from regform import Ui_registerform
 import regform
-from amu_database import getContent, getListSize, getDetails, deletePat
+from amu_database import getContent, getListSize, getDetails, deletePat, updatecolour
 from PyQt5.QtCore import QTimer, QTime, Qt
 import time
 
@@ -31,6 +31,10 @@ class Ui_waitlist(object):
     def getTimeElapsed(self):
         row= 0 
         listnow= getContent() # get the waitlist in the database as a list
+        green= 0
+        yellow= 0
+        red= 0
+        black= 0
         for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diag
             timenow= time.time()
             t= QtWidgets.QLabel()
@@ -39,11 +43,6 @@ class Ui_waitlist(object):
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
             t.setText(timeelapsed)
             
-            green= 0
-            yellow= 0
-            red= 0
-            black= 0
-
             if hours < 2:
                 green= green+1
             elif hours > 2 and hours < 3:
@@ -55,7 +54,8 @@ class Ui_waitlist(object):
             
             self.tableWidget.setCellWidget(row, 6, t)
             row= row+1
-        
+            updatecolour(green, yellow, red, black)    
+
         #try using dictionary to improve looping
     
     # def getTimeElapsed(self, starttime, row):
