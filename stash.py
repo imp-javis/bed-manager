@@ -65,7 +65,7 @@ class Ui_waitlist(object):
         self.tableWidget.setHorizontalHeaderItem(6, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(7, item)
-        item = QtWidgets.QTableWidgetItem()
+        item = QtWidçgets.QTableWidgetItem()
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setItem(0, 0, item)
         self.delpatient = QtWidgets.QPushButton(self.centralwidget)

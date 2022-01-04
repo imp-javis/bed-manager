@@ -54,20 +54,19 @@ class Ui_waitlist(object):
 
             if hours < 2:
                 green= green+1
-                c.setStyleSheet("background-color:  rgb(33, 255, 6)") #set timer backgroudn to green
+                c.setStyleSheet("background-color:  rgb(33, 255, 6)") #set timer background to green
 
             elif hours > 2 and hours < 3:
                 yellow= yellow+1
-                c.setStyleSheet("background-color:  rgb(255, 255, 10)") #set timer backgroudn to green
+                c.setStyleSheet("background-color:  rgb(255, 255, 10)") #set timer background to yellow
 
             elif hours > 3 and hours < 4:
                 red= red+1
-                c.setStyleSheet("background-color:  rgb(252, 1, 7)") #set timer backgroudn to green
+                c.setStyleSheet("background-color:  red") #set timer background to red
 
             elif hours > 4:
                 black = black+1
-                c.setStyleSheet("background-color:  black; color: white") #set timer backgroudn to green
-
+                c.setStyleSheet("background-color:  black; color: white") #set timer background to black
             
             self.tableWidget.setCellWidget(row, 6, t)
             self.tableWidget.setCellWidget(row, 0, c)
@@ -157,7 +156,7 @@ class Ui_waitlist(object):
         # self.delpatient.clicked.connect(self.deletePatient)
         self.title = QtWidgets.QLabel(self.centralwidget)
         self.title.setGeometry(QtCore.QRect(630, 10, 231, 61))
-        self.title.setStyleSheet("font: 40pt \"Open Sans\";")
+        self.title.setStyleSheet("font: 40pt \"Times\";")
         self.title.setObjectName("title")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(30, 90, 1361, 671))
@@ -193,8 +192,8 @@ class Ui_waitlist(object):
         self.tableWidget.setColumnWidth(1,200) #first name
         self.tableWidget.setColumnWidth(2,200) #last name
         self.tableWidget.setColumnWidth(3,180) #details
-        self.tableWidget.setColumnWidth(4,50) #isolation
-        self.tableWidget.setColumnWidth(5,250) #diagnosis
+        self.tableWidget.setColumnWidth(4,51) #isolation
+        self.tableWidget.setColumnWidth(5,450) #diagnosis
         self.tableWidget.setColumnWidth(6,150) #timer
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers) # does not allow editing to the table
         self.displayList()
