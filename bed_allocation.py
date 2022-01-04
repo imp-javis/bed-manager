@@ -1567,14 +1567,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         bedIndex = self.sender()
         currRow = self.tableWidget.currentRow()
 
-        # checking for current bed status availability              ## IT WORKS
+        # checking for current bed status availability              
         bedAvailable = self.bedStatusCheck(bedIndex)
 
         # checking for bed assignment duplicates in other rows      ## IT WORKS
         noDuplicates = self.duplicateCheck(bedColumn, bedIndex)
         
         # checking for isolation requirement
-        
         isolation = self.isolationCheck(currRow, isoColumn)
 
 
@@ -1604,7 +1603,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     noDuplicates = False
         return noDuplicates
 
-    def bedStatusCheck(self, bedIndex):
+    def bedStatusCheck(self, bedIndex):     ## WE NEED THE BED STATUS INFORMATION FROM PATIENT LIST
         bedAvailable = True
         return bedAvailable
 
