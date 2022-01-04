@@ -28,15 +28,31 @@ class Ui_waitlist(object):
         hours, minutes = divmod(mins, 60)
         return int(hours), int(minutes), int(secs)
 
-    def getTimeElapsed(self, starttime, row):
-        global timenow
-        timenow= int(time.time())
-        t= QtWidgets.QLabel()
-        timeelapsed= timenow-starttime
-        hours, mins, secs= self.timing(timeelapsed)
-        timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
-        t.setText(timeelapsed)
-        self.tableWidget.setCellWidget(row, 4, t)
+    def getTimeElapsed(self):
+        row= 0 
+        listnow= getContent() # get the waitlist in the database as a list
+        for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diag
+            timenow= time.time()
+            t= QtWidgets.QLabel()
+            timeelapsed= timenow-patient[5]
+            hours, mins, secs= self.timing(timeelapsed)
+            timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
+            t.setText(timeelapsed)
+            self.tableWidget.setCellWidget(row, 6, t)
+            row= row+1
+        
+        #try using dictionary to improve looping
+    
+    # def getTimeElapsed(self, starttime, row):
+    #     timenow= time.time()
+    #     t= QtWidgets.QLabel()
+    #     timeelapsed= timenow-starttime
+    #     hours, mins, secs= self.timing(timeelapsed)
+    #     timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
+    #     t.setText(timeelapsed)
+    #     self.tableWidget.setCellWidget(row, 6, t)
+
+    
     
     def displayList(self):
         size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
@@ -78,25 +94,24 @@ class Ui_waitlist(object):
             self.tableWidget.setCellWidget(row, 3, checkBox) # isolate
             self.tableWidget.setItem(row, 4, QtWidgets.QTableWidgetItem(patient[4])) #diagnosis
             self.tableWidget.setCellWidget(row, 5, self.w) #ward
-    
 
             # self.timer= QTimer()
             # self.timer.timeout.connect(lambda: self.getTimeElapsed(patient[5], row))
+
+            # #start timer and update every second
             # self.timer.start(1000)
-            # self.tableWidget.setItem(row, 4, QtWidgets.QTableWidgetItem(timeelapsed))
+
+            # #call the function
+            # self.getTimeElapsed(patient[5], row)
             row = row+1
 
     def deletePatient(self):
         currow= self.tableWidget.currentRow()
         first = self.tableWidget.item(currow, 0).text()
         last = self.tableWidget.item(currow, 1).text()
-        # print(currow)
         deletePat(first, last)
         self.displayList()
-       
-        # last = self.tableWidget.itemAt(currow, 1).text()
-        # deletePat(details[1], details[2])
-    
+
     def setupUi(self, waitlist):
         waitlist.setObjectName("waitlist")
         waitlist.resize(800, 600)
@@ -143,12 +158,21 @@ class Ui_waitlist(object):
         self.tableWidget.setColumnWidth(5,125)
         self.tableWidget.setColumnWidth(6,125)
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers) # does not allow editing to the table
-        waitlist.setCentralWidget(self.centralwidget)
         self.displayList()
 
+        # create timer
+        self.timer= QTimer()
+        self.timer.timeout.connect(self.getTimeElapsed)
+
+        #start timer and update every second
+        self.timer.start(1000)
+
+        #call the function
+        self.getTimeElapsed()
+
+        waitlist.setCentralWidget(self.centralwidget)
         self.retranslateUi(waitlist)
         QtCore.QMetaObject.connectSlotsByName(waitlist)
-
 
 
     def retranslateUi(self, waitlist):
