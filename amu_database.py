@@ -76,9 +76,20 @@ def getContent():
     return items
 
 def deletePat(first, last):
-    # first, last = getDetails(row)
-    c.execute("DELETE FROM waiting_list WHERE first LIKE :first AND last LIKE :last", {'first': first, 'last': last})
+    print("hey{}you".format(first))
+    print(last)
+    # c.execute("DELETE FROM waiting_list WHERE first LIKE :first AND last LIKE :last", {'first': first, 'last': last})
+    c.execute("DELETE FROM waiting_list WHERE first= '{}' AND last= '{}'".format(first, last))
+    # c.execute("DELETE FROM waiting_list WHERE first= 'seo joon AND last = park")
     conn.commit()
+    c.execute("SELECT * FROM waiting_list")
+    items= c.fetchall() #c.fetchone()
+    print(items)
+    # print('done')
+
+
+
+# deletePat('nur ', 'jamadk')
 
 # print(getContent())
 # c.execute("SELECT * FROM waiting_list")

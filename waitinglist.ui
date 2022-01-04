@@ -71,7 +71,17 @@
     </row>
     <column>
      <property name="text">
-      <string>Name</string>
+      <string>First Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Details</string>
      </property>
     </column>
     <column>

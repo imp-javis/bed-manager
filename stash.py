@@ -9,28 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-# from regform import Ui_registerform
-import regform
-from amu_database import getListSize
+
 
 class Ui_waitlist(object):
-    def addPatient(self):
-        self.window = QtWidgets.QGroupBox()
-        self.ui = regform.Ui_registerform()
-        self.ui.setupUi(self.window, waitlist)
-        self.window.show()
-    
-    def loadData(self):
-        size= getListSize()
-        self.tableWidget.setRowCount(size)
-        row= size-1
-        names= getLast(size)
-        # for list in lists:
-        self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem(names[0]))
-        self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(names[1]))
-            # row= row +1
-
-        
     def setupUi(self, waitlist):
         waitlist.setObjectName("waitlist")
         waitlist.resize(800, 600)
@@ -45,10 +26,12 @@ class Ui_waitlist(object):
         self.title.setObjectName("title")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(30, 90, 731, 441))
+        self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget.setAlternatingRowColors(False)
+        self.tableWidget.setGridStyle(QtCore.Qt.SolidLine)
         self.tableWidget.setWordWrap(True)
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(5)
-        self.tableWidget.setRowCount(1)
+        self.tableWidget.setColumnCount(7)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -61,11 +44,13 @@ class Ui_waitlist(object):
         self.tableWidget.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(4, item)
-        self.tableWidget.setColumnWidth(0,190)
-        self.tableWidget.setColumnWidth(1,190)
-        self.tableWidget.setColumnWidth(2,100)
-        self.tableWidget.setColumnWidth(3,120)
-        self.tableWidget.setColumnWidth(4,125)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(6, item)
+        self.delpatient = QtWidgets.QPushButton(self.centralwidget)
+        self.delpatient.setGeometry(QtCore.QRect(510, 30, 113, 32))
+        self.delpatient.setObjectName("delpatient")
         waitlist.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(waitlist)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 24))
@@ -74,8 +59,6 @@ class Ui_waitlist(object):
         self.statusbar = QtWidgets.QStatusBar(waitlist)
         self.statusbar.setObjectName("statusbar")
         waitlist.setStatusBar(self.statusbar)
-        self.newpatient.clicked.connect(self.addPatient)
-        self.loadData
 
         self.retranslateUi(waitlist)
         QtCore.QMetaObject.connectSlotsByName(waitlist)
@@ -90,11 +73,16 @@ class Ui_waitlist(object):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("waitlist", "Last Name"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("waitlist", "consultant doctor"))
+        item.setText(_translate("waitlist", "Details"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("waitlist", "discharge summary"))
+        item.setText(_translate("waitlist", "Isolation"))
         item = self.tableWidget.horizontalHeaderItem(4)
+        item.setText(_translate("waitlist", "Diagnosis"))
+        item = self.tableWidget.horizontalHeaderItem(5)
+        item.setText(_translate("waitlist", "discharge summary"))
+        item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("waitlist", "Timer"))
+        self.delpatient.setText(_translate("waitlist", "Delete Patient"))
 
 
 if __name__ == "__main__":
