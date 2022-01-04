@@ -17,7 +17,7 @@ import time
 
 
 class Ui_waitlist(object):
-    def addPatient(self, waitlist):
+    def addPatient(self):
         self.window = QtWidgets.QGroupBox()
         self.ui = regform.Ui_registerform()
         self.ui.setupUi(self.window, waitlist)
@@ -38,75 +38,51 @@ class Ui_waitlist(object):
         t.setText(timeelapsed)
         self.tableWidget.setCellWidget(row, 4, t)
     
-    def displayList(self):
-        size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
-        self.tableWidget.setRowCount(size) #setting the table row size
-        row= 0 
-        listnow= getContent() # get the waitlist in the database as a list
-        for patient in listnow: #looping through each row of waitlist and add it to the table
-            self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem(("Name: {} {} \nAge: {} \nGender: {}").format(patient[0], patient[1], patient[2],patient[3])))
-            self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(patient[4]))
-            self.tableWidget.setRowHeight(row, 70)
-            checkBox = QtWidgets.QCheckBox()
-            checkBox.setGeometry(QtCore.QRect(260, 230, 21, 20))
-            checkBox.setChecked(patient[6])
-            # checkBox1 = QtWidgets.QCheckBox()
-            # checkBox1.setGeometry(QtCore.QRect(260, 230, 21, 20))
-            # checkBox1.setChecked(False)
-            btn = QtWidgets.QPushButton()
-            btn.setText("Delete")
-
-            dest= QtWidgets.QComboBox()
-            dest.setFocusPolicy(QtCore.Qt.StrongFocus)
-            dest.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
-            dest.setEditable(False)
-            dest.addItem("Select")
-            dest.addItem("Discharge Lounge")
-            dest.addItem("Downstream Ward")
-
-            ward= QtWidgets.QLineEdit()
-            ward.setPlaceholderText("ward location")
-
-            self.w= QtWidgets.QWidget()
-            self.w.layout = QtWidgets.QVBoxLayout()
-            
-            self.w.layout.addWidget(dest)
-            self.w.layout.addWidget(ward)
-            self.w.setLayout(self.w.layout)
+    # def displayList(self):
+        # size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
+        # self.tableWidget.setRowCount(size) #setting the table row size
+        # row= 0 
+        # listnow= getContent() # get the waitlist in the database as a list
+        # for patient in listnow: #looping through each row of waitlist and add it to the table
+        #     self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem(("Name: {} {} \nAge: {} \nGender: {}").format(patient[0], patient[1], patient[2],patient[3])))
+        #     self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(patient[4]))
+        #     self.tableWidget.setRowHeight(row, 70)
+        #     checkBox = QtWidgets.QCheckBox()
+        #     checkBox.setGeometry(QtCore.QRect(260, 230, 21, 20))
+        #     checkBox.setChecked(patient[6])
+        #     btn = QtWidgets.QPushButton()
+        #     btn.setText("Delete")
+        #     dest= QtWidgets.QComboBox()
+        #     dest.setFocusPolicy(QtCore.Qt.StrongFocus)
+        #     dest.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        #     dest.setEditable(False)
+        #     dest.addItem("Select")
+        #     dest.addItem("Discharge Lounge")
+        #     dest.addItem("Downstream Ward")
+        #     ward= QtWidgets.QLineEdit()
+        #     ward.setPlaceholderText("ward location")
+        #     self.w= QtWidgets.QWidget()
+        #     self.w.layout = QtWidgets.QVBoxLayout()
+        #     self.w.layout.addWidget(dest)
+        #     self.w.layout.addWidget(ward)
+        #     self.w.setLayout(self.w.layout)
     
-            self.tableWidget.setCellWidget(row, 2, checkBox)
-            self.tableWidget.setCellWidget(row, 3, self.w)
-
-            # self.timer= QTimer()
-            # self.timer.timeout.connect(lambda: self.getTimeElapsed(patient[5], row))
-            # self.timer.start(1000)
-            # self.tableWidget.setItem(row, 4, QtWidgets.QTableWidgetItem(timeelapsed))
-            row = row+1
-
-    def deletePatient(self):
-        currow= self.tableWidget.currentRow()
-        details = self.tableWidget.itemAt(currow, 0).text().split()
-        print(currow)
-        print(details[1])
-        print(details[2])
-        # deletePat(details[1], details[2])
-        # self.displayList()
-       
-        # last = self.tableWidget.itemAt(currow, 1).text()
-        # deletePat(details[1], details[2])
+        #     self.tableWidget.setCellWidget(row, 2, checkBox)
+        #     self.tableWidget.setCellWidget(row, 3, self.w)
+        #     row = row+1
     
     def setupUi(self, waitlist):
         waitlist.setObjectName("waitlist")
         waitlist.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(waitlist)
         self.centralwidget.setObjectName("centralwidget")
-        self.newpatient = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.addPatient(waitlist))
+        self.newpatient = QtWidgets.QPushButton(self.centralwidget)
         self.newpatient.setGeometry(QtCore.QRect(632, 30, 131, 32))
         self.newpatient.setObjectName("newpatient")
         self.delpatient = QtWidgets.QPushButton(self.centralwidget)
         self.delpatient.setGeometry(QtCore.QRect(510, 30, 113, 32))
         self.delpatient.setObjectName("delpatient")
-        self.delpatient.clicked.connect(self.deletePatient)
+        # self.delpatient.clicked.connect(self.deletePatient)
         self.title = QtWidgets.QLabel(self.centralwidget)
         self.title.setGeometry(QtCore.QRect(290, 30, 171, 51))
         self.title.setStyleSheet("font: 25pt \"Avenir Next\";")
@@ -136,11 +112,49 @@ class Ui_waitlist(object):
         self.tableWidget.setColumnWidth(4,125)
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers) # does not allow editing to the table
         waitlist.setCentralWidget(self.centralwidget)
-        self.displayList()
+        self.menubar = QtWidgets.QMenuBar(waitlist)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 24))
+        self.menubar.setObjectName("menubar")
+        waitlist.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(waitlist)
+        self.statusbar.setObjectName("statusbar")
+        waitlist.setStatusBar(self.statusbar)
+        size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
+        self.tableWidget.setRowCount(size) #setting the table row size
+        row= 0 
+        listnow= getContent() # get the waitlist in the database as a list
+        for patient in listnow: #looping through each row of waitlist and add it to the table
+            self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem(("Name: {} {} \nAge: {} \nGender: {}").format(patient[0], patient[1], patient[2],patient[3])))
+            self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(patient[4]))
+            self.tableWidget.setRowHeight(row, 70)
+            checkBox = QtWidgets.QCheckBox()
+            checkBox.setGeometry(QtCore.QRect(260, 230, 21, 20))
+            checkBox.setChecked(patient[6])
+            btn = QtWidgets.QPushButton()
+            btn.setText("Delete")
+            dest= QtWidgets.QComboBox()
+            dest.setFocusPolicy(QtCore.Qt.StrongFocus)
+            dest.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+            dest.setEditable(False)
+            dest.addItem("Select")
+            dest.addItem("Discharge Lounge")
+            dest.addItem("Downstream Ward")
+            ward= QtWidgets.QLineEdit()
+            ward.setPlaceholderText("ward location")
+            self.w= QtWidgets.QWidget()
+            self.w.layout = QtWidgets.QVBoxLayout()
+            self.w.layout.addWidget(dest)
+            self.w.layout.addWidget(ward)
+            self.w.setLayout(self.w.layout)
+    
+            self.tableWidget.setCellWidget(row, 2, checkBox)
+            self.tableWidget.setCellWidget(row, 3, self.w)
+            row = row+1
+
+        self.newpatient.clicked.connect(self.addPatient)
 
         self.retranslateUi(waitlist)
         QtCore.QMetaObject.connectSlotsByName(waitlist)
-
 
 
     def retranslateUi(self, waitlist):
@@ -169,5 +183,4 @@ if __name__ == "__main__":
     ui = Ui_waitlist()
     ui.setupUi(waitlist)
     waitlist.show()
-    
     sys.exit(app.exec_())

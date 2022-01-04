@@ -9,15 +9,17 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from amu_database import addtowaitlist, getLast, getListSize
+from amu_database import addtowaitlist
 
 
 class Ui_registerform(object):
     def addedPatient(self, reg_win, wait_win):
         import waitlist
+        import time
         # print(self.genderBox.currentText())
         # print(self.ageBox.text())
-        addtowaitlist(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText())
+        seconds = time.time()
+        addtowaitlist(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), int(seconds), self.checkBox.checkState())
         self.window = QtWidgets.QMainWindow()
         self.ui = waitlist.Ui_waitlist()
         self.ui.setupUi(self.window)
@@ -57,6 +59,12 @@ class Ui_registerform(object):
         self.label_3 = QtWidgets.QLabel(registerform)
         self.label_3.setGeometry(QtCore.QRect(30, 140, 60, 16))
         self.label_3.setObjectName("label_3")
+        self.si = QtWidgets.QLabel(registerform)
+        self.si.setGeometry(QtCore.QRect(290, 110, 91, 16))
+        self.si.setObjectName("si")
+        self.checkBox = QtWidgets.QCheckBox(registerform)
+        self.checkBox.setGeometry(QtCore.QRect(380, 110, 16, 20))
+        self.checkBox.setObjectName("checkBox")
         self.genderBox = QtWidgets.QComboBox(registerform)
         self.genderBox.setGeometry(QtCore.QRect(90, 140, 105, 28))
         self.genderBox.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -93,6 +101,7 @@ class Ui_registerform(object):
         self.dlabel.setText(_translate("registerform", "Top-line Diagnosis"))
         self.pushButton.setText(_translate("registerform", "Register"))
         self.lastlabel.setText(_translate("registerform", "Last name:"))
+        self.si.setText(_translate("registerform", "Self-isolation:"))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,18 @@
+<RCC>
+  <qresource prefix="Icons">
+    <file>imperial-college-healthcare-nhs-trust-logo-vector.png</file>
+    <file>Graphics_Monitor/1.png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(1).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(2).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(3).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(4).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(5).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(6).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(7).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(8).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(9).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(10).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(11).png</file>
+    <file>Graphics_Monitor/output-onlinepngtools(12).png</file>
+  </qresource>
+</RCC>
