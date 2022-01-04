@@ -9,9 +9,23 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from waitlist import Ui_waitlist
 
 class Ui_MainWindow2(object):
+
+    def showWaitlist(self, monitor):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_waitlist()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        monitor.close()
+
+    def showBed(self, monitor):
+        pass
+
+    def showPatientinBed(self, monitor):
+        pass 
+
     def setupUi(self, MainWindow2):
         MainWindow2.setObjectName("MainWindow2")
         MainWindow2.resize(1440, 847)
@@ -180,7 +194,7 @@ class Ui_MainWindow2(object):
         self.bedframe.setLineWidth(1)
         self.bedframe.setObjectName("bedframe")
         self.bedlayoutframe = QtWidgets.QFrame(self.bedframe)
-        self.bedlayoutframe.setGeometry(QtCore.QRect(10, 0, 581, 351))
+        self.bedlayoutframe.setGeometry(QtCore.QRect(10, 30, 581, 351))
         self.bedlayoutframe.setAutoFillBackground(True)
         self.bedlayoutframe.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.bedlayoutframe.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -4220,79 +4234,37 @@ class Ui_MainWindow2(object):
         self.toolButton.setText("")
         self.toolButton.setObjectName("toolButton")
         self.label = QtWidgets.QLabel(self.groupBox)
-        self.label.setGeometry(QtCore.QRect(80, 290, 311, 41))
+        self.label.setGeometry(QtCore.QRect(80, 310, 311, 41))
         font = QtGui.QFont()
         font.setFamily("Avenir")
         font.setPointSize(24)
         self.label.setFont(font)
         self.label.setObjectName("label")
-        self.widget_2 = QtWidgets.QWidget(self.groupBox)
-        self.widget_2.setGeometry(QtCore.QRect(0, 0, 51, 41))
-        self.widget_2.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(2).png);\n"
+        self.groupBox_2 = QtWidgets.QGroupBox(self.groupBox)
+        self.groupBox_2.setGeometry(QtCore.QRect(-10, 0, 61, 51))
+        self.groupBox_2.setStyleSheet("background-color: transparent;\n"
+"border-image:url(:/graphics/Graphics_Monitor/output-onlinepngtools(2).png);\n"
 "background: none;\n"
 "border:none;\n"
 "background-repeat:none;")
-        self.widget_2.setObjectName("widget_2")
-        self.widget = QtWidgets.QWidget(self.groupBox)
-        self.widget.setGeometry(QtCore.QRect(10, 280, 61, 51))
-        self.widget.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(12).png);\n"
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.groupBox1 = QtWidgets.QGroupBox(self.groupBox)
+        self.groupBox1.setGeometry(QtCore.QRect(10, 300, 61, 51))
+        self.groupBox1.setStyleSheet("background-color: transparent;\n"
+"border-image:url(:/graphics/Graphics_Monitor/output-onlinepngtools(12).png);\n"
 "background: none;\n"
 "border:none;\n"
 "background-repeat:none;")
-        self.widget.setObjectName("widget")
+        self.groupBox1.setObjectName("groupBox1")
         self.label_2 = QtWidgets.QLabel(self.groupBox)
-        self.label_2.setGeometry(QtCore.QRect(50, 0, 101, 41))
+        self.label_2.setGeometry(QtCore.QRect(60, 0, 101, 41))
         font = QtGui.QFont()
         font.setFamily("Avenir")
         font.setPointSize(24)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
-        self.widget_7 = QtWidgets.QWidget(self.groupBox)
-        self.widget_7.setGeometry(QtCore.QRect(230, 60, 61, 51))
-        self.widget_7.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(9).png);\n"
-"background: none;\n"
-"border:none;\n"
-"background-repeat:none;")
-        self.widget_7.setObjectName("widget_7")
-        self.editlogo = QtWidgets.QWidget(self.groupBox)
-        self.editlogo.setGeometry(QtCore.QRect(60, 60, 61, 51))
-        self.editlogo.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/graphics/Graphics_Monitor/output-onlinepngtools(8).png);\n"
-"background: none;\n"
-"border:none;\n"
-"background-repeat:none;")
-        self.editlogo.setObjectName("editlogo")
-        self.widget_14 = QtWidgets.QWidget(self.groupBox)
-        self.widget_14.setGeometry(QtCore.QRect(330, 50, 231, 191))
-        self.widget_14.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(11).png);\n"
-"background: none;\n"
-"border:none;\n"
-"background-repeat:none;")
-        self.widget_14.setObjectName("widget_14")
-        self.widget_3 = QtWidgets.QWidget(self.widget_14)
-        self.widget_3.setGeometry(QtCore.QRect(100, 10, 61, 51))
-        self.widget_3.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(10).png);\n"
-"background: none;\n"
-"border:none;\n"
-"background-repeat:none;")
-        self.widget_3.setObjectName("widget_3")
-        self.pushButton = QtWidgets.QPushButton(self.widget_14)
-        self.pushButton.setGeometry(QtCore.QRect(80, 90, 113, 32))
-        self.pushButton.setObjectName("pushButton")
-        self.editframe = QtWidgets.QFrame(self.groupBox)
-        self.editframe.setGeometry(QtCore.QRect(10, 50, 151, 181))
-        self.editframe.setStyleSheet("background-color: white;\n"
-"")
-        self.editframe.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.editframe.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.editframe.setObjectName("editframe")
-        self.editbutton = QtWidgets.QPushButton(self.editframe)
-        self.editbutton.setGeometry(QtCore.QRect(0, 0, 151, 191))
+        self.editbutton = QtWidgets.QPushButton(self.groupBox, clicked= lambda: self.showWaitlist(MainWindow2))
+        self.editbutton.setGeometry(QtCore.QRect(30, 70, 151, 191))
         self.editbutton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
 "background: none;\n"
@@ -4301,24 +4273,97 @@ class Ui_MainWindow2(object):
 "")
         self.editbutton.setText("")
         self.editbutton.setObjectName("editbutton")
-        self.label_4 = QtWidgets.QLabel(self.editframe)
-        self.label_4.setGeometry(QtCore.QRect(40, 100, 91, 20))
+        self.label_4 = QtWidgets.QLabel(self.groupBox)
+        self.label_4.setGeometry(QtCore.QRect(70, 150, 81, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label_4.setFont(font)
         self.label_4.setScaledContents(False)
+        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setWordWrap(True)
         self.label_4.setObjectName("label_4")
-        self.editframe.raise_()
-        self.widget_14.raise_()
+        self.allocationbutton = QtWidgets.QPushButton(self.groupBox, clicked= lambda: self.showBed(MainWindow2))
+        self.allocationbutton.setGeometry(QtCore.QRect(160, 70, 151, 191))
+        self.allocationbutton.setStyleSheet("background-color: transparent;\n"
+"border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
+"background: none;\n"
+"border:none;\n"
+"background-repeat:none;\n"
+"")
+        self.allocationbutton.setText("")
+        self.allocationbutton.setObjectName("allocationbutton")
+        self.patientinbedbutton = QtWidgets.QPushButton(self.groupBox, clicked= lambda: self.showPatientinBed(MainWindow2))
+        self.patientinbedbutton.setGeometry(QtCore.QRect(290, 70, 151, 191))
+        self.patientinbedbutton.setStyleSheet("background-color: transparent;\n"
+"border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
+"background: none;\n"
+"border:none;\n"
+"background-repeat:none;\n"
+"")
+        self.patientinbedbutton.setText("")
+        self.patientinbedbutton.setObjectName("patientinbedbutton")
+        self.dischargelistbutton = QtWidgets.QPushButton(self.groupBox)
+        self.dischargelistbutton.setGeometry(QtCore.QRect(420, 70, 151, 191))
+        self.dischargelistbutton.setStyleSheet("background-color: transparent;\n"
+"border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
+"background: none;\n"
+"border:none;\n"
+"background-repeat:none;\n"
+"")
+        self.dischargelistbutton.setText("")
+        self.dischargelistbutton.setObjectName("dischargelistbutton")
+        self.allocate = QtWidgets.QLabel(self.groupBox)
+        self.allocate.setGeometry(QtCore.QRect(200, 150, 91, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.allocate.setFont(font)
+        self.allocate.setScaledContents(False)
+        self.allocate.setAlignment(QtCore.Qt.AlignCenter)
+        self.allocate.setWordWrap(True)
+        self.allocate.setObjectName("allocate")
+        self.label_9 = QtWidgets.QLabel(self.groupBox)
+        self.label_9.setGeometry(QtCore.QRect(220, 80, 61, 51))
+        self.label_9.setText("")
+        self.label_9.setPixmap(QtGui.QPixmap(":/graphics/Graphics_Monitor/output-onlinepngtools(9).png"))
+        self.label_9.setScaledContents(True)
+        self.label_9.setObjectName("label_9")
+        self.label_10 = QtWidgets.QLabel(self.groupBox)
+        self.label_10.setGeometry(QtCore.QRect(80, 80, 61, 51))
+        self.label_10.setText("")
+        self.label_10.setPixmap(QtGui.QPixmap(":/graphics/Graphics_Monitor/output-onlinepngtools(8).png"))
+        self.label_10.setScaledContents(True)
+        self.label_10.setObjectName("label_10")
+        self.label_12 = QtWidgets.QLabel(self.groupBox)
+        self.label_12.setGeometry(QtCore.QRect(340, 80, 61, 51))
+        self.label_12.setText("")
+        self.label_12.setPixmap(QtGui.QPixmap(":/graphics/Graphics_Monitor/output-onlinepngtools(10).png"))
+        self.label_12.setScaledContents(True)
+        self.label_12.setObjectName("label_12")
+        self.patientstatus = QtWidgets.QLabel(self.groupBox)
+        self.patientstatus.setGeometry(QtCore.QRect(330, 150, 91, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.patientstatus.setFont(font)
+        self.patientstatus.setScaledContents(False)
+        self.patientstatus.setAlignment(QtCore.Qt.AlignCenter)
+        self.patientstatus.setWordWrap(True)
+        self.patientstatus.setObjectName("patientstatus")
+        self.allocationbutton.raise_()
+        self.patientinbedbutton.raise_()
+        self.dischargelistbutton.raise_()
         self.bedframe.raise_()
         self.toolButton.raise_()
         self.label.raise_()
-        self.widget_2.raise_()
-        self.widget.raise_()
+        self.groupBox_2.raise_()
+        self.groupBox.raise_()
         self.label_2.raise_()
-        self.widget_7.raise_()
-        self.editlogo.raise_()
+        self.editbutton.raise_()
+        self.label_4.raise_()
+        self.allocate.raise_()
+        self.label_9.raise_()
+        self.label_10.raise_()
+        self.label_12.raise_()
+        self.patientstatus.raise_()
         self.verticalLayout.addWidget(self.groupBox)
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(30, 0, 241, 161))
@@ -4369,14 +4414,14 @@ class Ui_MainWindow2(object):
         self.label_11.setStyleSheet("font: 15pt \".AppleSystemUIFont\";\n"
 "")
         self.label_11.setObjectName("label_11")
-        self.widget_9 = QtWidgets.QWidget(self.centralwidget)
-        self.widget_9.setGeometry(QtCore.QRect(20, 130, 71, 61))
-        self.widget_9.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(2).png);\n"
+        self.groupBox_9 = QtWidgets.QGroupBox(self.centralwidget)
+        self.groupBox_9.setGeometry(QtCore.QRect(20, 130, 71, 61))
+        self.groupBox_9.setStyleSheet("background-color: transparent;\n"
+"border-image:url(:/graphics/Graphics_Monitor/output-onlinepngtools(2).png);\n"
 "background: none;\n"
 "border:none;\n"
 "background-repeat:none;")
-        self.widget_9.setObjectName("widget_9")
+        self.groupBox_9.setObjectName("groupBox_9")
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(1040, 230, 391, 241))
         self.frame.setStyleSheet("background-color: transparent;\n"
@@ -4442,8 +4487,9 @@ class Ui_MainWindow2(object):
         self.bay1bed1.setWhatsThis(_translate("MainWindow2", "Bay 1 Bed 1"))
         self.label.setText(_translate("MainWindow2", "AMU Bed Live Monitoring"))
         self.label_2.setText(_translate("MainWindow2", "Overview"))
-        self.pushButton.setText(_translate("MainWindow2", "Patient Status"))
-        self.label_4.setText(_translate("MainWindow2", "Edit/Review List"))
+        self.label_4.setText(_translate("MainWindow2", "Edit/Review Waitlist"))
+        self.allocate.setText(_translate("MainWindow2", "Bed Allocation or Management"))
+        self.patientstatus.setText(_translate("MainWindow2", "Patient Status"))
         self.label_6.setText(_translate("MainWindow2", "<html><head/><body><p>Acute Medical Unit </p><p>Management Systems</p></body></html>"))
         self.label_7.setText(_translate("MainWindow2", "Highlights"))
         self.label_8.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
