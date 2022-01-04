@@ -46,6 +46,7 @@ class Ui_waitlist(object):
         for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diag
             timenow= time.time()
             t= QtWidgets.QLabel()
+            c= QtWidgets.QLabel()
             timeelapsed= timenow-patient[5]
             hours, mins, secs= self.timing(timeelapsed)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
@@ -53,22 +54,23 @@ class Ui_waitlist(object):
 
             if hours < 2:
                 green= green+1
-                t.setStyleSheet("background-color:  rgb(33, 255, 6)") #set timer backgroudn to green
+                c.setStyleSheet("background-color:  rgb(33, 255, 6)") #set timer backgroudn to green
 
             elif hours > 2 and hours < 3:
                 yellow= yellow+1
-                t.setStyleSheet("background-color:  rgb(255, 255, 10)") #set timer backgroudn to green
+                c.setStyleSheet("background-color:  rgb(255, 255, 10)") #set timer backgroudn to green
 
             elif hours > 3 and hours < 4:
                 red= red+1
-                t.setStyleSheet("background-color:  rgb(252, 1, 7)") #set timer backgroudn to green
+                c.setStyleSheet("background-color:  rgb(252, 1, 7)") #set timer backgroudn to green
 
             elif hours > 4:
                 black = black+1
-                t.setStyleSheet("background-color:  black; color: white") #set timer backgroudn to green
+                c.setStyleSheet("background-color:  black; color: white") #set timer backgroudn to green
 
             
             self.tableWidget.setCellWidget(row, 6, t)
+            self.tableWidget.setCellWidget(row, 0, c)
             row= row+1
             updatecolour(green, yellow, red, black)    # insert waiting list tiemr status into database
 
@@ -84,9 +86,6 @@ class Ui_waitlist(object):
             checkBox = QtWidgets.QCheckBox()
             checkBox.setGeometry(QtCore.QRect(260, 230, 21, 20))
             checkBox.setChecked(patient[6])
-            # checkBox1 = QtWidgets.QCheckBox()
-            # checkBox1.setGeometry(QtCore.QRect(260, 230, 21, 20))
-            # checkBox1.setChecked(False)
             btn = QtWidgets.QPushButton()
             btn.setText("Delete")
 
@@ -107,14 +106,20 @@ class Ui_waitlist(object):
             self.w.layout.addWidget(dest)
             self.w.layout.addWidget(ward)
             self.w.setLayout(self.w.layout)
+
+            self.isolate= QtWidgets.QWidget()
+            self.isolate.layout = QtWidgets.QHBoxLayout()
+            self.isolate.layout.addWidget(checkBox)
+            self.isolate.setLayout(self.isolate.layout)
+            
             self.tableWidget.setRowHeight(row, 70)
 
-            self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem("{}".format(patient[0]))) #first name
-            self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem("{}".format(patient[1]))) #last name
-            self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[2],patient[3]))) #age and gender
-            self.tableWidget.setCellWidget(row, 3, checkBox) # isolate
-            self.tableWidget.setItem(row, 4, QtWidgets.QTableWidgetItem(patient[4])) #diagnosis
-            self.tableWidget.setCellWidget(row, 5, self.w) #ward
+            self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem("{}".format(patient[0]))) #first name
+            self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem("{}".format(patient[1]))) #last name
+            self.tableWidget.setItem(row, 3, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[2],patient[3]))) #age and gender
+            self.tableWidget.setCellWidget(row, 4, self.isolate) # isolate
+            self.tableWidget.setItem(row, 5, QtWidgets.QTableWidgetItem(patient[4])) #diagnosis
+            # self.tableWidget.setCellWidget(row, 6, self.w) #ward
 
             # self.timer= QTimer()
             # self.timer.timeout.connect(lambda: self.getTimeElapsed(patient[5], row))
@@ -135,52 +140,62 @@ class Ui_waitlist(object):
 
     def setupUi(self, waitlist):
         waitlist.setObjectName("waitlist")
-        waitlist.resize(800, 600)
+        # waitlist.resize(800, 600)
+        # self.setWindowState(QtCore.Qt.WindowMaximized)
+        waitlist.showMaximized()
         self.centralwidget = QtWidgets.QWidget(waitlist)
         self.centralwidget.setObjectName("centralwidget")
         self.newpatient = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.addPatient(waitlist))
-        self.newpatient.setGeometry(QtCore.QRect(632, 30, 131, 32))
+        self.newpatient.setGeometry(QtCore.QRect(1250, 30, 131, 32))
         self.newpatient.setObjectName("newpatient")
         self.delpatient = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.deletePatient())
-        self.delpatient.setGeometry(QtCore.QRect(510, 30, 113, 32))
+        self.delpatient.setGeometry(QtCore.QRect(1130, 30, 113, 32))
         self.delpatient.setObjectName("delpatient")
         self.backButton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.back(waitlist))
         self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 32))
         self.backButton.setObjectName("backButton")
         # self.delpatient.clicked.connect(self.deletePatient)
         self.title = QtWidgets.QLabel(self.centralwidget)
-        self.title.setGeometry(QtCore.QRect(290, 30, 171, 51))
-        self.title.setStyleSheet("font: 25pt \"Avenir Next\";")
+        self.title.setGeometry(QtCore.QRect(630, 10, 231, 61))
+        self.title.setStyleSheet("font: 40pt \"Open Sans\";")
         self.title.setObjectName("title")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(30, 90, 731, 441))
+        self.tableWidget.setGeometry(QtCore.QRect(30, 90, 1361, 671))
         self.tableWidget.setWordWrap(True)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(7)
         self.tableWidget.setRowCount(1)
         item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(5, item)
         item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setHorizontalHeaderItem(6, item)
-        self.tableWidget.setColumnWidth(0,190)
-        self.tableWidget.setColumnWidth(1,190)
-        self.tableWidget.setColumnWidth(2,100)
-        self.tableWidget.setColumnWidth(3,120)
-        self.tableWidget.setColumnWidth(4,125)
-        self.tableWidget.setColumnWidth(5,125)
-        self.tableWidget.setColumnWidth(6,125)
+        self.tableWidget.setColumnWidth(0,125) #status
+        self.tableWidget.setColumnWidth(1,200) #first name
+        self.tableWidget.setColumnWidth(2,200) #last name
+        self.tableWidget.setColumnWidth(3,180) #details
+        self.tableWidget.setColumnWidth(4,50) #isolation
+        self.tableWidget.setColumnWidth(5,250) #diagnosis
+        self.tableWidget.setColumnWidth(6,150) #timer
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers) # does not allow editing to the table
         self.displayList()
 
@@ -205,17 +220,17 @@ class Ui_waitlist(object):
         self.newpatient.setText(_translate("waitlist", "Add New Patient"))
         self.title.setText(_translate("waitlist", "Waiting List"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("waitlist", "First Name"))
+        item.setText(_translate("waitlist", "Status"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("waitlist", "Last Name"))
+        item.setText(_translate("waitlist", "First Name"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("waitlist", "Details"))
+        item.setText(_translate("waitlist", "Last Name"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("waitlist", "Isolation"))
+        item.setText(_translate("waitlist", "Details"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("waitlist", "Diagnosis"))
+        item.setText(_translate("waitlist", "Isolation"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("waitlist", "discharge summary"))
+        item.setText(_translate("waitlist", "Diagnosis"))
         item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("waitlist", "Timer"))
         self.delpatient.setText(_translate("waitlist", "Delete Patient"))
