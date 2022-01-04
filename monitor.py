@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from amu_database import getColournum
 from waitlist import Ui_waitlist
 
 class Ui_MainWindow2(object):
@@ -4437,18 +4438,23 @@ class Ui_MainWindow2(object):
         self.label_3.setPixmap(QtGui.QPixmap(":/Icons/Graphics_Monitor/output-onlinepngtools(5).png"))
         self.label_3.setScaledContents(True)
         self.label_3.setObjectName("label_3")
+        collist= getColournum()
         self.green = QtWidgets.QLabel(self.frame)
         self.green.setGeometry(QtCore.QRect(60, 50, 81, 21))
         self.green.setObjectName("green")
+        self.green.setText(str(collist[0][0]))
         self.yellow = QtWidgets.QLabel(self.frame)
         self.yellow.setGeometry(QtCore.QRect(60, 90, 91, 16))
         self.yellow.setObjectName("yellow")
+        self.yellow.setText(str(collist[0][1]))
         self.red = QtWidgets.QLabel(self.frame)
         self.red.setGeometry(QtCore.QRect(60, 140, 91, 16))
         self.red.setObjectName("red")
+        self.red.setText(str(collist[0][2]))
         self.black = QtWidgets.QLabel(self.frame)
         self.black.setGeometry(QtCore.QRect(60, 180, 81, 16))
         self.black.setObjectName("black")
+        self.black.setText(str(collist[0][3]))
         self.bays = QtWidgets.QLabel(self.frame)
         self.bays.setGeometry(QtCore.QRect(250, 80, 101, 31))
         self.bays.setObjectName("bays")
@@ -4503,12 +4509,12 @@ class Ui_MainWindow2(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Overview:</p></body></html>"))
-        self.green.setText(_translate("MainWindow2", "Green_label"))
-        self.yellow.setText(_translate("MainWindow2", "Yellow_lable"))
-        self.red.setText(_translate("MainWindow2", "Red_label"))
-        self.black.setText(_translate("MainWindow2", "Black_label"))
-        self.bays.setText(_translate("MainWindow2", "Bays_label"))
-        self.siderooms.setText(_translate("MainWindow2", "Siderooms_label"))
+        # self.green.setText(_translate("MainWindow2", "Green_label"))
+        # self.yellow.setText(_translate("MainWindow2", "Yellow_lable"))
+        # self.red.setText(_translate("MainWindow2", "Red_label"))
+        # self.black.setText(_translate("MainWindow2", "Black_label"))
+        # self.bays.setText(_translate("MainWindow2", "Bays_label"))
+        # self.siderooms.setText(_translate("MainWindow2", "Siderooms_label"))
 import mongraphics
 
 
