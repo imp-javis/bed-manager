@@ -62,8 +62,6 @@ class Ui_waitlist(object):
     #     t.setText(timeelapsed)
     #     self.tableWidget.setCellWidget(row, 6, t)
 
-    
-    
     def displayList(self):
         size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
         self.tableWidget.setRowCount(size) #setting the table row size
