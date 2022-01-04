@@ -4463,7 +4463,7 @@ class Ui_MainWindow2(object):
         self.black.setText(_translate("MainWindow2", "Black_label"))
         self.bays.setText(_translate("MainWindow2", "Bays_label"))
         self.siderooms.setText(_translate("MainWindow2", "Siderooms_label"))
-import mon-graphics_rc
+import mongraphics
 
 
 if __name__ == "__main__":
