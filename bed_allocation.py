@@ -33,6 +33,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         MainWindow.resize(1370, 772)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(20, 80, 600, 580))
         self.tableWidget.setObjectName("tableWidget")
@@ -42,6 +43,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.tableWidget.setColumnWidth(1,90)
         self.tableWidget.setColumnWidth(2,90)
         self.tableWidget.setColumnWidth(3,118)
+
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -66,6 +68,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # attempt to make columns 0-2 read only
         #item = QtWidgets.QTableWidgetItem()
         #item.setFlags(item.flags() ^ ItemIsEditable);
+
+        ## TEMPORARY CONTENT
+
+        self.tableWidget.setItem(0,2,QtWidgets.QTableWidgetItem("Y"))
+        self.tableWidget.setItem(1,2,QtWidgets.QTableWidgetItem("N"))
+
 
         self.titleBA = QtWidgets.QLabel(self.centralwidget)
         self.titleBA.setGeometry(QtCore.QRect(640, 20, 201, 41))
@@ -1520,8 +1528,38 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         bedIndex = self.sender()
         currRow = self.tableWidget.currentRow()
 
-        # checking for bed assignment duplicates in other rows
-        column = 3
+
+        # checking for current bed status availability              ## IT WORKS
+        bedAvailable = self.bedStatusCheck(bedIndex)
+
+        # checking for bed assignment duplicates in other rows      ## IT WORKS
+        bedColumn = 3
+        noDuplicates = self.duplicateCheck(bedColumn, bedIndex)
+        
+        # checking for isolation requirement
+        isoColumn = 2
+        isolation = self.isolationCheck(currRow, isoColumn)
+
+        # checking for monitor requirement
+
+
+        # officially assigning bed to patient
+        if noDuplicates and bedAvailable:
+            if isolation:
+                if bedIndex.text() == "R1" or bedIndex.text() == "R2" or bedIndex.text() == "R3" or bedIndex.text() == "R4":
+                    self.tableWidget.setItem(currRow,bedColumn,QtWidgets.QTableWidgetItem(bedIndex.text()))     
+            #elif monitor:
+            #    if bedIndex.text() == "A1" or bedIndex.text() == "A2" or bedIndex.text() == "A3" or bedIndex.text() == "A4" or bedIndex.text() == "B1" or bedIndex.text() == "B2" or bedIndex.text() == "B3" or bedIndex.text() == "B4":
+            #        self.tableWidget.setItem(currRow,bedColumn,QtWidgets.QTableWidgetItem(bedIndex.text()))
+            else:
+                if bedIndex.text() != "R1" or bedIndex.text() != "R2" or bedIndex.text() != "R3" or bedIndex.text() != "R4":
+                    self.tableWidget.setItem(currRow,bedColumn,QtWidgets.QTableWidgetItem(bedIndex.text()))
+
+        # self.sender().setStyleSheet("background-color: white;")
+        # if add colour, need to find way to revert the original back if another bed is chosen
+
+
+    def duplicateCheck(self, column, bedIndex):
         noDuplicates = True
         for row in range(self.tableWidget.rowCount()): 
             _item = self.tableWidget.item(row, column)          # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
@@ -1529,18 +1567,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 item = self.tableWidget.item(row, column).text()       # gets cell item name
                 if item == bedIndex.text():
                     noDuplicates = False
+        return noDuplicates
 
-        # checking for current bed status availability
+    def bedStatusCheck(self, bedIndex):
         bedAvailable = True
+        return bedAvailable
 
-
-        # officially assigning bed to patient
-        if noDuplicates and bedAvailable:
-            self.tableWidget.setItem(currRow,3,QtWidgets.QTableWidgetItem(bedIndex.text()))     
-
-        # self.sender().setStyleSheet("background-color: white;")
-        # if add colour, need to find way to revert the original back if another bed is chosen
-
+    def isolationCheck(self, currRow, isoColumn):
+        isolation = False
+        i_item = self.tableWidget.item(currRow, isoColumn)          # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
+        if i_item:
+            item = self.tableWidget.item(currRow, isoColumn).text()
+            if item == "Y":
+                isolation = True
+            elif item == "N":
+                isolation = False
+        return isolation
 
 if __name__ == "__main__":
     import sys
