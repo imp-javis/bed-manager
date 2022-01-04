@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow2(object):
     def setupUi(self, MainWindow2):
         MainWindow2.setObjectName("MainWindow2")
-        MainWindow2.resize(1440, 772)
+        MainWindow2.resize(1440, 847)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -4257,34 +4257,14 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.widget_7.setObjectName("widget_7")
-        self.widget_5 = QtWidgets.QWidget(self.groupBox)
-        self.widget_5.setGeometry(QtCore.QRect(60, 60, 61, 51))
-        self.widget_5.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(8).png);\n"
+        self.editlogo = QtWidgets.QWidget(self.groupBox)
+        self.editlogo.setGeometry(QtCore.QRect(60, 60, 61, 51))
+        self.editlogo.setStyleSheet("background-color: transparent;\n"
+"border-image:url(:/graphics/Graphics_Monitor/output-onlinepngtools(8).png);\n"
 "background: none;\n"
 "border:none;\n"
 "background-repeat:none;")
-        self.widget_5.setObjectName("widget_5")
-        self.label_3 = QtWidgets.QLabel(self.groupBox)
-        self.label_3.setGeometry(QtCore.QRect(50, 130, 111, 61))
-        font = QtGui.QFont()
-        font.setFamily(".AppleSystemUIFont")
-        font.setPointSize(15)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_3.setFont(font)
-        self.label_3.setStyleSheet("font: 15pt \".AppleSystemUIFont\";\n"
-"")
-        self.label_3.setObjectName("label_3")
-        self.widget_12 = QtWidgets.QWidget(self.groupBox)
-        self.widget_12.setGeometry(QtCore.QRect(0, 50, 181, 191))
-        self.widget_12.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(11).png);\n"
-"background: none;\n"
-"border:none;\n"
-"background-repeat:none;")
-        self.widget_12.setObjectName("widget_12")
+        self.editlogo.setObjectName("editlogo")
         self.widget_14 = QtWidgets.QWidget(self.groupBox)
         self.widget_14.setGeometry(QtCore.QRect(330, 50, 231, 191))
         self.widget_14.setStyleSheet("background-color: transparent;\n"
@@ -4293,17 +4273,6 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.widget_14.setObjectName("widget_14")
-        self.label_5 = QtWidgets.QLabel(self.widget_14)
-        self.label_5.setGeometry(QtCore.QRect(70, 80, 121, 51))
-        font = QtGui.QFont()
-        font.setFamily(".AppleSystemUIFont")
-        font.setPointSize(15)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_5.setFont(font)
-        self.label_5.setStyleSheet("font: 15pt \".AppleSystemUIFont\";")
-        self.label_5.setObjectName("label_5")
         self.widget_3 = QtWidgets.QWidget(self.widget_14)
         self.widget_3.setGeometry(QtCore.QRect(100, 10, 61, 51))
         self.widget_3.setStyleSheet("background-color: transparent;\n"
@@ -4312,26 +4281,35 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.widget_3.setObjectName("widget_3")
-        self.widget_13 = QtWidgets.QWidget(self.groupBox)
-        self.widget_13.setGeometry(QtCore.QRect(160, 50, 201, 191))
-        self.widget_13.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(11).png);\n"
+        self.pushButton = QtWidgets.QPushButton(self.widget_14)
+        self.pushButton.setGeometry(QtCore.QRect(80, 90, 113, 32))
+        self.pushButton.setObjectName("pushButton")
+        self.editframe = QtWidgets.QFrame(self.groupBox)
+        self.editframe.setGeometry(QtCore.QRect(10, 50, 151, 181))
+        self.editframe.setStyleSheet("background-color: white;\n"
+"")
+        self.editframe.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.editframe.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.editframe.setObjectName("editframe")
+        self.editbutton = QtWidgets.QPushButton(self.editframe)
+        self.editbutton.setGeometry(QtCore.QRect(0, 0, 151, 191))
+        self.editbutton.setStyleSheet("background-color: transparent;\n"
+"border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
 "background: none;\n"
 "border:none;\n"
-"background-repeat:none;")
-        self.widget_13.setObjectName("widget_13")
-        self.label_4 = QtWidgets.QLabel(self.widget_13)
-        self.label_4.setGeometry(QtCore.QRect(60, 80, 121, 51))
+"background-repeat:none;\n"
+"")
+        self.editbutton.setText("")
+        self.editbutton.setObjectName("editbutton")
+        self.label_4 = QtWidgets.QLabel(self.editframe)
+        self.label_4.setGeometry(QtCore.QRect(40, 100, 91, 20))
         font = QtGui.QFont()
-        font.setFamily(".AppleSystemUIFont")
-        font.setPointSize(15)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
+        font.setPointSize(12)
         self.label_4.setFont(font)
-        self.label_4.setStyleSheet("font: 15pt \".AppleSystemUIFont\";")
+        self.label_4.setScaledContents(False)
+        self.label_4.setWordWrap(True)
         self.label_4.setObjectName("label_4")
-        self.widget_13.raise_()
+        self.editframe.raise_()
         self.widget_14.raise_()
         self.bedframe.raise_()
         self.toolButton.raise_()
@@ -4340,9 +4318,7 @@ class Ui_MainWindow2(object):
         self.widget.raise_()
         self.label_2.raise_()
         self.widget_7.raise_()
-        self.widget_5.raise_()
-        self.label_3.raise_()
-        self.widget_12.raise_()
+        self.editlogo.raise_()
         self.verticalLayout.addWidget(self.groupBox)
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(30, 0, 241, 161))
@@ -4352,30 +4328,22 @@ class Ui_MainWindow2(object):
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
-        self.label_7.setGeometry(QtCore.QRect(1100, 40, 121, 41))
+        self.label_7.setGeometry(QtCore.QRect(1070, 40, 121, 41))
         font = QtGui.QFont()
         font.setFamily("Avenir")
         font.setPointSize(24)
         self.label_7.setFont(font)
         self.label_7.setObjectName("label_7")
         self.widget_6 = QtWidgets.QWidget(self.centralwidget)
-        self.widget_6.setGeometry(QtCore.QRect(1060, 600, 371, 131))
+        self.widget_6.setGeometry(QtCore.QRect(1060, 670, 371, 131))
         self.widget_6.setStyleSheet("background-color: transparent;\n"
 "border-image:url(:/Icons/imperial-college-healthcare-nhs-trust-logo-vector.png);\n"
 "background: none;\n"
 "border:none;\n"
 "background-repeat:none;")
         self.widget_6.setObjectName("widget_6")
-        self.widget_8 = QtWidgets.QWidget(self.centralwidget)
-        self.widget_8.setGeometry(QtCore.QRect(1050, 210, 371, 211))
-        self.widget_8.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(5).png);\n"
-"background: none;\n"
-"border:none;\n"
-"background-repeat:none;")
-        self.widget_8.setObjectName("widget_8")
         self.label_8 = QtWidgets.QLabel(self.centralwidget)
-        self.label_8.setGeometry(QtCore.QRect(1070, 420, 341, 61))
+        self.label_8.setGeometry(QtCore.QRect(1070, 460, 341, 61))
         font = QtGui.QFont()
         font.setFamily(".AppleSystemUIFont")
         font.setPointSize(15)
@@ -4387,32 +4355,8 @@ class Ui_MainWindow2(object):
 "")
         self.label_8.setObjectName("label_8")
         self.timeEdit = QtWidgets.QTimeEdit(self.centralwidget)
-        self.timeEdit.setGeometry(QtCore.QRect(1170, 460, 118, 24))
+        self.timeEdit.setGeometry(QtCore.QRect(1170, 500, 118, 24))
         self.timeEdit.setObjectName("timeEdit")
-        self.label_9 = QtWidgets.QLabel(self.centralwidget)
-        self.label_9.setGeometry(QtCore.QRect(110, 220, 111, 61))
-        font = QtGui.QFont()
-        font.setFamily(".AppleSystemUIFont")
-        font.setPointSize(15)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_9.setFont(font)
-        self.label_9.setStyleSheet("font: 15pt \".AppleSystemUIFont\";\n"
-"")
-        self.label_9.setObjectName("label_9")
-        self.label_10 = QtWidgets.QLabel(self.centralwidget)
-        self.label_10.setGeometry(QtCore.QRect(110, 280, 111, 61))
-        font = QtGui.QFont()
-        font.setFamily(".AppleSystemUIFont")
-        font.setPointSize(15)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_10.setFont(font)
-        self.label_10.setStyleSheet("font: 15pt \".AppleSystemUIFont\";\n"
-"")
-        self.label_10.setObjectName("label_10")
         self.label_11 = QtWidgets.QLabel(self.centralwidget)
         self.label_11.setGeometry(QtCore.QRect(110, 130, 111, 61))
         font = QtGui.QFont()
@@ -4433,22 +4377,53 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.widget_9.setObjectName("widget_9")
-        self.widget_10 = QtWidgets.QWidget(self.centralwidget)
-        self.widget_10.setGeometry(QtCore.QRect(30, 280, 61, 61))
-        self.widget_10.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(4).png);\n"
+        self.frame = QtWidgets.QFrame(self.centralwidget)
+        self.frame.setGeometry(QtCore.QRect(1040, 230, 391, 241))
+        self.frame.setStyleSheet("background-color: transparent;\n"
 "background: none;\n"
 "border:none;\n"
 "background-repeat:none;")
-        self.widget_10.setObjectName("widget_10")
-        self.widget_11 = QtWidgets.QWidget(self.centralwidget)
-        self.widget_11.setGeometry(QtCore.QRect(30, 210, 61, 51))
-        self.widget_11.setStyleSheet("background-color: transparent;\n"
-"border-image:url(:/Icons/Graphics_Monitor/output-onlinepngtools(3).png);\n"
-"background: none;\n"
-"border:none;\n"
-"background-repeat:none;")
-        self.widget_11.setObjectName("widget_11")
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.label_3 = QtWidgets.QLabel(self.frame)
+        self.label_3.setGeometry(QtCore.QRect(50, 20, 351, 201))
+        self.label_3.setText("")
+        self.label_3.setPixmap(QtGui.QPixmap(":/Icons/Graphics_Monitor/output-onlinepngtools(5).png"))
+        self.label_3.setScaledContents(True)
+        self.label_3.setObjectName("label_3")
+        self.green = QtWidgets.QLabel(self.frame)
+        self.green.setGeometry(QtCore.QRect(60, 50, 81, 21))
+        self.green.setObjectName("green")
+        self.yellow = QtWidgets.QLabel(self.frame)
+        self.yellow.setGeometry(QtCore.QRect(60, 90, 91, 16))
+        self.yellow.setObjectName("yellow")
+        self.red = QtWidgets.QLabel(self.frame)
+        self.red.setGeometry(QtCore.QRect(60, 140, 91, 16))
+        self.red.setObjectName("red")
+        self.black = QtWidgets.QLabel(self.frame)
+        self.black.setGeometry(QtCore.QRect(60, 180, 81, 16))
+        self.black.setObjectName("black")
+        self.bays = QtWidgets.QLabel(self.frame)
+        self.bays.setGeometry(QtCore.QRect(250, 80, 101, 31))
+        self.bays.setObjectName("bays")
+        self.siderooms = QtWidgets.QLabel(self.frame)
+        self.siderooms.setGeometry(QtCore.QRect(250, 150, 111, 16))
+        self.siderooms.setObjectName("siderooms")
+        self.waitstatbckground = QtWidgets.QLabel(self.frame)
+        self.waitstatbckground.setGeometry(QtCore.QRect(0, -10, 451, 231))
+        self.waitstatbckground.setText("")
+        self.waitstatbckground.setPixmap(QtGui.QPixmap(":/graphics/Graphics_Monitor/output-onlinepngtools(5).png"))
+        self.waitstatbckground.setScaledContents(True)
+        self.waitstatbckground.setObjectName("waitstatbckground")
+        self.waitstatbckground.raise_()
+        self.label_3.raise_()
+        self.green.raise_()
+        self.yellow.raise_()
+        self.red.raise_()
+        self.black.raise_()
+        self.bays.raise_()
+        self.siderooms.raise_()
         MainWindow2.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow2)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 24))
@@ -4467,14 +4442,8 @@ class Ui_MainWindow2(object):
         self.bay1bed1.setWhatsThis(_translate("MainWindow2", "Bay 1 Bed 1"))
         self.label.setText(_translate("MainWindow2", "AMU Bed Live Monitoring"))
         self.label_2.setText(_translate("MainWindow2", "Overview"))
-        self.label_3.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Edit/Review </p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Patient Waitlist</p></body></html>"))
-        self.label_5.setText(_translate("MainWindow2", "<html><head/><body><p>Patient Status</p></body></html>"))
-        self.label_4.setText(_translate("MainWindow2", "<html><head/><body><p>Bed Allocation </p><p>or Management</p></body></html>"))
+        self.pushButton.setText(_translate("MainWindow2", "Patient Status"))
+        self.label_4.setText(_translate("MainWindow2", "Edit/Review List"))
         self.label_6.setText(_translate("MainWindow2", "<html><head/><body><p>Acute Medical Unit </p><p>Management Systems</p></body></html>"))
         self.label_7.setText(_translate("MainWindow2", "Highlights"))
         self.label_8.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -4483,24 +4452,18 @@ class Ui_MainWindow2(object):
 "</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Please note: Black Status should be achieved in:</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.label_9.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Support:</p>\n"
-        self.label_10.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Settings:</p></body></html>"))
         self.label_11.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Overview:</p></body></html>"))
-import monitorgraphics
-import icons
+        self.green.setText(_translate("MainWindow2", "Green_label"))
+        self.yellow.setText(_translate("MainWindow2", "Yellow_lable"))
+        self.red.setText(_translate("MainWindow2", "Red_label"))
+        self.black.setText(_translate("MainWindow2", "Black_label"))
+        self.bays.setText(_translate("MainWindow2", "Bays_label"))
+        self.siderooms.setText(_translate("MainWindow2", "Siderooms_label"))
+import mon-graphics_rc
 
 
 if __name__ == "__main__":
