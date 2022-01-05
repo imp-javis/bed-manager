@@ -17,7 +17,6 @@ class Ui_registerform(object):
         import waitlist
         import time
         seconds = time.time()
-        print(self.first.text())
 
         if self.first.text().strip():
             self.invalid.setText("Please enter the first name")
