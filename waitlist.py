@@ -50,18 +50,18 @@ class Ui_waitlist(object):
             hours, mins, secs= self.timing(timeelapsed)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
             # t.setText(timeelapsed)
+            # brush = QtGui.QBrush(QtGui.QColor(33, 255, 6)) # set background to green
+            # brush = QtGui.QBrush(QtGui.QColor(255, 255, 10)) # set background to yellow
 
             if hours < 2:
                 green= green+1
                 brush = QtGui.QBrush(QtGui.QColor(33, 255, 6)) # set background to green
                 brush.setStyle(QtCore.Qt.SolidPattern)
-
-            elif hours > 2 and hours < 3:
+            elif hours < 3:
                 yellow= yellow+1
                 brush = QtGui.QBrush(QtGui.QColor(255, 255, 10)) # set background to yellow
                 brush.setStyle(QtCore.Qt.SolidPattern)
-
-            elif hours > 3 and hours < 4:
+            elif hours < 4:
                 red= red+1
                 brush = QtGui.QBrush(QtGui.QColor(252, 1, 7)) # set background to red
                 brush.setStyle(QtCore.Qt.SolidPattern)
