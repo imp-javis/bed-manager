@@ -45,8 +45,8 @@ def reset():
 # reset()
 
 # this inserts patient info into the bed they have been assigned
-def addtoBed(first, last, age, gender, diagnosis, isolate):
-    c.execute("INSERT INTO patient_inBed (first, last, age, gender, diagnosis, isolation) VALUES (:first, :last, :age, :gender, :diagnosis, :isolate)", {'first': first, 'last': last, 'age': age, 'gender': gender, 'diagnosis': diagnosis, 'time': time, 'isolate': isolate})
+def addtoBed(bed, first, last, age, gender, diagnosis, isolate):
+    c.execute("INSERT INTO patient_inBed (bed, first, last, age, gender, diagnosis, isolation) VALUES (:bed, :first, :last, :age, :gender, :diagnosis, :isolate)", {'bed': bed, 'first': first, 'last': last, 'age': age, 'gender': gender, 'diagnosis': diagnosis, 'time': time, 'isolate': isolate})
     conn.commit()
 
 # function to get ALL patient details of a SINGLE patient from list of patient_inBed (can send patient info to patient_inLounge or destination.db)

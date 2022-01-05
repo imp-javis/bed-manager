@@ -10,33 +10,41 @@
     <height>771</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Waiting List</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="title">
+   <widget class="QLabel" name="patientListTitle">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>670</x>
       <y>10</y>
       <width>171</width>
       <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 25pt &quot;Avenir Next&quot;;</string>
+     <string notr="true">font: 25pt &quot;Arial&quot;;</string>
     </property>
     <property name="text">
      <string>Patient List</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="patientTable">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>70</y>
+      <y>110</y>
       <width>1351</width>
-      <height>641</height>
+      <height>390</height>
      </rect>
     </property>
     <property name="wordWrap">
@@ -54,22 +62,52 @@
     </row>
     <column>
      <property name="text">
-      <string>Name</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
       <string>Bed</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>To be discharged</string>
+      <string>First Name</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Discharge Summary</string>
+      <string>Last Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Age</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Gender</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Diagnosis</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Isolation</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Discharge</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Lounge</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Summary</string>
      </property>
     </column>
     <column>
@@ -87,38 +125,13 @@
       <string>Death</string>
      </property>
     </column>
-    <column>
-     <property name="text">
-      <string>Notes</string>
+    <item row="0" column="0">
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
-    </column>
+    </item>
    </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>1170</x>
-      <y>10</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>.AppleSystemUIFont</family>
-      <pointsize>13</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 13pt &quot;.AppleSystemUIFont&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Number of beds taken: </string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="buttBack">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -131,6 +144,129 @@
      <string>Back</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="buttConfirm">
+    <property name="geometry">
+     <rect>
+      <x>1280</x>
+      <y>20</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="patientTable_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>560</y>
+      <width>1351</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+    <row>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </row>
+    <column>
+     <property name="text">
+      <string>Bed</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>First Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Age</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Gender</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Diagnosis</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Isolation</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Discharge</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Lounge</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Summary</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Medication</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="patientListTitle_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>70</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Patients in Beds</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="patientListTitle_3">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>520</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 15pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Patients in Discharge Lounge</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -138,7 +274,7 @@
      <x>0</x>
      <y>0</y>
      <width>1440</width>
-     <height>24</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

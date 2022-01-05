@@ -55,10 +55,10 @@ def addtowaitlist(first, last, age, gender, diagnosis, time, isolate):
     c.execute("INSERT INTO waiting_list VALUES (:first, :last, :age, :gender, :diagnosis, :time, :isolate)", {'first': first, 'last': last, 'age': age, 'gender': gender, 'diagnosis': diagnosis, 'time': time, 'isolate': isolate })
     conn.commit()
 
-def updatecolour(green, yellow, red, black):
-    c.execute("DELETE FROM colourcount")
-    c.execute("INSERT INTO colourcount VALUES (:green, :yellow, :red, :black)", {'green': green, 'yellow': yellow, 'red': red, 'black': black })
-    conn.commit()
+# def getTime():
+#     c.execute("SELECT timer FROM waiting_list WHERE rowid LIKE :row", {'row': row})
+#     times= c.fetchall()
+#     return times
 
 def getDetails(row):
     c.execute("SELECT first, last FROM waiting_list WHERE rowid LIKE :row", {'row': row})
@@ -75,14 +75,28 @@ def getContent():
     items= c.fetchall() #c.fetchone()
     return items
 
-def getColournum():
-    c.execute("SELECT * FROM colourcount")
-    items= c.fetchall() #c.fetchone()
-    return items    
-
 def deletePat(first, last):
     c.execute("DELETE FROM waiting_list WHERE first= '{}' AND last= '{}'".format(first, last))
     conn.commit()
+
+def getPatWithBed(rowsWithBeds):
+    c.execute("SELECT * FROM waiting_list WHERE row = '{}'".format(rowWithBeds))
+    items = c.fetchall() #c.fetchone()
+    return items    # returns a list of patients with beds assigned
+
+
+def updatecolour(green, yellow, red, black):
+    c.execute("DELETE FROM colourcount")
+    c.execute("INSERT INTO colourcount VALUES (:green, :yellow, :red, :black)", {'green': green, 'yellow': yellow, 'red': red, 'black': black })
+    conn.commit()
+
+def getColournum():
+    c.execute("SELECT * FROM colourcount")
+    items= c.fetchall() #c.fetchone()
+    return items  
+
+# c.execute("SELECT * FROM waiting_list")
+# print(c.fetchall())
 
 # conn.close() #close connections
 

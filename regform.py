@@ -17,26 +17,13 @@ class Ui_registerform(object):
         import waitlist
         import time
         seconds = time.time()
-
-        # check for registration form input
-        if not self.first.text().strip():
-            self.invalid.setText("Please enter the first name")
-        elif not self.last.text().strip():
-            self.invalid.setText("Plase enter the last name")
-        elif self.ageBox.text() == "0":
-            self.invalid.setText("Please enter the correct age")
-        elif self.genderBox.currentText() == "Select":
-            self.invalid.setText("Please choose a gender")
-        elif not self.diagnosis.toPlainText().strip():
-            self.invalid.setText("Plase enter the diagnosis")
-        else:
-            addtowaitlist(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), int(seconds), self.checkBox.checkState())
-            self.window = QtWidgets.QMainWindow()
-            self.ui = waitlist.Ui_waitlist()
-            self.ui.setupUi(self.window)
-            self.window.show()
-            wait_win.close()
-            reg_win.close()
+        addtowaitlist(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), int(seconds), self.checkBox.checkState())
+        self.window = QtWidgets.QMainWindow()
+        self.ui = waitlist.Ui_waitlist()
+        self.ui.setupUi(self.window)
+        self.window.show()          #first = variable for first name, ageBox = variable for age etc.
+        wait_win.close()
+        reg_win.close()
 
     def setupUi(self, registerform, waitlist):
         registerform.setObjectName("registerform")

@@ -19,7 +19,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from amu_database import getContent, getListSize, getDetails, deletePat
+from amu_database import getContent, getListSize, getDetails, deletePat, getPatWithBed
+from patientList_database import addtoBed
 
 # also attempt to make columns 0-2 read only
 # class tableBed(QtWidgets.QTableWidget):
@@ -1487,6 +1488,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.R2.clicked.connect(self.chooseBed)
         self.R3.clicked.connect(self.chooseBed)
         self.R4.clicked.connect(self.chooseBed)
+        self.buttAssign.clicked.connect(self.assignBed)
+        #self.buttBack.clicked.connect(________)
+
 
         ## array with all bed indices
 
@@ -1565,10 +1569,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
             row = row+1
 
-        
+
+
+
+    ## FUNCTION TO ASSIGN BED BASED ON BUTTON PRESSED ##
+
     def chooseBed(self):
-        firstNameColumn = 1
-        lastNameColumn = 2
+        firstNameColumn = 0
+        lastNameColumn = 1
+        # genderColumn = 2
         isoColumn = 3
         bedColumn = 4
 
@@ -1625,6 +1634,55 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             elif item == "N":
                 isolation = False
         return isolation
+
+
+
+
+    ## FUNCTION TO CONTROL ACTIONS AFTER "ASSIGN" IS PRESSED ##             
+
+    def assignBed(self):
+        rowsWithBeds, rowBedIndex = self.bedRows()
+        patsWithBeds = []
+
+        for row in rowsWithBeds:
+            # run the function getPatWithBed() from amu_database.py that selects patients only from certain rows
+            # returns a row of info on ONE that has been assigned beds
+            # this selection is repeated through this for loop to get all patients that have just been given a bed
+            # this list of patients need to be added to the patient list database (aka. patsWithBeds)
+            patsWithBeds.append(getPatWithBed(row))
+
+        #rowBedIndex[0] gets bed index for 1st patient
+        #patsWithBeds[0][0] gets 1st patient first name
+        #patsWithBeds[1][3] gets 2nd patient gender
+
+        #adding patient to patientList.db
+        bedNum = len(rowBedIndex)
+        patBedNum = len(patsWithBeds)
+        if bedNum == patBedNum:     # make sure we have taken the same number of data for each patient and bed
+            for row in bedNum:
+                addtoBed(rowBedIndex[row],patsWithBeds[row][0],patsWithBeds[row][1],patsWithBeds[row][2],patsWithBeds[row][3],patsWithBeds[row][4],patsWithBeds[row][6])
+                deletePat(patsWithBeds[row][0],patsWithBeds[row][1])    # and then delete patient from waiting list
+
+
+    def bedRows(self):
+        totRowNum = self.tableWidget.rowCount()
+        rowsWithBeds = []
+        rowBedIndex = []
+
+        for row in totRowNum:
+            i_item = self.tableWidget.item(row, bedColumn)       # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
+            if i_item:  # if patient has been given a bed
+                currRow = self.tableWidget.currentRow()
+                rowsWithBeds.append(currRow)        # adds the row # that has a bed assigned
+
+                item = self.tableWidget.item(currRow, isoColumn).text()
+                rowBedIndex.append(item)
+
+        return rowsWithBeds, rowBedIndex
+    
+
+
+
 
 if __name__ == "__main__":
     import sys
