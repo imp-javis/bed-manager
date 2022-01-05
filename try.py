@@ -4448,6 +4448,7 @@ class Ui_MainWindow2(object):
         self.bedavailable.setGeometry(QtCore.QRect(240, 70, 121, 81))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
+        font.setPointSize(16)
         self.bedavailable.setFont(font)
         self.bedavailable.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.bedavailable.setObjectName("bedavailable")
@@ -4501,7 +4502,7 @@ class Ui_MainWindow2(object):
         self.black.setText(_translate("MainWindow2", "Black_label"))
         self.bedavailable.setText(_translate("MainWindow2", "bedavailability"))
         self.time.setText(_translate("MainWindow2", "time"))
-import mongraphics
+import mon-graphics_rc
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import regform
-from amu_database import getContent, getListSize, getDetails, deletePat, updatecolour
+from amu_database import getContent, getListSize, getDetails, deletePat, updatecolour, toBlack
 from PyQt5.QtCore import QTimer, QTime, Qt
 import time
 
@@ -42,12 +42,13 @@ class Ui_waitlist(object):
         yellow= 0
         red= 0
         black= 0
+        blacktime=0
         for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diag
             timenow= time.time()
             t= QtWidgets.QLabel()
             c= QtWidgets.QLabel()
-            timeelapsed= timenow-patient[5]
-            hours, mins, secs= self.timing(timeelapsed)
+            timeelapsing= timenow-patient[5]
+            hours, mins, secs= self.timing(timeelapsing)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
             # t.setText(timeelapsed)
             # brush = QtGui.QBrush(QtGui.QColor(33, 255, 6)) # set background to green
@@ -69,6 +70,14 @@ class Ui_waitlist(object):
                 black = black+1
                 brush = QtGui.QBrush(QtGui.QColor(0, 0, 0)) # set background to black
                 brush.setStyle(QtCore.Qt.SolidPattern)
+            
+            if timeelapsing>blacktime:
+                toBlack(timeelapsing)
+            elif timeelapsing<blacktime:
+                pass
+            elif timeelapsing> 14400:
+                toBlack(0)
+                
 
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)

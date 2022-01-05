@@ -9,12 +9,25 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+<<<<<<< HEAD
 from amu_database import getColournum
 from patientList_database import bedAvailability
 from waitlist import Ui_waitlist
 # I need the patientlist before i can add the bedavailability in
+=======
+from amu_database import getBlack, getColournum
+from waitlist import Ui_waitlist
+from PyQt5.QtCore import QTimer, QTime, Qt
+
+>>>>>>> cae7c660d8056a7166110ab328127fd2abeb02da
 
 class Ui_MainWindow2(object):
+
+#     def showBlackTime(self):
+        # seconds= getBlack()
+        # mins, secs = divmod(seconds, 60)
+        # hours, minutes = divmod(mins, 60)
+        # self.time.setText('{:02d}:{:02d}:{:02d}'.format(int(hours), int(minutes), int(secs)))
 
     def showWaitlist(self, monitor):
         self.window = QtWidgets.QMainWindow()
@@ -4395,17 +4408,17 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.widget_6.setObjectName("widget_6")
-        self.label_8 = QtWidgets.QLabel(self.centralwidget)
-        self.label_8.setGeometry(QtCore.QRect(1070, 460, 341, 61))
+        # self.label_8 = QtWidgets.QLabel(self.centralwidget)
+        # self.label_8.setGeometry(QtCore.QRect(1070, 460, 341, 61))
         font = QtGui.QFont()
         font.setFamily(".AppleSystemUIFont")
         font.setPointSize(15)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
-        self.label_8.setFont(font)
-        self.label_8.setStyleSheet("font: 15pt \"Times New Roman\";\n""")
-        self.label_8.setObjectName("label_8")
+        # self.label_8.setFont(font)
+        # self.label_8.setStyleSheet("font: 15pt \"Times New Roman\";\n""")
+        # self.label_8.setObjectName("label_8")
         # self.time = QtWidgets.QLabel(self.centralwidget)
         # self.time.setGeometry(QtCore.QRect(1149, 500, 161, 20))
         # self.time.setAlignment(QtCore.Qt.AlignCenter)
@@ -4420,7 +4433,7 @@ class Ui_MainWindow2(object):
         font.setItalic(False)
         font.setWeight(50)
         self.label_11.setFont(font)
-        self.label_11.setStyleSheet("font: 15pt \".AppleSystemUIFont\";\n"
+        self.label_11.setStyleSheet("font: 15pt \"Times New Roman\";\n"
 "")
         self.label_11.setObjectName("label_11")
         self.groupBox_9 = QtWidgets.QGroupBox(self.centralwidget)
@@ -4486,19 +4499,31 @@ class Ui_MainWindow2(object):
         self.red.raise_()
         self.black.raise_()
         self.bedavailable.raise_()
-        self.time = QtWidgets.QLabel(self.centralwidget)
-        self.time.setGeometry(QtCore.QRect(1149, 500, 161, 20))
-        self.time.setAlignment(QtCore.Qt.AlignCenter)
-        self.time.setObjectName("time")
-        self.time.setText("time")
+        # self.time = QtWidgets.QLabel(self.centralwidget)
+        # self.time.setGeometry(QtCore.QRect(1149, 500, 161, 20))
+        # self.time.setAlignment(QtCore.Qt.AlignCenter)
+        # self.time.setObjectName("time")
         collist= getColournum()
         self.green.setText(str(collist[0][0]))
         self.yellow.setText(str(collist[0][1]))
         self.red.setText(str(collist[0][2]))
         self.black.setText(str(collist[0][3]))
+
         MainWindow2.setCentralWidget(self.centralwidget)
 
+<<<<<<< HEAD
         
+=======
+        #  # create timer
+        # self.timer= QTimer()
+        # self.timer.timeout.connect(self.showBlackTime)
+
+        # #start timer and update every second
+        # self.timer.start(1000)
+
+        # #call the function
+        # self.showBlackTime()
+>>>>>>> cae7c660d8056a7166110ab328127fd2abeb02da
 
         self.retranslateUi(MainWindow2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow2)
@@ -4514,23 +4539,12 @@ class Ui_MainWindow2(object):
         self.patientstatus.setText(_translate("MainWindow2", "Patient Status"))
         self.label_6.setText(_translate("MainWindow2", "<html><head/><body><p>Acute Medical Unit </p><p>Management Systems</p></body></html>"))
         self.label_7.setText(_translate("MainWindow2", "Highlights"))
-        self.label_8.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Please note: Black Status should be achieved in:</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.label_11.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Overview:</p></body></html>"))
-        # self.green.setText(_translate("MainWindow2", "Green_label"))
-        # self.yellow.setText(_translate("MainWindow2", "Yellow_lable"))
-        # self.red.setText(_translate("MainWindow2", "Red_label"))
-        # self.black.setText(_translate("MainWindow2", "Black_label"))
-        # self.bays.setText(_translate("MainWindow2", "Bays_label"))
-        # self.siderooms.setText(_translate("MainWindow2", "Siderooms_label"))
+
 import mongraphics
 
 
