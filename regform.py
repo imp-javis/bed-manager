@@ -18,15 +18,16 @@ class Ui_registerform(object):
         import time
         seconds = time.time()
 
-        if self.first.text().strip():
+        # check for registration form input
+        if not self.first.text().strip():
             self.invalid.setText("Please enter the first name")
-        elif self.last.text().strip():
+        elif not self.last.text().strip():
             self.invalid.setText("Plase enter the last name")
         elif self.ageBox.text() == "0":
             self.invalid.setText("Please enter the correct age")
         elif self.genderBox.currentText() == "Select":
             self.invalid.setText("Please choose a gender")
-        elif self.diagnosis.toPlainText().strip():
+        elif not self.diagnosis.toPlainText().strip():
             self.invalid.setText("Plase enter the diagnosis")
         else:
             addtowaitlist(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), int(seconds), self.checkBox.checkState())
