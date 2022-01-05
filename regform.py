@@ -16,21 +16,32 @@ class Ui_registerform(object):
     def addedPatient(self, reg_win, wait_win):
         import waitlist
         import time
-        # print(self.genderBox.currentText())
-        # print(self.ageBox.text())
         seconds = time.time()
-        addtowaitlist(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), int(seconds), self.checkBox.checkState())
-        self.window = QtWidgets.QMainWindow()
-        self.ui = waitlist.Ui_waitlist()
-        self.ui.setupUi(self.window)
-        self.window.show()
-        wait_win.close()
-        reg_win.close()
+        print(self.first.text())
+
+        if self.first.text().strip():
+            self.invalid.setText("Please enter the first name")
+        elif self.last.text().strip():
+            self.invalid.setText("Plase enter the last name")
+        elif self.ageBox.text() == "0":
+            self.invalid.setText("Please enter the correct age")
+        elif self.genderBox.currentText() == "Select":
+            self.invalid.setText("Please choose a gender")
+        elif self.diagnosis.toPlainText().strip():
+            self.invalid.setText("Plase enter the diagnosis")
+        else:
+            addtowaitlist(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), int(seconds), self.checkBox.checkState())
+            self.window = QtWidgets.QMainWindow()
+            self.ui = waitlist.Ui_waitlist()
+            self.ui.setupUi(self.window)
+            self.window.show()
+            wait_win.close()
+            reg_win.close()
 
     def setupUi(self, registerform, waitlist):
         registerform.setObjectName("registerform")
         registerform.setWindowModality(QtCore.Qt.WindowModal)
-        registerform.resize(588, 455)
+        registerform.resize(588, 469)
         registerform.setTitle("")
         self.first = QtWidgets.QLineEdit(registerform)
         self.first.setGeometry(QtCore.QRect(120, 30, 341, 21))
@@ -83,11 +94,16 @@ class Ui_registerform(object):
         self.dlabel.setWordWrap(False)
         self.dlabel.setObjectName("dlabel")
         self.pushButton = QtWidgets.QPushButton(registerform,  clicked = lambda: self.addedPatient(registerform, waitlist))
-        self.pushButton.setGeometry(QtCore.QRect(240, 400, 113, 32))
+        self.pushButton.setGeometry(QtCore.QRect(240, 420, 113, 32))
         self.pushButton.setObjectName("pushButton")
         self.genderBox.addItem("Select")
         self.genderBox.addItem("Male")
         self.genderBox.addItem("Female")
+        self.invalid = QtWidgets.QLabel(registerform)
+        self.invalid.setGeometry(QtCore.QRect(90, 400, 411, 20))
+        self.invalid.setStyleSheet("color: red")
+        self.invalid.setAlignment(QtCore.Qt.AlignCenter)
+        self.invalid.setObjectName("invalid")
 
         self.retranslateUi(registerform)
         QtCore.QMetaObject.connectSlotsByName(registerform)
