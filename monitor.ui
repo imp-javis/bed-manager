@@ -13138,16 +13138,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTimeEdit" name="timeEdit">
-    <property name="geometry">
-     <rect>
-      <x>1170</x>
-      <y>500</y>
-      <width>118</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
@@ -13216,33 +13206,19 @@ background-repeat:none;</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>20</y>
-       <width>351</width>
-       <height>201</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/Icons/Graphics_Monitor/output-onlinepngtools(5).png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="green">
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>50</y>
+       <y>70</y>
        <width>81</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+      </font>
      </property>
      <property name="text">
       <string>Green_label</string>
@@ -13252,23 +13228,33 @@ background-repeat:none;</string>
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>90</y>
+       <y>110</y>
        <width>91</width>
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+      </font>
+     </property>
      <property name="text">
-      <string>Yellow_lable</string>
+      <string>Yellow_label</string>
      </property>
     </widget>
     <widget class="QLabel" name="red">
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>140</y>
+       <y>150</y>
        <width>91</width>
        <height>16</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+      </font>
      </property>
      <property name="text">
       <string>Red_label</string>
@@ -13278,68 +13264,82 @@ background-repeat:none;</string>
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>180</y>
+       <y>190</y>
        <width>81</width>
        <height>16</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+      </font>
      </property>
      <property name="text">
       <string>Black_label</string>
      </property>
     </widget>
-    <widget class="QLabel" name="bays">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>80</y>
-       <width>101</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Bays_label</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="siderooms">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>150</y>
-       <width>111</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Siderooms_label</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="waitstatbckground">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>-10</y>
-       <width>451</width>
-       <height>231</height>
+       <x>10</x>
+       <y>20</y>
+       <width>371</width>
+       <height>191</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="mon-graphics.qrc">:/graphics/Graphics_Monitor/output-onlinepngtools(5).png</pixmap>
+      <pixmap resource="mon-graphics.qrc">:/graphics/Graphics_Monitor/Highlight.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="bedavailable">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>70</y>
+       <width>121</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+      </font>
+     </property>
+     <property name="text">
+      <string>bedavailability</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
     <zorder>waitstatbckground</zorder>
-    <zorder>label_3</zorder>
     <zorder>green</zorder>
     <zorder>yellow</zorder>
     <zorder>red</zorder>
     <zorder>black</zorder>
-    <zorder>bays</zorder>
-    <zorder>siderooms</zorder>
+    <zorder>bedavailable</zorder>
+   </widget>
+   <widget class="QLabel" name="time">
+    <property name="geometry">
+     <rect>
+      <x>1149</x>
+      <y>500</y>
+      <width>161</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>time</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
