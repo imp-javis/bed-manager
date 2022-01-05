@@ -10,7 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from amu_database import getColournum
+from patientList_database import bedAvailability
 from waitlist import Ui_waitlist
+# I need the patientlist before i can add the bedavailability in
 
 class Ui_MainWindow2(object):
 
@@ -4472,10 +4474,12 @@ class Ui_MainWindow2(object):
         self.bedavailable.setGeometry(QtCore.QRect(240, 70, 121, 81))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
+        font.setPointSize(10)
         self.bedavailable.setFont(font)
         self.bedavailable.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.bedavailable.setObjectName("bedavailable")
-        self.bedavailable.setText("bedavailability") #change this, brian
+        #x = bedAvailability()
+        #self.bedavailable.setText(str(x)) #change this, brian
         self.waitstatbckground.raise_()
         self.green.raise_()
         self.yellow.raise_()
@@ -4494,6 +4498,7 @@ class Ui_MainWindow2(object):
         self.black.setText(str(collist[0][3]))
         MainWindow2.setCentralWidget(self.centralwidget)
 
+        
 
         self.retranslateUi(MainWindow2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow2)

@@ -80,7 +80,7 @@ class Ui_waitlist(object):
 
             row= row+1
 
-        updatecolour(green, yellow, red, black)    # insert waiting list tiemr status into database
+        updatecolour(green, yellow, red, black)    # insert waiting list timer status into database
     
     def displayList(self):
         size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
