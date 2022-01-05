@@ -24,6 +24,25 @@ def coloursys():
         red integer,
         black integer)""")
 
+# coloursys()
+def resetgoingBlack():
+    c.execute("DROP TABLE goingBlack")
+    c.execute("""CREATE TABLE goingBlack (
+        time integer)""")
+
+
+
+def toBlack(time):
+    c.execute("DELETE FROM goingBlack")
+    c.execute("INSERT INTO goingBlack VALUES (:time)", {'time': time})
+
+def getBlack():
+    c.execute("SELECT * FROM goingBlack")
+    time= c.fetchone()
+    return time[0]
+
+# print(getBlack())
+# resetgoingBlack()
 # c.execute("""CREATE TABLE patient_inBed(
 #         first text, 
 #         last text,
@@ -87,7 +106,7 @@ def getPatWithBed(rowsWithBeds):
 
 def updatecolour(green, yellow, red, black):
     c.execute("DELETE FROM colourcount")
-    c.execute("INSERT INTO colourcount VALUES (:green, :yellow, :red, :black)", {'green': green, 'yellow': yellow, 'red': red, 'black': black })
+    c.execute("INSERT INTO colourcount VALUES (:green, :yellow, :red, :black)", {'green': green, 'yellow': yellow, 'red': red, 'black': black})
     conn.commit()
 
 def getColournum():
@@ -95,6 +114,7 @@ def getColournum():
     items= c.fetchall() #c.fetchone()
     return items  
 
+# print(getColournum())
 # c.execute("SELECT * FROM waiting_list")
 # print(c.fetchall())
 
