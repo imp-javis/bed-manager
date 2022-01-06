@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import regform
-from amu_database import getContent, getListSize, getDetails, deletePat, updatecolour, toBlack
+from amu_database import getListSize, deletePatfromWaitlist, updatecolour, getPatientInfo, getPatientinWaitlist
 from PyQt5.QtCore import QTimer, QTime, Qt
 import time
 
@@ -37,17 +37,17 @@ class Ui_waitlist(object):
 
     def getTimeElapsed(self):
         row= 0 
-        listnow= getContent() # get the waitlist in the database as a list
+        listnow= getPatientinWaitlist() # get the waitlist in the database as a list
         green= 0
         yellow= 0
         red= 0
         black= 0
-        blacktime=0
+        # blacktime=0
         for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diag
             timenow= time.time()
             t= QtWidgets.QLabel()
             c= QtWidgets.QLabel()
-            timeelapsing= timenow-patient[5]
+            timeelapsing= timenow-patient[1] # get time of each patient
             hours, mins, secs= self.timing(timeelapsing)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
             # t.setText(timeelapsed)
@@ -71,12 +71,12 @@ class Ui_waitlist(object):
                 brush = QtGui.QBrush(QtGui.QColor(0, 0, 0)) # set background to black
                 brush.setStyle(QtCore.Qt.SolidPattern)
             
-            if timeelapsing>blacktime:
-                toBlack(timeelapsing)
-            elif timeelapsing<blacktime:
-                pass
-            elif timeelapsing> 14400:
-                toBlack(0)
+            # if timeelapsing>blacktime:
+            #     toBlack(timeelapsing)
+            # elif timeelapsing<blacktime:
+            #     pass
+            # elif timeelapsing> 14400:
+            #     toBlack(0)
                 
 
             item = QtWidgets.QTableWidgetItem()
@@ -95,27 +95,29 @@ class Ui_waitlist(object):
         size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
         self.tableWidget.setRowCount(size) #setting the table row size
         row= 0 
-        listnow= getContent() # get the waitlist in the database as a list
-        for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
+        listnow= getPatientinWaitlist() # get the waitlist in the database as a list
+        for waitlistPat in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
+            patient = getPatientInfo(waitlistPat[0])
             checkBox = QtWidgets.QTableWidgetItem()
             checkBox.setTextAlignment(QtCore.Qt.AlignCenter)
             checkBox.setCheckState(patient[6])
             
             self.tableWidget.setRowHeight(row, 70)
-
-            self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem("{}".format(patient[0]))) #first name
-            self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem("{}".format(patient[1]))) #last name
-            self.tableWidget.setItem(row, 3, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[2],patient[3]))) #age and gender
+            item = QtWidgets.QTableWidgetItem()
+            item.setTextAlignment(QtCore.Qt.AlignCenter)
+            item.setText(str(patient[0])) 
+            self.tableWidget.setItem(row, 1, item) #id
+            self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem("{} {}".format(patient[1], patient[2]))) # name
+            self.tableWidget.setItem(row, 3, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[3],patient[4]))) #age and gender
             self.tableWidget.setItem(row, 4, checkBox)
-            self.tableWidget.setItem(row, 5, QtWidgets.QTableWidgetItem(patient[4])) #diagnosis
+            self.tableWidget.setItem(row, 5, QtWidgets.QTableWidgetItem(patient[5])) #diagnosis
 
             row = row+1
 
     def deletePatient(self):
         currow= self.tableWidget.currentRow()
-        first = self.tableWidget.item(currow, 1).text()
-        last = self.tableWidget.item(currow, 2).text()
-        deletePat(first, last)
+        id = self.tableWidget.item(currow, 1).text()
+        deletePatfromWaitlist(id)
         self.displayList()
 
     def setupUi(self, waitlist):
@@ -162,11 +164,11 @@ class Ui_waitlist(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(6, item)
         self.tableWidget.setColumnWidth(0,125) #status
-        self.tableWidget.setColumnWidth(1,200) #first name
+        self.tableWidget.setColumnWidth(1,65) #id
         self.tableWidget.setColumnWidth(2,200) #last name
         self.tableWidget.setColumnWidth(3,180) #details
         self.tableWidget.setColumnWidth(4,51) #isolation
-        self.tableWidget.setColumnWidth(5,435) #diagnosis
+        self.tableWidget.setColumnWidth(5,572) #diagnosis
         self.tableWidget.setColumnWidth(6,150) #timer
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers) # does not allow editing to the table
         self.displayList()
@@ -194,9 +196,9 @@ class Ui_waitlist(object):
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("waitlist", "Status"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("waitlist", "First Name"))
+        item.setText(_translate("waitlist", "Patient ID"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("waitlist", "Last Name"))
+        item.setText(_translate("waitlist", "Name"))
         item = self.tableWidget.horizontalHeaderItem(3)
         item.setText(_translate("waitlist", "Details"))
         item = self.tableWidget.horizontalHeaderItem(4)

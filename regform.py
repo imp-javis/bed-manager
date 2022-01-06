@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from amu_database import addtowaitlist
+from amu_database import addtowaitlist, register, getPatientID
 
 
 class Ui_registerform(object):
@@ -30,7 +30,9 @@ class Ui_registerform(object):
         elif not self.diagnosis.toPlainText().strip():
             self.invalid.setText("Plase enter the diagnosis")
         else:
-            addtowaitlist(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), int(seconds), self.checkBox.checkState())
+            register(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), self.checkBox.checkState())
+            patID= getPatientID(self.first.text(), self.last.text(), self.ageBox.text(), self.genderBox.currentText(), self.diagnosis.toPlainText(), self.checkBox.checkState())
+            addtowaitlist(patID[0], int(seconds))
             self.window = QtWidgets.QMainWindow()
             self.ui = waitlist.Ui_waitlist()
             self.ui.setupUi(self.window)

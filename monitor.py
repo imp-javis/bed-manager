@@ -9,17 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-<<<<<<< HEAD
 from amu_database import getColournum
 from patientList_database import bedAvailability
-from waitlist import Ui_waitlist
 # I need the patientlist before i can add the bedavailability in
-=======
-from amu_database import getBlack, getColournum
 from waitlist import Ui_waitlist
 from PyQt5.QtCore import QTimer, QTime, Qt
 
->>>>>>> cae7c660d8056a7166110ab328127fd2abeb02da
 
 class Ui_MainWindow2(object):
 
@@ -4511,19 +4506,7 @@ class Ui_MainWindow2(object):
 
         MainWindow2.setCentralWidget(self.centralwidget)
 
-<<<<<<< HEAD
         
-=======
-        #  # create timer
-        # self.timer= QTimer()
-        # self.timer.timeout.connect(self.showBlackTime)
-
-        # #start timer and update every second
-        # self.timer.start(1000)
-
-        # #call the function
-        # self.showBlackTime()
->>>>>>> cae7c660d8056a7166110ab328127fd2abeb02da
 
         self.retranslateUi(MainWindow2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow2)
