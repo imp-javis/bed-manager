@@ -66,7 +66,7 @@ class Ui_waitlist(object):
                 red= red+1
                 brush = QtGui.QBrush(QtGui.QColor(252, 1, 7)) # set background to red
                 brush.setStyle(QtCore.Qt.SolidPattern)
-            elif hours > 4:
+            elif hours >= 4:
                 black = black+1
                 brush = QtGui.QBrush(QtGui.QColor(0, 0, 0)) # set background to black
                 brush.setStyle(QtCore.Qt.SolidPattern)
