@@ -9,20 +9,20 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from amu_database import getBedListSize, getPatientsinBed, getPatientInfo
 
 bedColumn = 0
-nameColumn = 1
-detailsColumn = 2
-diagnosisColumn = 3
-isoColumn = 4
-dischargeColumn = 5
-dis_loungeColumn = 6
-dis_sumColumn = 7
-dis_medColumn = 8
-downstreamColumn = 9
-deathColumn = 10
-
+idColumn = 1
+nameColumn = 2
+detailsColumn = 3
+diagnosisColumn = 4
+isoColumn = 5
+dischargeColumn = 6
+dis_loungeColumn = 7
+dis_sumColumn = 8
+dis_medColumn = 9
+downstreamColumn = 10
+deathColumn = 11
 
 class Ui_patientStatus(object):
     def setupUi(self, patientStatus):
@@ -33,13 +33,11 @@ class Ui_patientStatus(object):
         patientStatus.setFont(font)
         self.centralwidget = QtWidgets.QWidget(patientStatus)
         self.centralwidget.setObjectName("centralwidget")
-
         self.patientListTitle = QtWidgets.QLabel(self.centralwidget)
         self.patientListTitle.setGeometry(QtCore.QRect(620, 30, 231, 51))
         self.patientListTitle.setStyleSheet("font: 25pt \"Arial\";")
         self.patientListTitle.setAlignment(QtCore.Qt.AlignCenter)
         self.patientListTitle.setObjectName("patientListTitle")
-
         self.buttBack = QtWidgets.QPushButton(self.centralwidget)
         self.buttBack.setGeometry(QtCore.QRect(30, 30, 140, 50))
         font = QtGui.QFont()
@@ -47,7 +45,6 @@ class Ui_patientStatus(object):
         font.setPointSize(10)
         self.buttBack.setFont(font)
         self.buttBack.setObjectName("buttBack")
-
         self.buttConfirm = QtWidgets.QPushButton(self.centralwidget)
         self.buttConfirm.setGeometry(QtCore.QRect(1252, 30, 140, 50))
         font = QtGui.QFont()
@@ -55,7 +52,6 @@ class Ui_patientStatus(object):
         font.setPointSize(12)
         self.buttConfirm.setFont(font)
         self.buttConfirm.setObjectName("buttConfirm")
-
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(QtCore.QRect(30, 110, 1381, 751))
         font = QtGui.QFont()
@@ -63,10 +59,8 @@ class Ui_patientStatus(object):
         font.setPointSize(15)
         self.tabWidget.setFont(font)
         self.tabWidget.setObjectName("tabWidget")
-
         self.bedTab = QtWidgets.QWidget()
         self.bedTab.setObjectName("bedTab")
-
         self.bedTable = QtWidgets.QTableWidget(self.bedTab)
         self.bedTable.setGeometry(QtCore.QRect(10, 20, 1131, 661))
         font = QtGui.QFont()
@@ -75,47 +69,8 @@ class Ui_patientStatus(object):
         self.bedTable.setFont(font)
         self.bedTable.setWordWrap(True)
         self.bedTable.setObjectName("bedTable")
-        self.bedTable.setColumnCount(11)
-        self.bedTable.setRowCount(19)
-
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(3, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(4, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(5, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(6, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(7, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(8, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(9, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(10, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(11, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(12, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(13, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(14, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(15, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(16, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(17, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.bedTable.setVerticalHeaderItem(18, item)
+        self.bedTable.setColumnCount(12)
+        self.bedTable.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.bedTable.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -138,16 +93,19 @@ class Ui_patientStatus(object):
         self.bedTable.setHorizontalHeaderItem(9, item)
         item = QtWidgets.QTableWidgetItem()
         self.bedTable.setHorizontalHeaderItem(10, item)
-
-        # frame for downstream ward bed availability
-        self.frame = QtWidgets.QFrame(self.bedTab)
-        self.frame.setGeometry(QtCore.QRect(1160, 30, 201, 641))
-        self.frame.setAutoFillBackground(True)
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-
-        self.wardBedTitle = QtWidgets.QLabel(self.frame)
+        item = QtWidgets.QTableWidgetItem()
+        self.bedTable.setHorizontalHeaderItem(11, item)
+        self.wardFrame = QtWidgets.QFrame(self.bedTab)
+        self.wardFrame.setGeometry(QtCore.QRect(1160, 30, 201, 641))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        self.wardFrame.setFont(font)
+        self.wardFrame.setAutoFillBackground(True)
+        self.wardFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.wardFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.wardFrame.setObjectName("wardFrame")
+        self.wardBedTitle = QtWidgets.QLabel(self.wardFrame)
         self.wardBedTitle.setGeometry(QtCore.QRect(0, 10, 201, 51))
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -161,9 +119,7 @@ class Ui_patientStatus(object):
         self.wardBedTitle.setAlignment(QtCore.Qt.AlignCenter)
         self.wardBedTitle.setWordWrap(True)
         self.wardBedTitle.setObjectName("wardBedTitle")
-
-        # cardiology ward
-        self.cardioFrame = QtWidgets.QFrame(self.frame)
+        self.cardioFrame = QtWidgets.QFrame(self.wardFrame)
         self.cardioFrame.setGeometry(QtCore.QRect(20, 90, 161, 91))
         self.cardioFrame.setAutoFillBackground(False)
         self.cardioFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -191,10 +147,8 @@ class Ui_patientStatus(object):
         self.cardio.setFont(font)
         self.cardio.setText("")
         self.cardio.setAlignment(QtCore.Qt.AlignCenter)
-        self.cardio.setObjectName("cardio")     # change number of beds availableb for cardio via variable cardio
-
-        # endocrinology ward
-        self.endoFrame = QtWidgets.QFrame(self.frame)
+        self.cardio.setObjectName("cardio")
+        self.endoFrame = QtWidgets.QFrame(self.wardFrame)
         self.endoFrame.setGeometry(QtCore.QRect(20, 200, 161, 91))
         self.endoFrame.setAutoFillBackground(False)
         self.endoFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -223,9 +177,7 @@ class Ui_patientStatus(object):
         self.endo.setText("")
         self.endo.setAlignment(QtCore.Qt.AlignCenter)
         self.endo.setObjectName("endo")
-
-        # gastroentology ward
-        self.gastroFrame = QtWidgets.QFrame(self.frame)
+        self.gastroFrame = QtWidgets.QFrame(self.wardFrame)
         self.gastroFrame.setGeometry(QtCore.QRect(20, 310, 161, 91))
         self.gastroFrame.setAutoFillBackground(False)
         self.gastroFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -254,9 +206,7 @@ class Ui_patientStatus(object):
         self.gastro.setText("")
         self.gastro.setAlignment(QtCore.Qt.AlignCenter)
         self.gastro.setObjectName("gastro")
-
-        # geriatrics ward
-        self.geriFrame = QtWidgets.QFrame(self.frame)
+        self.geriFrame = QtWidgets.QFrame(self.wardFrame)
         self.geriFrame.setGeometry(QtCore.QRect(20, 420, 161, 91))
         self.geriFrame.setAutoFillBackground(False)
         self.geriFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -285,9 +235,7 @@ class Ui_patientStatus(object):
         self.geri.setText("")
         self.geri.setAlignment(QtCore.Qt.AlignCenter)
         self.geri.setObjectName("geri")
-
-        # respiratory ward
-        self.respFrame = QtWidgets.QFrame(self.frame)
+        self.respFrame = QtWidgets.QFrame(self.wardFrame)
         self.respFrame.setGeometry(QtCore.QRect(20, 530, 161, 91))
         self.respFrame.setAutoFillBackground(False)
         self.respFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -316,30 +264,21 @@ class Ui_patientStatus(object):
         self.resp.setText("")
         self.resp.setAlignment(QtCore.Qt.AlignCenter)
         self.resp.setObjectName("resp")
-
-        
-        # tab for patients in discharge lounge
-        self.frame.raise_()
+        self.wardFrame.raise_()
         self.bedTable.raise_()
         self.tabWidget.addTab(self.bedTab, "")
         self.loungeTab = QtWidgets.QWidget()
         self.loungeTab.setObjectName("loungeTab")
         self.loungeTable = QtWidgets.QTableWidget(self.loungeTab)
-        self.loungeTable.setGeometry(QtCore.QRect(10, 20, 931, 661))
+        self.loungeTable.setGeometry(QtCore.QRect(10, 20, 1021, 661))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-
         self.loungeTable.setFont(font)
         self.loungeTable.setWordWrap(True)
         self.loungeTable.setObjectName("loungeTable")
-        self.loungeTable.setColumnCount(9)
-        self.loungeTable.setRowCount(2)
-
-        item = QtWidgets.QTableWidgetItem()
-        self.loungeTable.setVerticalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.loungeTable.setVerticalHeaderItem(1, item)
+        self.loungeTable.setColumnCount(10)
+        self.loungeTable.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.loungeTable.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -358,6 +297,8 @@ class Ui_patientStatus(object):
         self.loungeTable.setHorizontalHeaderItem(7, item)
         item = QtWidgets.QTableWidgetItem()
         self.loungeTable.setHorizontalHeaderItem(8, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.loungeTable.setHorizontalHeaderItem(9, item)
         self.tabWidget.addTab(self.loungeTab, "")
         self.tabWidget.raise_()
         self.patientListTitle.raise_()
@@ -368,52 +309,72 @@ class Ui_patientStatus(object):
         self.statusbar.setObjectName("statusbar")
         patientStatus.setStatusBar(self.statusbar)
 
+        self.displayList()
 
-        # load info from DB
+        self.retranslateUi(patientStatus)
+        self.tabWidget.setCurrentIndex(0)
+        QtCore.QMetaObject.connectSlotsByName(patientStatus)
 
-        # display info from "patient_inBed" table on Bed tab
-        # display availability from "wardAvailability" table on Bed tab
 
-        # display info from "patient_inLounge" table on Discharge Lounge tab
-
-    def displayList(self, listnow, table):
-        # listnow = getPatientinBed, getPatientinLounge
+    def displayList(self):      # this function updates the list of patients currently in an AMU bed that is saved in database
+        # listnow = getPatientsinBed, getPatientsinLounge
         # table = bedTable, loungeTable
 
-        size = getBedListSize() # from here, this is the function to update the waitlist from registrations saved in the database
-        self.table.setRowCount(size) #setting the table row size
+        size = getBedListSize()
+        print(size)
+        self.bedTable.setRowCount(size) #setting the table row size
         row = 0
         #listnow = getPatientinWaitlist() # get the waitlist in the database as a list
-        
+        listnow = getPatientsinBed()
+        print(listnow)
         for pat in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
             
             patient = getPatientInfo(pat[0])
-
+            print(patient)
             isoStatus = ""
             if patient[6] == 0:
                 isoStatus = "N"
             elif patient[6] != 0:
                 isoStatus = "Y"
 
-            self.tableWidget.setRowHeight(row, 70)
+            checkBox_discharge = QtWidgets.QTableWidgetItem()
+            checkBox_discharge.setCheckState(0)
+
+            checkBox_discharge = QtWidgets.QTableWidgetItem()
+            checkBox_discharge.setCheckState(0)
+
+            checkBox_dischargeLounge = QtWidgets.QTableWidgetItem()
+            checkBox_dischargeLounge.setCheckState(0)
+
+            checkBox_dischargeSum = QtWidgets.QTableWidgetItem()
+            checkBox_dischargeSum.setCheckState(0)
+
+            checkBox_dischargeMed = QtWidgets.QTableWidgetItem()
+            checkBox_dischargeMed.setCheckState(0)
+
+            checkBox_death = QtWidgets.QTableWidgetItem()
+            checkBox_death.setCheckState(0)
+
+            self.bedTable.setRowHeight(row, 70)
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
 
-            self.tableWidget.setItem(row, isoColumn, QtWidgets.QTableWidgetItem(pat[1])) # bed
+            self.bedTable.setItem(row, bedColumn, QtWidgets.QTableWidgetItem(pat[1])) # bed
             item.setText(str(patient[0]))
-            self.tableWidget.setItem(row, idColumn, item) #id
-            self.tableWidget.setItem(row, nameColumn, QtWidgets.QTableWidgetItem("{} {}".format(patient[1], patient[2]))) # name
-            self.tableWidget.setItem(row, detailsColumn, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[3],patient[4]))) #age and gender
-            self.tableWidget.setItem(row, isoColumn, QtWidgets.QTableWidgetItem(("Diagnosis: {}").format(patient[5]))) # diagnosis
-            self.tableWidget.setItem(row, isoColumn, QtWidgets.QTableWidgetItem(isoStatus)) # isolation
-
+            self.bedTable.setItem(row, idColumn, item) #id
+            self.bedTable.setItem(row, nameColumn, QtWidgets.QTableWidgetItem("{} {}".format(patient[1], patient[2]))) # name
+            self.bedTable.setItem(row, detailsColumn, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[3],patient[4]))) #age and gender
+            self.bedTable.setItem(row, diagnosisColumn, QtWidgets.QTableWidgetItem(("{}").format(patient[5]))) # diagnosis
+            self.bedTable.setItem(row, isoColumn, QtWidgets.QTableWidgetItem(isoStatus)) # isolation
+            self.bedTable.setItem(row, dischargeColumn, checkBox_discharge) # discharge status
+            self.bedTable.setItem(row, dis_loungeColumn, checkBox_dischargeLounge)
+            self.bedTable.setItem(row, dis_sumColumn, checkBox_dischargeSum)
+            self.bedTable.setItem(row, dis_medColumn, checkBox_dischargeMed)
+            # zaty pls help ;-; # downstream ward
+            self.bedTable.setItem(row, deathColumn, checkBox_death) # death
 
             row = row+1
 
-
-        self.retranslateUi(patientStatus)
-        self.tabWidget.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(patientStatus)
 
     def retranslateUi(self, patientStatus):
         _translate = QtCore.QCoreApplication.translate
@@ -421,65 +382,29 @@ class Ui_patientStatus(object):
         self.patientListTitle.setText(_translate("patientStatus", "Patient Status"))
         self.buttBack.setText(_translate("patientStatus", "Return to Main"))
         self.buttConfirm.setText(_translate("patientStatus", "Confirm"))
-        item = self.bedTable.verticalHeaderItem(0)
-        item.setText(_translate("patientStatus", "1"))
-        item = self.bedTable.verticalHeaderItem(1)
-        item.setText(_translate("patientStatus", "2"))
-        item = self.bedTable.verticalHeaderItem(2)
-        item.setText(_translate("patientStatus", "3"))
-        item = self.bedTable.verticalHeaderItem(3)
-        item.setText(_translate("patientStatus", "4"))
-        item = self.bedTable.verticalHeaderItem(4)
-        item.setText(_translate("patientStatus", "5"))
-        item = self.bedTable.verticalHeaderItem(5)
-        item.setText(_translate("patientStatus", "6"))
-        item = self.bedTable.verticalHeaderItem(6)
-        item.setText(_translate("patientStatus", "7"))
-        item = self.bedTable.verticalHeaderItem(7)
-        item.setText(_translate("patientStatus", "8"))
-        item = self.bedTable.verticalHeaderItem(8)
-        item.setText(_translate("patientStatus", "9"))
-        item = self.bedTable.verticalHeaderItem(9)
-        item.setText(_translate("patientStatus", "10"))
-        item = self.bedTable.verticalHeaderItem(10)
-        item.setText(_translate("patientStatus", "11"))
-        item = self.bedTable.verticalHeaderItem(11)
-        item.setText(_translate("patientStatus", "12"))
-        item = self.bedTable.verticalHeaderItem(12)
-        item.setText(_translate("patientStatus", "13"))
-        item = self.bedTable.verticalHeaderItem(13)
-        item.setText(_translate("patientStatus", "14"))
-        item = self.bedTable.verticalHeaderItem(14)
-        item.setText(_translate("patientStatus", "15"))
-        item = self.bedTable.verticalHeaderItem(15)
-        item.setText(_translate("patientStatus", "16"))
-        item = self.bedTable.verticalHeaderItem(16)
-        item.setText(_translate("patientStatus", "17"))
-        item = self.bedTable.verticalHeaderItem(17)
-        item.setText(_translate("patientStatus", "18"))
-        item = self.bedTable.verticalHeaderItem(18)
-        item.setText(_translate("patientStatus", "20"))
         item = self.bedTable.horizontalHeaderItem(0)
         item.setText(_translate("patientStatus", "Bed"))
         item = self.bedTable.horizontalHeaderItem(1)
-        item.setText(_translate("patientStatus", "Name"))
+        item.setText(_translate("patientStatus", "ID"))
         item = self.bedTable.horizontalHeaderItem(2)
-        item.setText(_translate("patientStatus", "Details"))
+        item.setText(_translate("patientStatus", "Name"))
         item = self.bedTable.horizontalHeaderItem(3)
-        item.setText(_translate("patientStatus", "Diagnosis"))
+        item.setText(_translate("patientStatus", "Details"))
         item = self.bedTable.horizontalHeaderItem(4)
-        item.setText(_translate("patientStatus", "Isolation"))
+        item.setText(_translate("patientStatus", "Diagnosis"))
         item = self.bedTable.horizontalHeaderItem(5)
-        item.setText(_translate("patientStatus", "Discharge"))
+        item.setText(_translate("patientStatus", "Isolation"))
         item = self.bedTable.horizontalHeaderItem(6)
-        item.setText(_translate("patientStatus", "Lounge"))
+        item.setText(_translate("patientStatus", "Discharge"))
         item = self.bedTable.horizontalHeaderItem(7)
-        item.setText(_translate("patientStatus", "Summary"))
+        item.setText(_translate("patientStatus", "Lounge"))
         item = self.bedTable.horizontalHeaderItem(8)
-        item.setText(_translate("patientStatus", "Medication"))
+        item.setText(_translate("patientStatus", "Summary"))
         item = self.bedTable.horizontalHeaderItem(9)
-        item.setText(_translate("patientStatus", "Downstream"))
+        item.setText(_translate("patientStatus", "Medication"))
         item = self.bedTable.horizontalHeaderItem(10)
+        item.setText(_translate("patientStatus", "Downstream"))
+        item = self.bedTable.horizontalHeaderItem(11)
         item.setText(_translate("patientStatus", "Death"))
         self.wardBedTitle.setText(_translate("patientStatus", "Downstream Ward Bed Availabity"))
         self.cardioTitle.setText(_translate("patientStatus", "Cardiology"))
@@ -488,27 +413,25 @@ class Ui_patientStatus(object):
         self.geriTitle.setText(_translate("patientStatus", "Geriatrics"))
         self.respTitle.setText(_translate("patientStatus", "Respiratory"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.bedTab), _translate("patientStatus", "Beds"))
-        item = self.loungeTable.verticalHeaderItem(0)
-        item.setText(_translate("patientStatus", "1"))
-        item = self.loungeTable.verticalHeaderItem(1)
-        item.setText(_translate("patientStatus", "2"))
         item = self.loungeTable.horizontalHeaderItem(0)
         item.setText(_translate("patientStatus", "Bed"))
         item = self.loungeTable.horizontalHeaderItem(1)
-        item.setText(_translate("patientStatus", "Name"))
+        item.setText(_translate("patientStatus", "ID"))
         item = self.loungeTable.horizontalHeaderItem(2)
-        item.setText(_translate("patientStatus", "Details"))
+        item.setText(_translate("patientStatus", "Name"))
         item = self.loungeTable.horizontalHeaderItem(3)
-        item.setText(_translate("patientStatus", "Diagnosis"))
+        item.setText(_translate("patientStatus", "Details"))
         item = self.loungeTable.horizontalHeaderItem(4)
-        item.setText(_translate("patientStatus", "Isolation"))
+        item.setText(_translate("patientStatus", "Diagnosis"))
         item = self.loungeTable.horizontalHeaderItem(5)
-        item.setText(_translate("patientStatus", "Discharge"))
+        item.setText(_translate("patientStatus", "Isolation"))
         item = self.loungeTable.horizontalHeaderItem(6)
-        item.setText(_translate("patientStatus", "Lounge"))
+        item.setText(_translate("patientStatus", "Discharge"))
         item = self.loungeTable.horizontalHeaderItem(7)
-        item.setText(_translate("patientStatus", "Summary"))
+        item.setText(_translate("patientStatus", "Lounge"))
         item = self.loungeTable.horizontalHeaderItem(8)
+        item.setText(_translate("patientStatus", "Summary"))
+        item = self.loungeTable.horizontalHeaderItem(9)
         item.setText(_translate("patientStatus", "Medication"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.loungeTab), _translate("patientStatus", "Discharge Lounge"))
 

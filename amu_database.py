@@ -132,12 +132,12 @@ def resetbedallocation():
     try:
         c.execute("""DROP TABLE patient_inBed""")
         c.execute("""CREATE TABLE patient_inBed (
-        bed text,
-        patID integer)""") 
+        patID integer,
+        bed text)""") 
     except:
         c.execute("""CREATE TABLE patient_inBed (
-        bed text, 
-        patID integer)""") 
+        patID integer
+        bed text)""") 
 
 # resetbedallocation()
 
@@ -145,7 +145,7 @@ def resetbedallocation():
 #--------------- bed allocation functions -----------------
 
 def addtoBed(patID, bed):
-    c.execute("INSERT INTO patient_inBed VALUES (:bed, :patID)", {'bed': bed, 'patID': patID})
+    c.execute("INSERT INTO patient_inBed VALUES (:patID, :bed)", {'patID': patID, 'bed': bed})
     conn.commit()
 
 # to sort the list of patients in bed in order of their beds (A1-4, B1-4, C1-4, D1-4, R1-4)
@@ -161,6 +161,11 @@ def getPatientsinBed():
 def deletePatfromBed(id):
     c.execute("DELETE FROM patient_inBed WHERE patID= '{}'".format(id))
     conn.commit()
+
+def getBedListSize():   #get the size of the waitlist
+    c.execute("SELECT COUNT(*) FROM patient_inBed")
+    res= c.fetchone()
+    return res[0]
 
 def bedAvailability():
     c.execute("SELECT COUNT(*) FROM patient_inBed")

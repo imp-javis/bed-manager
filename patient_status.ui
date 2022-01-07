@@ -116,104 +116,14 @@
       <property name="wordWrap">
        <bool>true</bool>
       </property>
-      <row>
-       <property name="text">
-        <string>1</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>2</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>3</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>4</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>5</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>6</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>7</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>8</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>9</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>10</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>11</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>12</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>13</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>14</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>15</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>16</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>17</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>18</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>20</string>
-       </property>
-      </row>
       <column>
        <property name="text">
         <string>Bed</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>ID</string>
        </property>
       </column>
       <column>
@@ -267,7 +177,7 @@
        </property>
       </column>
      </widget>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="wardFrame">
       <property name="geometry">
        <rect>
         <x>1160</x>
@@ -275,6 +185,12 @@
         <width>201</width>
         <height>641</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="autoFillBackground">
        <bool>true</bool>
@@ -665,7 +581,7 @@
        </widget>
       </widget>
      </widget>
-     <zorder>frame</zorder>
+     <zorder>wardFrame</zorder>
      <zorder>bedTable</zorder>
     </widget>
     <widget class="QWidget" name="loungeTab">
@@ -677,7 +593,7 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>931</width>
+        <width>1021</width>
         <height>661</height>
        </rect>
       </property>
@@ -690,19 +606,14 @@
       <property name="wordWrap">
        <bool>true</bool>
       </property>
-      <row>
-       <property name="text">
-        <string>1</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>2</string>
-       </property>
-      </row>
       <column>
        <property name="text">
         <string>Bed</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>ID</string>
        </property>
       </column>
       <column>
