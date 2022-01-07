@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from waitlist import Ui_waitlist
-from amu_database import deletePat, getListSize, getContent, deletePat
+from amu_database import deletePat, getListSize, getContent
 
 class Ui_dischargeList(object):
     def returntoMain(self, win):

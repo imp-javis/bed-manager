@@ -17,17 +17,14 @@
 
 # set colours based on current allocation, taken from database (?)
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from amu_database import getContent, getListSize, getDetails, deletePat, getPatWithBed
-from patientList_database import addtoBed
+from amu_database import getListSize, getPatientInfo, deletePatfromWaitlist, getPatientinWaitlist, addtoBed, getPatientsinBed
 
-# also attempt to make columns 0-2 read only
-# class tableBed(QtWidgets.QTableWidget):
-    # def __init__(self):
-        # delegate = ReadOnlyDelete(self)
-        # for i in range(3):
-            # self.setItemDelegateForColumn(i, delegate)
+idColumn = 0
+nameColumn = 1
+detailsColumn = 2
+isoColumn = 3
+bedColumn = 4
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
     def showMonitor(self, main_win):
@@ -45,40 +42,40 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.centralwidget.setObjectName("centralwidget")
 
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(20, 80, 600, 580))
+        self.tableWidget.setGeometry(QtCore.QRect(50, 120, 580, 580))
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(5)
         # row length set in displayList() function
-        self.tableWidget.setColumnWidth(0,185)
-        self.tableWidget.setColumnWidth(1,100)
-        self.tableWidget.setColumnWidth(2,90)
-        self.tableWidget.setColumnWidth(3,90)
-        self.tableWidget.setColumnWidth(4,118)
+        self.tableWidget.setColumnWidth(idColumn,50)
+        self.tableWidget.setColumnWidth(nameColumn,180)
+        self.tableWidget.setColumnWidth(detailsColumn,135)
+        self.tableWidget.setColumnWidth(isoColumn,90)
+        self.tableWidget.setColumnWidth(bedColumn,90)
 
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(4, item)
 
@@ -86,9 +83,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.displayList()
 
         self.titleBA = QtWidgets.QLabel(self.centralwidget)
-        self.titleBA.setGeometry(QtCore.QRect(640, 20, 201, 41))
+        self.titleBA.setGeometry(QtCore.QRect(580, 20, 300, 41))
         font = QtGui.QFont()
-        font.setFamily("Avenir")
+        font.setFamily("Open Sans")
         font.setPointSize(24)
         self.titleBA.setFont(font)
         self.titleBA.setObjectName("titleBA")
@@ -1446,7 +1443,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.buttAssign.setObjectName("buttAssign")
 
         self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showMonitor(MainWindow))
-        self.buttBack.setGeometry(QtCore.QRect(20, 20, 141, 41))
+        self.buttBack.setGeometry(QtCore.QRect(50, 30, 141, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.buttBack.setFont(font)
@@ -1505,15 +1502,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "First Name"))
+        item.setText(_translate("MainWindow", "ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "Last Name"))
+        item.setText(_translate("MainWindow", "Name"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Gender"))
+        item.setText(_translate("MainWindow", "Details"))
         item = self.tableWidget.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "Isolation"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("MainWindow", "Assigned Bed"))
+        item.setText(_translate("MainWindow", "Bed"))
         self.titleBA.setText(_translate("MainWindow", "Bed Allocation"))
         self.R1.setText(_translate("MainWindow", "R1"))
         self.R2.setText(_translate("MainWindow", "R2"))
@@ -1543,51 +1540,46 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def displayList(self):
 
-        firstNameColumn = 0
-        lastNameColumn = 1
-        genderColumn = 2
-        isoColumn = 3
-        bedColumn = 4
-
         size = getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
         self.tableWidget.setRowCount(size) #setting the table row size
         row = 0
-        listnow = getContent() # get the waitlist in the database as a list
+        listnow = getPatientinWaitlist() # get the waitlist in the database as a list
         
-        for patient in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
+        for waitlistPat in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
             
+            patient = getPatientInfo(waitlistPat[0])
+
             isoStatus = ""
             if patient[6] == 0:
                 isoStatus = "N"
-            elif patient[6] == 1:
+            elif patient[6] != 0:
                 isoStatus = "Y"
 
-            self.tableWidget.setItem(row, firstNameColumn, QtWidgets.QTableWidgetItem("{}".format(patient[0]))) #first name
-            self.tableWidget.setItem(row, lastNameColumn, QtWidgets.QTableWidgetItem("{}".format(patient[1]))) #last name
-            self.tableWidget.setItem(row, genderColumn, QtWidgets.QTableWidgetItem(("{}").format(patient[3]))) #gender
+            self.tableWidget.setRowHeight(row, 70)
+            item = QtWidgets.QTableWidgetItem()
+            item.setTextAlignment(QtCore.Qt.AlignCenter)
+
+            item.setText(str(patient[0]))
+            self.tableWidget.setItem(row, idColumn, item) #id
+            self.tableWidget.setItem(row, nameColumn, QtWidgets.QTableWidgetItem("{} {}".format(patient[1], patient[2]))) # name
+            self.tableWidget.setItem(row, detailsColumn, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[3],patient[4]))) #age and gender
             self.tableWidget.setItem(row, isoColumn, QtWidgets.QTableWidgetItem(isoStatus)) # isolation
 
             row = row+1
 
 
 
-
     ## FUNCTION TO ASSIGN BED BASED ON BUTTON PRESSED ##
 
     def chooseBed(self):
-        firstNameColumn = 0
-        lastNameColumn = 1
-        # genderColumn = 2
-        isoColumn = 3
-        bedColumn = 4
 
-        bedIndex = self.sender()
+        bedIndex = self.sender()    # listens to which button has been selected
         currRow = self.tableWidget.currentRow()
 
         # checking for current bed status availability              
         bedAvailable = self.bedStatusCheck(bedIndex)
 
-        # checking for bed assignment duplicates in other rows      ## IT WORKS
+        # checking for bed assignment duplicates in other rows
         noDuplicates = self.duplicateCheck(bedColumn, bedIndex)
         
         # checking for isolation requirement
@@ -1599,11 +1591,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             if isolation:
                 if bedIndex.text() == "R1" or bedIndex.text() == "R2" or bedIndex.text() == "R3" or bedIndex.text() == "R4":
                     self.tableWidget.setItem(currRow,bedColumn,QtWidgets.QTableWidgetItem(bedIndex.text()))     
-            #elif monitor:
-            #    if bedIndex.text() == "A1" or bedIndex.text() == "A2" or bedIndex.text() == "A3" or bedIndex.text() == "A4" or bedIndex.text() == "B1" or bedIndex.text() == "B2" or bedIndex.text() == "B3" or bedIndex.text() == "B4":
-            #        self.tableWidget.setItem(currRow,bedColumn,QtWidgets.QTableWidgetItem(bedIndex.text()))
             else:
-                if bedIndex.text() != "R1" or bedIndex.text() != "R2" or bedIndex.text() != "R3" or bedIndex.text() != "R4":
+                if bedIndex.text() != "R1" and bedIndex.text() != "R2" and bedIndex.text() != "R3" and bedIndex.text() != "R4":
                     self.tableWidget.setItem(currRow,bedColumn,QtWidgets.QTableWidgetItem(bedIndex.text()))
 
         # self.sender().setStyleSheet("background-color: white;")
@@ -1641,44 +1630,34 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     ## FUNCTION TO CONTROL ACTIONS AFTER "ASSIGN" IS PRESSED ##             
 
     def assignBed(self):
-        rowsWithBeds, rowBedIndex = self.bedRows()
+
+        patsWithBeds = self.findPatsWithBeds()      # collect a list of patients that have been assigned beds
+
+        for pat in patsWithBeds:
+            addtoBed(pat[0],pat[1]) # add patsWithBeds to "patietnStatus" table in DB
+            deletePatfromWaitlist(pat[0])         # delete patsWithBeds from "waitlist" table in DB
+
+        #return to main screen
+        self.showMonitor(MainWindow)
+     
+            
+    def findPatsWithBeds(self):
+        totRowNum = self.tableWidget.rowCount()
         patsWithBeds = []
 
-        for row in rowsWithBeds:
-            # run the function getPatWithBed() from amu_database.py that selects patients only from certain rows
-            # returns a row of info on ONE that has been assigned beds
-            # this selection is repeated through this for loop to get all patients that have just been given a bed
-            # this list of patients need to be added to the patient list database (aka. patsWithBeds)
-            patsWithBeds.append(getPatWithBed(row))
+        for row in range(totRowNum):
+            # check if bedColumn is filled
+            item = self.tableWidget.item(row, bedColumn)       # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
+            if item:  # if patient has been given a bed
+                # fetch patID (in idColumn) + bedIndex (in bedColumn)
+                patID = int(self.tableWidget.item(row, idColumn).text())
+                bedIndex = self.tableWidget.item(row, bedColumn).text()
+                patBed = [patID, bedIndex]  # patID & bed for ONE patient
 
-        #rowBedIndex[0] gets bed index for 1st patient
-        #patsWithBeds[0][0] gets 1st patient first name
-        #patsWithBeds[1][3] gets 2nd patient gender
+                patsWithBeds.append(patBed) # add to list of ALL patients with beds
 
-        #adding patient to patientList.db
-        bedNum = len(rowBedIndex)
-        patBedNum = len(patsWithBeds)
-        if bedNum == patBedNum:     # make sure we have taken the same number of data for each patient and bed
-            for row in bedNum:
-                addtoBed(rowBedIndex[row],patsWithBeds[row][0],patsWithBeds[row][1],patsWithBeds[row][2],patsWithBeds[row][3],patsWithBeds[row][4],patsWithBeds[row][6])
-                deletePat(patsWithBeds[row][0],patsWithBeds[row][1])    # and then delete patient from waiting list
+        return patsWithBeds
 
-
-    def bedRows(self):
-        totRowNum = self.tableWidget.rowCount()
-        rowsWithBeds = []
-        rowBedIndex = []
-
-        for row in totRowNum:
-            i_item = self.tableWidget.item(row, bedColumn)       # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
-            if i_item:  # if patient has been given a bed
-                currRow = self.tableWidget.currentRow()
-                rowsWithBeds.append(currRow)        # adds the row # that has a bed assigned
-
-                item = self.tableWidget.item(currRow, isoColumn).text()
-                rowBedIndex.append(item)
-
-        return rowsWithBeds, rowBedIndex
     
 
 

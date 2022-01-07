@@ -113,6 +113,7 @@ def resetcoloursys(): #function to update the waitlist patient status
 
 # coloursys()
 
+# colour code for waitlist
 def updatecolour(green, yellow, red, black):
     c.execute("DELETE FROM colourcount")
     c.execute("INSERT INTO colourcount VALUES (:green, :yellow, :red, :black)", {'green': green, 'yellow': yellow, 'red': red, 'black': black})
@@ -123,14 +124,84 @@ def getColournum():
     items= c.fetchall() #c.fetchone()
     return items  
 
-#--------------- bed allocation functions-------------------------
 
-def getPatWithBed(rowsWithBeds):
-    c.execute("SELECT * FROM waitlist WHERE row = '{}'".format(rowWithBeds))
-    items = c.fetchall() #c.fetchone()
-    return items    # returns a list of patients with beds assigned
+
+#---------------- patient status for patients in bed ---------------------
+
+def resetbedallocation():
+    try:
+        c.execute("""DROP TABLE patient_inBed""")
+        c.execute("""CREATE TABLE patient_inBed (
+        bed text,
+        patID integer)""") 
+    except:
+        c.execute("""CREATE TABLE patient_inBed (
+        bed text, 
+        patID integer)""") 
+
+# resetbedallocation()
+
+
+#--------------- bed allocation functions -----------------
+
+def addtoBed(patID, bed):
+    c.execute("INSERT INTO patient_inBed VALUES (:bed, :patID)", {'bed': bed, 'patID': patID})
+    conn.commit()
+
+# to sort the list of patients in bed in order of their beds (A1-4, B1-4, C1-4, D1-4, R1-4)
+def sortByBed():
+    c.execute("SELECT * FROM patient_inBed ORDER BY bed")
+    conn.commit()
+
+def getPatientsinBed():
+    c.execute("SELECT * FROM patient_inBed")
+    items = c.fetchall()
+    return items
+
+def deletePatfromBed(id):
+    c.execute("DELETE FROM patient_inBed WHERE patID= '{}'".format(id))
+    conn.commit()
+
+def bedAvailability():
+    c.execute("SELECT COUNT(*) FROM patient_inBed")
+    res = c.fetchone()
+    y = 20 - res[0]
+    return y
+
+
+# to fetch beds and their current status: occupied, discharge, downstream (if not on list, then free)
+# def takenBeds():
+
+
+
+#---------------- patient status for patients in bed/lounge ---------------------
+
+
+
+
+
+
+#---------------- free bed availability in downstream wards ---------------------
+
+
+def resetwardavailability():
+    try:
+        c.execute("""DROP TABLE wardAvailability""")
+        c.execute("""CREATE TABLE wardAvailability (
+        cardio integer,
+        endo integer,
+        gastro integer,
+        geri integer,
+        resp integer)""") 
+    except:
+        c.execute("""CREATE TABLE patient_inBed (
+        cardio integer,
+        endo integer,
+        gastro integer,
+        geri integer,
+        resp integer)""") 
+
 
 
 
 # conn.close() #close connections
-
