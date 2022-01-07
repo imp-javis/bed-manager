@@ -403,7 +403,7 @@ class Ui_patientStatus(object):
         elif table == self.loungeTable:
             size = getLoungeListSize()
             listnow = getPatientsinLounge()
-        
+
         table.setRowCount(size) #setting the table row size
         row = 0
        
