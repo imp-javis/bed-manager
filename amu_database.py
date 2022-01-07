@@ -37,7 +37,7 @@ def reset(): # restart a table  if a table exist
             gender text,
             diagnosis text,
             isolation integer)""") 
-    else: 
+    except: 
         c.execute("""CREATE TABLE patInfo (
             patID integer PRIMARY KEY, 
             first text, 
@@ -69,7 +69,7 @@ def resetwaitlist():
         c.execute("""CREATE TABLE waitlist (
         patID integer, 
         waittime integer)""") 
-    else: 
+    except: 
         c.execute("""CREATE TABLE waitlist (
         patID integer, 
         waittime integer)""") 
@@ -104,7 +104,7 @@ def resetcoloursys(): #function to update the waitlist patient status
             yellow integer,
             red integer,
             black integer)""")
-    else:
+    except:
         c.execute("""CREATE TABLE colourcount (
             green integer, 
             yellow integer,
