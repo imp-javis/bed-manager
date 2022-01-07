@@ -14,6 +14,7 @@ from patientList_database import bedAvailability
 # I need the patientlist before i can add the bedavailability in
 from waitlist import Ui_waitlist
 from PyQt5.QtCore import QTimer, QTime, Qt
+import threading 
 
 
 class Ui_MainWindow2(object):
@@ -4504,9 +4505,10 @@ class Ui_MainWindow2(object):
         self.red.setText(str(collist[0][2]))
         self.black.setText(str(collist[0][3]))
 
-        MainWindow2.setCentralWidget(self.centralwidget)
+        MainWindow2.setCentralWidget(self.centralwidget)        
 
-        
+        # x= threading.Thread(target= )
+
 
         self.retranslateUi(MainWindow2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow2)

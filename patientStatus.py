@@ -469,6 +469,10 @@ class Ui_patientStatus(object):
             table.setItem(row, dis_sumColumn, checkBox_dischargeSum) # discharge summary
             table.setItem(row, dis_medColumn, checkBox_dischargeMed) # discharge medication
             # zaty pls help ;-; # downstream ward
+            comboBox= QtWidgets.QComboBox()
+            comboBox.addItem("Select")
+            comboBox.addItem("Cardiology")
+            table.setCellWidget(row, downstreamColumn, comboBox)
             table.setItem(row, deathColumn, checkBox_death) # death
 
             row = row+1
