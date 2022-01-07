@@ -14,16 +14,29 @@ c = conn.cursor()
 
 #----- login database-------------------
 
+# c.execute("DROP TABLE registered_user")
 # c.execute("""CREATE TABLE registered_user (
 #     email text,
-#     password text)""")
+#     password text,
+#     photo text)""")
 
+# c.execute("DELETE FROM registered_user")
+# c.execute("INSERT INTO registered_user VALUES ('new', '1234', 'taeyong.png')")
+# conn.commit()
 def login(email, password): #login function
     c.execute("SELECT * FROM registered_user WHERE email LIKE :email AND password LIKE :password", {'email': email, 'password': password})
     if (c.fetchone() == None):
         return 1
     else: 
         return 2
+
+def getPhoto(email, password):
+    c.execute("SELECT photo FROM registered_user WHERE email LIKE :email AND password LIKE :password", {'email': email, 'password': password})
+    photo= c.fetchone()[0]
+    return photo
+
+# c.execute("SELECT * FROM registered_user ")
+# print(c.fetchall())
 
  #------------Register patient---------------------
 def reset(): # restart a table  if a table exist

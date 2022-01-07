@@ -4359,7 +4359,7 @@ class Ui_MainWindow2(object):
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
-        self.label_7.setGeometry(QtCore.QRect(1070, 40, 121, 41))
+        self.label_7.setGeometry(QtCore.QRect(1070, 30, 121, 41))
         font = QtGui.QFont()
         font.setFamily("Avenir")
         font.setPointSize(24)
@@ -4462,6 +4462,15 @@ class Ui_MainWindow2(object):
         self.time.setGeometry(QtCore.QRect(1149, 500, 161, 20))
         self.time.setAlignment(QtCore.Qt.AlignCenter)
         self.time.setObjectName("time")
+        self.photo = QtWidgets.QLabel(self.centralwidget)
+        self.photo.setGeometry(QtCore.QRect(1150, 80, 161, 161))
+        self.photo.setStyleSheet("background-image:url(:/graphics/Graphics_Monitor/marklee.png);\n"
+"background-repeat: no-repeat; \n"
+"background-position: center;\n"
+"border-radius: 78px;")
+        self.photo.setText("")
+        self.photo.setScaledContents(True)
+        self.photo.setObjectName("photo")
         MainWindow2.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow2)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 24))
@@ -4502,7 +4511,7 @@ class Ui_MainWindow2(object):
         self.black.setText(_translate("MainWindow2", "Black_label"))
         self.bedavailable.setText(_translate("MainWindow2", "bedavailability"))
         self.time.setText(_translate("MainWindow2", "time"))
-import mon-graphics_rc
+import mongraphics
 
 
 if __name__ == "__main__":

@@ -13075,7 +13075,7 @@ background-repeat:none;
     <property name="geometry">
      <rect>
       <x>1070</x>
-      <y>40</y>
+      <y>30</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -13340,6 +13340,28 @@ background-repeat:none;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="photo">
+    <property name="geometry">
+     <rect>
+      <x>1150</x>
+      <y>80</y>
+      <width>161</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/graphics/Graphics_Monitor/marklee.png);
+background-repeat: no-repeat; 
+background-position: center;
+border-radius: 78px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

@@ -1,7 +1,9 @@
 <RCC>
   <qresource prefix="graphics">
-    <file>Graphics_Monitor/Highlight.png</file>
+    <file>Graphics_Monitor/taeyong.png</file>
     <file>Graphics_Monitor/1.png</file>
+    <file>Graphics_Monitor/marklee.png</file>
+    <file>Graphics_Monitor/Highlight.png</file>
     <file>Graphics_Monitor/outline.png</file>
     <file>Graphics_Monitor/output-onlinepngtools(1).png</file>
     <file>Graphics_Monitor/output-onlinepngtools(2).png</file>

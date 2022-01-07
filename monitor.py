@@ -13,7 +13,7 @@ from amu_database import getColournum
 from patientList_database import bedAvailability
 # I need the patientlist before i can add the bedavailability in
 from waitlist import Ui_waitlist
-from PyQt5.QtCore import QTimer, QTime, Qt
+from PyQt5.QtCore import QTimer, QTime, Qt, pyqtPickleProtocol
 import threading 
 
 
@@ -4395,12 +4395,16 @@ class Ui_MainWindow2(object):
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
-        self.label_7.setGeometry(QtCore.QRect(1070, 40, 121, 41))
+        self.label_7.setGeometry(QtCore.QRect(1070, 30, 121, 41))
         font = QtGui.QFont()
         font.setFamily("Avenir")
         font.setPointSize(24)
         self.label_7.setFont(font)
         self.label_7.setObjectName("label_7")
+        self.photo = QtWidgets.QLabel(self.centralwidget)
+        self.photo.setGeometry(QtCore.QRect(1150, 80, 161, 161))
+        self.photo.setScaledContents(True)
+        self.photo.setObjectName("photo")
         self.widget_6 = QtWidgets.QWidget(self.centralwidget)
         self.widget_6.setGeometry(QtCore.QRect(1060, 670, 371, 131))
         self.widget_6.setStyleSheet("background-color: transparent;\n"
