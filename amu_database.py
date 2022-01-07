@@ -133,28 +133,39 @@ def resetbedallocation():
         c.execute("""DROP TABLE patient_inBed""")
         c.execute("""CREATE TABLE patient_inBed (
         patID integer,
-        bed text)""") 
+        bed text,
+        discharge integer,
+        lounge integer,
+        dis_sum integer,
+        dis_meds integer,
+        downstream text,
+        death integer)""") 
     except:
         c.execute("""CREATE TABLE patient_inBed (
         patID integer
-        bed text)""") 
+        bed text
+        discharge integer,
+        lounge integer,
+        dis_sum integer,
+        dis_meds integer,
+        downstream text
+        death integer)""") 
 
-# resetbedallocation()
+#resetbedallocation()
 
 
 #--------------- bed allocation functions -----------------
 
-def addtoBed(patID, bed):
-    c.execute("INSERT INTO patient_inBed VALUES (:patID, :bed)", {'patID': patID, 'bed': bed})
-    conn.commit()
+#def addtoBed(patID, bed):
+#    c.execute("INSERT INTO patient_inBed (patID, bed) VALUES (:patID, :bed)", {'patID': patID, 'bed': bed})
+#    conn.commit()
 
-# to sort the list of patients in bed in order of their beds (A1-4, B1-4, C1-4, D1-4, R1-4)
-def sortByBed():
-    c.execute("SELECT * FROM patient_inBed ORDER BY bed")
+def addtoBed(patID, bed, discharge, lounge, dis_sum, dis_meds, downstream, death):
+    c.execute("INSERT INTO patient_inBed VALUES (:patID, :bed, :discharge, :lounge, :dis_sum, :dis_meds, :downstream, :death)", {'patID': patID, 'bed': bed, 'discharge': discharge, 'lounge': lounge, 'dis_sum': dis_sum, 'dis_meds': dis_meds, 'downstream': downstream,'death': death})
     conn.commit()
 
 def getPatientsinBed():
-    c.execute("SELECT * FROM patient_inBed")
+    c.execute("SELECT * FROM patient_inBed ORDER BY bed")
     items = c.fetchall()
     return items
 
@@ -179,9 +190,28 @@ def bedAvailability():
 
 
 
-#---------------- patient status for patients in bed/lounge ---------------------
+#---------------- patient status for patients in discharge lounge ---------------------
 
+def resetdischargelounge():
+    try:
+        c.execute("""DROP TABLE patient_inLounge""")
+        c.execute("""CREATE TABLE patient_inLounge (
+        patID integer,
+        bed text,
+        discharge integer,
+        lounge integer,
+        dis_sum integer,
+        dis_meds integer)""") 
+    except:
+        c.execute("""CREATE TABLE patient_inLounge (
+        patID integer
+        bed text
+        discharge integer,
+        lounge integer,
+        dis_sum integer,
+        dis_meds integer)""") 
 
+#resetdischargelounge()
 
 
 
@@ -199,14 +229,14 @@ def resetwardavailability():
         geri integer,
         resp integer)""") 
     except:
-        c.execute("""CREATE TABLE patient_inBed (
+        c.execute("""CREATE TABLE wardAvailability (
         cardio integer,
         endo integer,
         gastro integer,
         geri integer,
         resp integer)""") 
 
-
+#resetwardavailability()
 
 
 # conn.close() #close connections

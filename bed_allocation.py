@@ -1634,7 +1634,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         patsWithBeds = self.findPatsWithBeds()      # collect a list of patients that have been assigned beds
 
         for pat in patsWithBeds:
-            addtoBed(pat[0],pat[1]) # add patsWithBeds to "patietnStatus" table in DB
+            addtoBed(pat[0],pat[1],0,0,0,0,"None",0) # add patsWithBeds to "patientStatus" table in DB
             deletePatfromWaitlist(pat[0])         # delete patsWithBeds from "waitlist" table in DB
 
         #return to main screen
