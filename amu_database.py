@@ -18,10 +18,12 @@ c = conn.cursor()
 # c.execute("""CREATE TABLE registered_user (
 #     email text,
 #     password text,
-#     photo text)""")
+#     photo text,
+#     name text)""")
 
 # c.execute("DELETE FROM registered_user")
-# c.execute("INSERT INTO registered_user VALUES ('new', '1234', 'taeyong.png')")
+# c.execute("INSERT INTO registered_user VALUES ('javis', '1234javis', 'marklee.png', 'Mark Lee')")
+# c.execute("INSERT INTO registered_user VALUES ('new', '1234', 'taeyong.png', 'Lee Taeyong')")
 # conn.commit()
 def login(email, password): #login function
     c.execute("SELECT * FROM registered_user WHERE email LIKE :email AND password LIKE :password", {'email': email, 'password': password})
@@ -30,10 +32,10 @@ def login(email, password): #login function
     else: 
         return 2
 
-def getPhoto(email, password):
-    c.execute("SELECT photo FROM registered_user WHERE email LIKE :email AND password LIKE :password", {'email': email, 'password': password})
-    photo= c.fetchone()[0]
-    return photo
+def getUser(email, password):
+    c.execute("SELECT photo, name FROM registered_user WHERE email LIKE :email AND password LIKE :password", {'email': email, 'password': password})
+    user= c.fetchone()
+    return user[0], user[1]
 
 # c.execute("SELECT * FROM registered_user ")
 # print(c.fetchall())

@@ -4373,18 +4373,6 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.widget_6.setObjectName("widget_6")
-        self.label_8 = QtWidgets.QLabel(self.centralwidget)
-        self.label_8.setGeometry(QtCore.QRect(1070, 460, 341, 61))
-        font = QtGui.QFont()
-        font.setFamily(".AppleSystemUIFont")
-        font.setPointSize(15)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_8.setFont(font)
-        self.label_8.setStyleSheet("font: 15pt \".AppleSystemUIFont\";\n"
-"")
-        self.label_8.setObjectName("label_8")
         self.label_11 = QtWidgets.QLabel(self.centralwidget)
         self.label_11.setGeometry(QtCore.QRect(110, 130, 111, 61))
         font = QtGui.QFont()
@@ -4458,19 +4446,23 @@ class Ui_MainWindow2(object):
         self.red.raise_()
         self.black.raise_()
         self.bedavailable.raise_()
-        self.time = QtWidgets.QLabel(self.centralwidget)
-        self.time.setGeometry(QtCore.QRect(1149, 500, 161, 20))
-        self.time.setAlignment(QtCore.Qt.AlignCenter)
-        self.time.setObjectName("time")
         self.photo = QtWidgets.QLabel(self.centralwidget)
-        self.photo.setGeometry(QtCore.QRect(1150, 80, 161, 161))
+        self.photo.setGeometry(QtCore.QRect(1180, 80, 111, 111))
         self.photo.setStyleSheet("background-image:url(:/graphics/Graphics_Monitor/marklee.png);\n"
 "background-repeat: no-repeat; \n"
 "background-position: center;\n"
-"border-radius: 78px;")
+"border-radius: 55px;")
         self.photo.setText("")
         self.photo.setScaledContents(True)
         self.photo.setObjectName("photo")
+        self.username = QtWidgets.QLabel(self.centralwidget)
+        self.username.setGeometry(QtCore.QRect(1120, 210, 221, 31))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(20)
+        self.username.setFont(font)
+        self.username.setAlignment(QtCore.Qt.AlignCenter)
+        self.username.setObjectName("username")
         MainWindow2.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow2)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 24))
@@ -4494,12 +4486,6 @@ class Ui_MainWindow2(object):
         self.patientstatus.setText(_translate("MainWindow2", "Patient Status"))
         self.label_6.setText(_translate("MainWindow2", "<html><head/><body><p>Acute Medical Unit </p><p>Management Systems</p></body></html>"))
         self.label_7.setText(_translate("MainWindow2", "Highlights"))
-        self.label_8.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Please note: Black Status should be achieved in:</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.label_11.setText(_translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -4510,8 +4496,8 @@ class Ui_MainWindow2(object):
         self.red.setText(_translate("MainWindow2", "Red_label"))
         self.black.setText(_translate("MainWindow2", "Black_label"))
         self.bedavailable.setText(_translate("MainWindow2", "bedavailability"))
-        self.time.setText(_translate("MainWindow2", "time"))
-import mongraphics
+        self.username.setText(_translate("MainWindow2", "Name"))
+import mon-graphics_rc
 
 
 if __name__ == "__main__":

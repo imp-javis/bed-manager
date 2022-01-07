@@ -10,10 +10,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from monitor import Ui_MainWindow2
-from amu_database import login, getPhoto
+from amu_database import login, getUser
 
 class Ui_LoginWindow(object):
-    def openMonitor(self, pp):
+    def openMonitor(self, pp, name):
         self.monitor = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow2()
         self.ui.setupUi(self.monitor)
@@ -21,14 +21,15 @@ class Ui_LoginWindow(object):
         self.ui.photo.setStyleSheet("background-image:url(:/graphics/Graphics_Monitor/{});\n"
         "background-repeat: no-repeat; \n"
         "background-position: center;\n"
-        "border-radius: 78px;".format(pp))
+        "border-radius: 55px;".format(pp))
+        self.ui.username.setText("Dr {}".format(name))
         self.monitor.show()
         LoginWindow.hide()
 
     def loginclicked(self):
         if (login(self.userEdit.text(), self.passEdit.text()) == 2):
-            photo= getPhoto(self.userEdit.text(), self.passEdit.text())
-            self.openMonitor(photo)
+            photo, name= getUser(self.userEdit.text(), self.passEdit.text())
+            self.openMonitor(photo, name)
         else: 
             self.validity.setText("Invalid username or password")
 
