@@ -60,12 +60,6 @@ def getListSize():
     res = c.fetchone()
     return res[0]
 
-def bedAvailability():
-    c.execute("SELECT * FROM patient_inBed")
-    x = c.fetchall()
-    y = 20 - x
-    return y
-
 def getContent():
     c.execute("SELECT * FROM patient_inBed")
     items= c.fetchall() #c.fetchone()

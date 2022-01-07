@@ -9,9 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from amu_database import getColournum
-from patientList_database import bedAvailability
-# I need the patientlist before i can add the bedavailability in
+from amu_database import getColournum, bedAvailability
 from waitlist import Ui_waitlist
 from PyQt5.QtCore import QTimer, QTime, Qt, pyqtPickleProtocol
 import threading 
@@ -4500,12 +4498,12 @@ class Ui_MainWindow2(object):
         self.bedavailable.setGeometry(QtCore.QRect(240, 70, 121, 81))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
-        font.setPointSize(10)
+        font.setPointSize(15)
         self.bedavailable.setFont(font)
         self.bedavailable.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.bedavailable.setObjectName("bedavailable")
-        #x = bedAvailability()
-        #self.bedavailable.setText(str(x)) #change this, brian
+        x = bedAvailability()
+        self.bedavailable.setText(str(x)) 
         self.waitstatbckground.raise_()
         self.green.raise_()
         self.yellow.raise_()
