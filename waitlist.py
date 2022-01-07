@@ -82,7 +82,7 @@ class Ui_waitlist(object):
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
             item.setText(timeelapsed)
-            self.tableWidget.setItem(row, 6, item)
+            self.tableWidget.setItem(row, 8, item)
             item = QtWidgets.QTableWidgetItem()
             item.setBackground(brush)
             self.tableWidget.setItem(row, 0, item)
@@ -98,9 +98,14 @@ class Ui_waitlist(object):
         listnow= getPatientinWaitlist() # get the waitlist in the database as a list
         for waitlistPat in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
             patient = getPatientInfo(waitlistPat[0])
-            checkBox = QtWidgets.QTableWidgetItem()
-            checkBox.setTextAlignment(QtCore.Qt.AlignCenter)
-            checkBox.setCheckState(patient[6])
+            checkBox_isolate = QtWidgets.QTableWidgetItem()
+            checkBox_isolate.setCheckState(patient[6])
+
+            checkBox_cc = QtWidgets.QTableWidgetItem()
+            checkBox_cc.setCheckState(0)
+
+            checkBox_pwtr = QtWidgets.QTableWidgetItem()
+            checkBox_pwtr.setCheckState(0)
             
             self.tableWidget.setRowHeight(row, 70)
             item = QtWidgets.QTableWidgetItem()
@@ -109,8 +114,11 @@ class Ui_waitlist(object):
             self.tableWidget.setItem(row, 1, item) #id
             self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem("{} {}".format(patient[1], patient[2]))) # name
             self.tableWidget.setItem(row, 3, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[3],patient[4]))) #age and gender
-            self.tableWidget.setItem(row, 4, checkBox)
+            self.tableWidget.setItem(row, 4, checkBox_isolate)
             self.tableWidget.setItem(row, 5, QtWidgets.QTableWidgetItem(patient[5])) #diagnosis
+            self.tableWidget.setItem(row, 6, checkBox_cc)
+            self.tableWidget.setItem(row, 7, checkBox_pwtr)
+
 
             row = row+1
 
@@ -144,11 +152,12 @@ class Ui_waitlist(object):
         self.tableWidget.setGeometry(QtCore.QRect(30, 90, 1361, 671))
         self.tableWidget.setWordWrap(True)
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(7)
+        self.tableWidget.setColumnCount(9)
         self.tableWidget.setRowCount(1)
         item = QtWidgets.QTableWidgetItem()
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         self.tableWidget.setVerticalHeaderItem(0, item)
+
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -163,13 +172,20 @@ class Ui_waitlist(object):
         self.tableWidget.setHorizontalHeaderItem(5, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(7, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(8, item)
+
         self.tableWidget.setColumnWidth(0,125) #status
         self.tableWidget.setColumnWidth(1,65) #id
         self.tableWidget.setColumnWidth(2,200) #last name
-        self.tableWidget.setColumnWidth(3,180) #details
+        self.tableWidget.setColumnWidth(3,120) #details
         self.tableWidget.setColumnWidth(4,51) #isolation
-        self.tableWidget.setColumnWidth(5,572) #diagnosis
-        self.tableWidget.setColumnWidth(6,150) #timer
+        self.tableWidget.setColumnWidth(5,545) #diagnosis
+        self.tableWidget.setColumnWidth(6,73) #clerk check
+        self.tableWidget.setColumnWidth(7,75) #pwtr check
+        self.tableWidget.setColumnWidth(8,100) #timer
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers) # does not allow editing to the table
         self.displayList()
 
@@ -206,6 +222,10 @@ class Ui_waitlist(object):
         item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("waitlist", "Diagnosis"))
         item = self.tableWidget.horizontalHeaderItem(6)
+        item.setText(_translate("waitlist", "Clerk Check"))
+        item = self.tableWidget.horizontalHeaderItem(7)
+        item.setText(_translate("waitlist", "PWTR Check"))
+        item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("waitlist", "Timer"))
         self.delpatient.setText(_translate("waitlist", "Delete Patient"))
         self.backButton.setText(_translate("waitlist", "Back"))
