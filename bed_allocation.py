@@ -1435,7 +1435,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.D4.setObjectName("D4")
 
         ## Assign/Back buttons
-        self.buttAssign = QtWidgets.QPushButton(self.centralwidget)
+        self.buttAssign = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.assignBed(MainWindow))
         self.buttAssign.setGeometry(QtCore.QRect(1130, 640, 181, 61))
         font = QtGui.QFont()
         font.setPointSize(20)
@@ -1485,7 +1485,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.R2.clicked.connect(self.chooseBed)
         self.R3.clicked.connect(self.chooseBed)
         self.R4.clicked.connect(self.chooseBed)
-        self.buttAssign.clicked.connect(self.assignBed)
+        # self.buttAssign.clicked.connect(self.assignBed)
         #self.buttBack.clicked.connect(________)
 
 
@@ -1629,7 +1629,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     ## FUNCTION TO CONTROL ACTIONS AFTER "ASSIGN" IS PRESSED ##             
 
-    def assignBed(self):
+    def assignBed(self, MainWindow):
 
         patsWithBeds = self.findPatsWithBeds()      # collect a list of patients that have been assigned beds
 
@@ -1638,6 +1638,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             deletePatfromWaitlist(pat[0])         # delete patsWithBeds from "waitlist" table in DB
 
         #return to main screen
+        
         self.showMonitor(MainWindow)
      
             

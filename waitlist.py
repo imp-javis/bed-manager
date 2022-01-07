@@ -77,7 +77,6 @@ class Ui_waitlist(object):
             #     pass
             # elif timeelapsing> 14400:
             #     toBlack(0)
-                
 
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
