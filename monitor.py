@@ -41,7 +41,12 @@ class Ui_MainWindow2(object):
         monitor.close()
 
     def showPatientinBed(self, monitor):
-        pass 
+        from patientStatus import Ui_patientStatus
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_patientStatus()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        monitor.close()
 
     def setupUi(self, MainWindow2):
         MainWindow2.setObjectName("MainWindow2")

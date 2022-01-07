@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import regform
-from amu_database import getListSize, deletePatfromWaitlist, updatecolour, getPatientInfo, getPatientinWaitlist
+from amu_database import getListSize, deletePatfromWaitlist, updatePWTR, updatecolour, getPatientInfo, getPatientinWaitlist, updateCC
 from PyQt5.QtCore import QTimer, QTime, Qt
 import time
 
@@ -47,7 +47,7 @@ class Ui_waitlist(object):
             timenow= time.time()
             t= QtWidgets.QLabel()
             c= QtWidgets.QLabel()
-            timeelapsing= timenow-patient[1] # get time of each patient
+            timeelapsing= timenow-patient[3] # get time of each patient
             hours, mins, secs= self.timing(timeelapsing)
             timeelapsed= '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
             # t.setText(timeelapsed)
@@ -100,12 +100,15 @@ class Ui_waitlist(object):
             checkBox_isolate = QtWidgets.QTableWidgetItem()
             checkBox_isolate.setCheckState(patient[6])
 
-            checkBox_cc = QtWidgets.QTableWidgetItem()
-            checkBox_cc.setCheckState(0)
+            checkBox_cc = QtWidgets.QCheckBox()
+            checkBox_cc.setCheckState(waitlistPat[1])
+            checkBox_cc.stateChanged.connect(lambda: updateCC(waitlistPat[0], checkBox_cc.checkState()))
 
-            checkBox_pwtr = QtWidgets.QTableWidgetItem()
-            checkBox_pwtr.setCheckState(0)
+            checkBox_pwtr = QtWidgets.QCheckBox()
+            checkBox_pwtr.setCheckState(waitlistPat[2])
+            checkBox_pwtr.stateChanged.connect(lambda: updatePWTR(waitlistPat[0], checkBox_pwtr.checkState()))
             
+
             self.tableWidget.setRowHeight(row, 70)
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
@@ -115,8 +118,8 @@ class Ui_waitlist(object):
             self.tableWidget.setItem(row, 3, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[3],patient[4]))) #age and gender
             self.tableWidget.setItem(row, 4, checkBox_isolate)
             self.tableWidget.setItem(row, 5, QtWidgets.QTableWidgetItem(patient[5])) #diagnosis
-            self.tableWidget.setItem(row, 6, checkBox_cc)
-            self.tableWidget.setItem(row, 7, checkBox_pwtr)
+            self.tableWidget.setCellWidget(row, 6, checkBox_cc)
+            self.tableWidget.setCellWidget(row, 7, checkBox_pwtr)
 
 
             row = row+1

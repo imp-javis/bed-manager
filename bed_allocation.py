@@ -85,7 +85,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.titleBA = QtWidgets.QLabel(self.centralwidget)
         self.titleBA.setGeometry(QtCore.QRect(580, 20, 300, 41))
         font = QtGui.QFont()
-        font.setFamily("Open Sans")
+        font.setFamily("Times New Roman")
         font.setPointSize(24)
         self.titleBA.setFont(font)
         self.titleBA.setObjectName("titleBA")
@@ -1638,7 +1638,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             deletePatfromWaitlist(pat[0])         # delete patsWithBeds from "waitlist" table in DB
 
         #return to main screen
-        
+
         self.showMonitor(MainWindow)
      
             

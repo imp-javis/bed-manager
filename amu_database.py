@@ -67,17 +67,28 @@ def resetwaitlist():
     try:
         c.execute("""DROP TABLE waitlist""")
         c.execute("""CREATE TABLE waitlist (
-        patID integer, 
+        patID integer,
+        clerkcheck integer,
+        pwtr integer,  
         waittime integer)""") 
     except: 
         c.execute("""CREATE TABLE waitlist (
-        patID integer, 
+        patID integer,
+        clerkcheck integer,
+        pwtr integer, 
         waittime integer)""") 
 
 # resetwaitlist()
-
 def addtowaitlist(patID, time):
-    c.execute("INSERT INTO waitlist  VALUES (:patID, :waittime)", {'patID': patID, 'waittime': time})
+    c.execute("INSERT INTO waitlist  VALUES (:patID,'0','0', :waittime)", {'patID': patID, 'waittime': time})
+    conn.commit()
+
+def updateCC(patID, check):
+    c.execute("UPDATE waitlist SET clerkcheck='{}' WHERE patID= '{}'".format(check, patID))
+    conn.commit()
+
+def updatePWTR(patID, check):
+    c.execute("UPDATE waitlist SET pwtr='{}' WHERE patID= '{}'".format(check, patID))
     conn.commit()
 
 def getPatientinWaitlist():
