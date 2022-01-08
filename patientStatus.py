@@ -89,17 +89,17 @@ class Ui_patientStatus(object):
         self.bedTable.setColumnCount(12)
         self.bedTable.setRowCount(0)
 
-        self.bedTable.setColumnWidth(bedColumn,40)
-        self.bedTable.setColumnWidth(idColumn,40)
-        self.bedTable.setColumnWidth(nameColumn,160)
-        self.bedTable.setColumnWidth(detailsColumn,120)
-        self.bedTable.setColumnWidth(diagnosisColumn,120)
-        self.bedTable.setColumnWidth(isoColumn,90)
-        self.bedTable.setColumnWidth(dischargeColumn,80)
-        self.bedTable.setColumnWidth(dis_loungeColumn,80)
-        self.bedTable.setColumnWidth(dis_sumColumn,80)
-        self.bedTable.setColumnWidth(dis_medColumn,80)
-        self.bedTable.setColumnWidth(downstreamColumn,100)
+        self.bedTable.setColumnWidth(bedColumn,30)
+        self.bedTable.setColumnWidth(idColumn,30)
+        self.bedTable.setColumnWidth(nameColumn,135)
+        self.bedTable.setColumnWidth(detailsColumn,110)
+        self.bedTable.setColumnWidth(diagnosisColumn,165)
+        self.bedTable.setColumnWidth(isoColumn,78)
+        self.bedTable.setColumnWidth(dischargeColumn,78)
+        self.bedTable.setColumnWidth(dis_loungeColumn,78)
+        self.bedTable.setColumnWidth(dis_sumColumn,78)
+        self.bedTable.setColumnWidth(dis_medColumn,78)
+        self.bedTable.setColumnWidth(downstreamColumn,115)
         self.bedTable.setColumnWidth(deathColumn,60)
 
         item = QtWidgets.QTableWidgetItem()
@@ -340,16 +340,16 @@ class Ui_patientStatus(object):
         self.loungeTable.setColumnCount(10)
         self.loungeTable.setRowCount(0)
 
-        self.bedTable.setColumnWidth(bedColumn,40)
-        self.bedTable.setColumnWidth(idColumn,40)
-        self.bedTable.setColumnWidth(nameColumn,160)
-        self.bedTable.setColumnWidth(detailsColumn,120)
-        self.bedTable.setColumnWidth(diagnosisColumn,120)
-        self.bedTable.setColumnWidth(isoColumn,90)
-        self.bedTable.setColumnWidth(dischargeColumn,80)
-        self.bedTable.setColumnWidth(dis_loungeColumn,80)
-        self.bedTable.setColumnWidth(dis_sumColumn,80)
-        self.bedTable.setColumnWidth(dis_medColumn,80)
+        #self.bedTable.setColumnWidth(bedColumn,40)
+        #self.bedTable.setColumnWidth(idColumn,40)
+        #self.bedTable.setColumnWidth(nameColumn,160)
+        #self.bedTable.setColumnWidth(detailsColumn,120)
+        #self.bedTable.setColumnWidth(diagnosisColumn,120)
+        #self.bedTable.setColumnWidth(isoColumn,90)
+        #self.bedTable.setColumnWidth(dischargeColumn,80)
+        #self.bedTable.setColumnWidth(dis_loungeColumn,80)
+        #self.bedTable.setColumnWidth(dis_sumColumn,80)
+        #self.bedTable.setColumnWidth(dis_medColumn,80)
 
         item = QtWidgets.QTableWidgetItem()
         self.loungeTable.setHorizontalHeaderItem(0, item)
@@ -417,41 +417,28 @@ class Ui_patientStatus(object):
             elif patient[6] != 0:
                 isoStatus = "Y"
 
-            checkBox_discharge = QtWidgets.QTableWidgetItem()
-            checkBox_discharge.setCheckState(0)
+            comboBox_ward = QtWidgets.QComboBox()
+            comboBox_ward.addItem("Select")
+            comboBox_ward.addItem("Cardiology")
+            comboBox_ward.addItem("Endocrinology")
+            comboBox_ward.addItem("Gastroenterology")
+            comboBox_ward.addItem("Geriatrics")
+            comboBox_ward.addItem("Respiratory")
 
             checkBox_discharge = QtWidgets.QTableWidgetItem()
-            checkBox_discharge.setCheckState(0)
+            checkBox_discharge.setCheckState(pat[2])
 
             checkBox_dischargeLounge = QtWidgets.QTableWidgetItem()
-            checkBox_dischargeLounge.setCheckState(0)
+            checkBox_dischargeLounge.setCheckState(pat[3])
 
             checkBox_dischargeSum = QtWidgets.QTableWidgetItem()
-            checkBox_dischargeSum.setCheckState(0)
+            checkBox_dischargeSum.setCheckState(pat[4])
 
             checkBox_dischargeMed = QtWidgets.QTableWidgetItem()
-            checkBox_dischargeMed.setCheckState(0)
+            checkBox_dischargeMed.setCheckState(pat[5])
 
             checkBox_death = QtWidgets.QTableWidgetItem()
-            checkBox_death.setCheckState(0)
-
-            #checkBox_discharge = QtWidgets.QTableWidgetItem()
-            #checkBox_discharge.setCheckState(pat[2])
-
-            #checkBox_discharge = QtWidgets.QTableWidgetItem()
-            #checkBox_discharge.setCheckState(pat[3])
-
-            #checkBox_dischargeLounge = QtWidgets.QTableWidgetItem()
-            #checkBox_dischargeLounge.setCheckState(pat[4])
-
-            #checkBox_dischargeSum = QtWidgets.QTableWidgetItem()
-            #checkBox_dischargeSum.setCheckState(pat[5])
-
-            #checkBox_dischargeMed = QtWidgets.QTableWidgetItem()
-            #checkBox_dischargeMed.setCheckState(pat[6])
-
-            #checkBox_death = QtWidgets.QTableWidgetItem()
-            #checkBox_death.setCheckState(pat[8])
+            checkBox_death.setCheckState(pat[7])
 
             self.bedTable.setRowHeight(row, 70)
             item = QtWidgets.QTableWidgetItem()
@@ -468,11 +455,7 @@ class Ui_patientStatus(object):
             table.setItem(row, dis_loungeColumn, checkBox_dischargeLounge) # discharge lounge
             table.setItem(row, dis_sumColumn, checkBox_dischargeSum) # discharge summary
             table.setItem(row, dis_medColumn, checkBox_dischargeMed) # discharge medication
-            # zaty pls help ;-; # downstream ward
-            comboBox= QtWidgets.QComboBox()
-            comboBox.addItem("Select")
-            comboBox.addItem("Cardiology")
-            table.setCellWidget(row, downstreamColumn, comboBox)
+            table.setCellWidget(row, downstreamColumn, comboBox_ward) # downstream ward
             table.setItem(row, deathColumn, checkBox_death) # death
 
             row = row+1

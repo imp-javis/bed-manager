@@ -35,7 +35,7 @@ class Ui_waitlist(object):
         hours, minutes = divmod(mins, 60)
         return int(hours), int(minutes), int(secs)
 
-    def getTimeElapsed(self):
+    def getTimeElapsed(self):           # do we need variable row in this function??--------------------------------------------------------
         row= 0 
         listnow= getPatientinWaitlist() # get the waitlist in the database as a list
         green= 0

@@ -262,7 +262,15 @@ def resetwardavailability():
         geri integer,
         resp integer)""") 
 
-#resetwardavailability()
+resetwardavailability()
 
+def getWardAvailability():
+    c.execute("SELECT * FROM wardAvailability")
+    items = c.fetchall()
+    return items
 
+#   WHY WON'T IT UPDATE HELPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
+def updateWardBeds(cardioNew, endoNew, gastroNew, geriNew, respNew):
+    c.execute("UPDATE wardAvailability SET cardio='{}', endo='{}', gastro='{}', geri='{}', resp='{}'".format(cardioNew, endoNew, gastroNew, geriNew, respNew))
+    conn.commit()
 # conn.close() #close connections
