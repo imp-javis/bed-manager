@@ -239,6 +239,57 @@ def resetdischargelounge():
 
 #resetdischargelounge()
 
+def addtoLounge(patID, bed, discharge, lounge, dis_sum, dis_meds, downstream, death):
+    c.execute("INSERT INTO patient_inLounge VALUES (:patID, :bed, :discharge, :lounge, :dis_sum, :dis_meds)", {'patID': patID, 'bed': bed, 'discharge': discharge, 'lounge': lounge, 'dis_sum': dis_sum, 'dis_meds': dis_meds})
+    conn.commit()
+
+def getPatientsinLounge():
+    c.execute("SELECT * FROM patient_inLounge")
+    items = c.fetchall()
+    return items
+
+def deletePatfromLounge(id):
+    c.execute("DELETE FROM patient_inLounge WHERE patID= '{}'".format(id))
+    conn.commit()
+
+def getLoungeListSize():   #get the size of the waitlist
+    c.execute("SELECT COUNT(*) FROM patient_inLounge")
+    res= c.fetchone()
+    return res[0]
+
+
+#---------------- patient status for patients in discharge lounge ---------------------
+
+def resetdownstream():
+    try:
+        c.execute("""DROP TABLE patient_downstream""")
+        c.execute("""CREATE TABLE patient_downstream (
+        patID integer,
+        downstream text)""") 
+    except:
+        c.execute("""CREATE TABLE patient_downstream (
+        patID integer,
+        downstream text)""") 
+
+#resetdownstream()
+
+def addtoDownstream(patID, downstream):
+    c.execute("INSERT INTO patient_downstream VALUES (:patID, :downstream)", {'patID': patID, 'downstream': downstream})
+    conn.commit()
+
+def getPatientsforDownstream():
+    c.execute("SELECT * FROM patient_downstream")
+    items = c.fetchall()
+    return items
+
+def deletePatfromDownstream(id):
+    c.execute("DELETE FROM patient_downstream WHERE patID= '{}'".format(id))
+    conn.commit()
+
+def getDownstreamListSize():   #get the size of the list of patients assigned downstream
+    c.execute("SELECT COUNT(*) FROM patient_downstream")
+    res= c.fetchone()
+    return res[0]
 
 
 

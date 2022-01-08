@@ -386,7 +386,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             isoStatus = ""
             if patient[6] == 0:
                 isoStatus = "N"
-            elif patient[6] != 0:
+            elif patient[6] > 0:
                 isoStatus = "Y"
 
             self.tableWidget.setRowHeight(row, 70)
@@ -409,16 +409,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
         bedIndex = self.sender()    # listens to which button has been selected
         currRow = self.tableWidget.currentRow()
-
-        # checking for current bed status availability              
-        bedAvailable = self.bedStatusCheck(bedIndex)
-
-        # checking for bed assignment duplicates in other rows
-        noDuplicates = self.duplicateCheck(bedColumn, bedIndex)
-        
-        # checking for isolation requirement
-        isolation = self.isolationCheck(currRow, isoColumn)
-
+                  
+        bedAvailable = self.bedStatusCheck(bedIndex)                # checking for current bed status availability 
+        noDuplicates = self.duplicateCheck(bedColumn, bedIndex)     # checking for bed assignment duplicates in other rows
+        isolation = self.isolationCheck(currRow, isoColumn)         # checking for isolation requirement
 
         # officially assigning bed to patient
         if noDuplicates and bedAvailable:
@@ -474,7 +468,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     brush = "background-color: rgb(190, 190, 190)"
                     button.setStyleSheet(brush)
 
-                
 
     def isolationCheck(self, currRow, isoColumn):
         isolation = False
@@ -497,7 +490,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         patsWithBeds = self.findPatsWithBeds()      # collect a list of patients that have been assigned beds
 
         for pat in patsWithBeds:
-            addtoBed(pat[0],pat[1],0,0,0,0,"None",0) # add patsWithBeds to "patientStatus" table in DB
+            addtoBed(pat[0],pat[1],0,0,0,0,"Select",0) # add patsWithBeds to "patientStatus" table in DB
             deletePatfromWaitlist(pat[0])         # delete patsWithBeds from "waitlist" table in DB
 
         #return to main screen
