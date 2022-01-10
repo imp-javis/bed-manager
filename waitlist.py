@@ -94,21 +94,19 @@ class Ui_waitlist(object):
         size= getListSize() # from here, this is the function to update the waitlist from registrations saved in the database
         self.tableWidget.setRowCount(size) #setting the table row size
         row= 0 
+
         listnow= getPatientinWaitlist() # get the waitlist in the database as a list
         for waitlistPat in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
             patient = getPatientInfo(waitlistPat[0])
             checkBox_isolate = QtWidgets.QTableWidgetItem()
             checkBox_isolate.setCheckState(patient[6])
 
-            checkBox_cc = QtWidgets.QCheckBox()
+            checkBox_cc = QtWidgets.QTableWidgetItem()
             checkBox_cc.setCheckState(waitlistPat[1])
-            checkBox_cc.stateChanged.connect(lambda: updateCC(waitlistPat[0], checkBox_cc.checkState()))
 
-            checkBox_pwtr = QtWidgets.QCheckBox()
+            checkBox_pwtr = QtWidgets.QTableWidgetItem()
             checkBox_pwtr.setCheckState(waitlistPat[2])
-            checkBox_pwtr.stateChanged.connect(lambda: updatePWTR(waitlistPat[0], checkBox_pwtr.checkState()))
             
-
             self.tableWidget.setRowHeight(row, 70)
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
@@ -118,11 +116,32 @@ class Ui_waitlist(object):
             self.tableWidget.setItem(row, 3, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[3],patient[4]))) #age and gender
             self.tableWidget.setItem(row, 4, checkBox_isolate)
             self.tableWidget.setItem(row, 5, QtWidgets.QTableWidgetItem(patient[5])) #diagnosis
-            self.tableWidget.setCellWidget(row, 6, checkBox_cc)
-            self.tableWidget.setCellWidget(row, 7, checkBox_pwtr)
-
+            self.tableWidget.setItem(row, 6, checkBox_cc)
+            self.tableWidget.setItem(row, 7, checkBox_pwtr)
 
             row = row+1
+
+        self.tableWidget.itemClicked.connect(self.updatecheck)
+
+    def updatecheck(self, item):
+        col= self.tableWidget.column(item)
+
+        if col == 6:
+            row= self.tableWidget.row(item)
+            state=item.checkState()
+            sel_id= self.tableWidget.item(row, 1).text()
+            updateCC(sel_id, state)
+        
+        elif col == 7:
+            row= self.tableWidget.row(item)
+            state=item.checkState()
+            sel_id= self.tableWidget.item(row, 1).text()
+            updatePWTR(sel_id, state)
+            
+        else: 
+            pass
+    
+
 
     def deletePatient(self):
         currow= self.tableWidget.currentRow()
