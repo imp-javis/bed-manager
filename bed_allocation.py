@@ -34,7 +34,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow2()
         self.ui.setupUi(self.window)
         self.window.show()
-        main_win.close()
+        main_win.close()               
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -319,7 +319,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.R2.clicked.connect(self.chooseBed)
         self.R3.clicked.connect(self.chooseBed)
         self.R4.clicked.connect(self.chooseBed)
-        # self.buttAssign.clicked.connect(self.assignBed)
+        #self.buttAssign.clicked.connect(self.assignBed)
         #self.buttBack.clicked.connect(________)
 
 
@@ -378,7 +378,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.tableWidget.setRowCount(size) #setting the table row size
         row = 0
         listnow = getPatientinWaitlist() # get the waitlist in the database as a list
-        
+
         for waitlistPat in listnow: #looping through each row of waitlist and add it to the table {first, last, age, gender, diagnosis, time, isolate}
             
             patient = getPatientInfo(waitlistPat[0])
@@ -485,16 +485,20 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     ## FUNCTION TO CONTROL ACTIONS AFTER "ASSIGN" IS PRESSED ##             
 
-    def assignBed(self, MainWindow):
+    def assignBed(self, MainWindow):                                # PROBLEM: TWO RECORDS OF PATIENTS ARE ADDED TO DB UPON "ASSIGN"
+        self.buttAssign.setEnabled(False)
 
         patsWithBeds = self.findPatsWithBeds()      # collect a list of patients that have been assigned beds
+        print("patsWithBeds")
+        print(patsWithBeds)
 
         for pat in patsWithBeds:
             addtoBed(pat[0],pat[1],0,0,0,0,"Select",0) # add patsWithBeds to "patientStatus" table in DB
             deletePatfromWaitlist(pat[0])         # delete patsWithBeds from "waitlist" table in DB
+            print("added patient")
 
         #return to main screen
-
+        print("about to close window")
         self.showMonitor(MainWindow)
      
             

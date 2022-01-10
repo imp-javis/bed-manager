@@ -75,6 +75,7 @@ def getPatientInfo(patID):
     c.execute("SELECT * FROM patInfo where patID= :patID", {'patID': patID})
     info= c.fetchone()
     return info
+
 # reset()
 
 #--------------Adding to waitlist-------------
@@ -152,12 +153,12 @@ def getColournum():
 
 
 
-#---------------- patient status for patients in bed ---------------------
+#---------------- patient status for patients in amu ---------------------
 
-def resetbedallocation():
+def resetpatientinamu():
     try:
-        c.execute("""DROP TABLE patient_inBed""")
-        c.execute("""CREATE TABLE patient_inBed (
+        c.execute("""DROP TABLE patient_inAMU""")
+        c.execute("""CREATE TABLE patient_inAMU (
         patID integer,
         bed text,
         discharge integer,
@@ -167,7 +168,7 @@ def resetbedallocation():
         downstream text,
         death integer)""") 
     except:
-        c.execute("""CREATE TABLE patient_inBed (
+        c.execute("""CREATE TABLE patient_inAMU (
         patID integer
         bed text
         discharge integer,
@@ -177,35 +178,55 @@ def resetbedallocation():
         downstream text
         death integer)""") 
 
-#resetbedallocation()
+#resetpatientinamu()
 
 
 #--------------- bed allocation functions -----------------
 
 #def addtoBed(patID, bed):
-#    c.execute("INSERT INTO patient_inBed (patID, bed) VALUES (:patID, :bed)", {'patID': patID, 'bed': bed})
+#    c.execute("INSERT INTO patient_inAMU (patID, bed) VALUES (:patID, :bed)", {'patID': patID, 'bed': bed})
 #    conn.commit()
 
 def addtoBed(patID, bed, discharge, lounge, dis_sum, dis_meds, downstream, death):
-    c.execute("INSERT INTO patient_inBed VALUES (:patID, :bed, :discharge, :lounge, :dis_sum, :dis_meds, :downstream, :death)", {'patID': patID, 'bed': bed, 'discharge': discharge, 'lounge': lounge, 'dis_sum': dis_sum, 'dis_meds': dis_meds, 'downstream': downstream,'death': death})
+    c.execute("INSERT INTO patient_inAMU VALUES (:patID, :bed, :discharge, :lounge, :dis_sum, :dis_meds, :downstream, :death)", {'patID': patID, 'bed': bed, 'discharge': discharge, 'lounge': lounge, 'dis_sum': dis_sum, 'dis_meds': dis_meds, 'downstream': downstream,'death': death})
     conn.commit()
 
 def getPatientsinBed():
-    c.execute("SELECT * FROM patient_inBed ORDER BY bed")
+    c.execute("SELECT * FROM patient_inAMU WHERE lounge=0 ORDER BY bed")
+    items = c.fetchall()
+    return items
+
+def getPatientsinLounge():
+    c.execute("SELECT * FROM patient_inAMU WHERE lounge NOT IN (0)")
+    items = c.fetchall()
+    return items
+
+def getPatientsDownstream():
+    c.execute("SELECT * FROM patient_inAMU WHERE downstream NOT IN ('Select') ORDER BY bed")
     items = c.fetchall()
     return items
 
 def deletePatfromBed(id):
-    c.execute("DELETE FROM patient_inBed WHERE patID= '{}'".format(id))
+    c.execute("DELETE FROM patient_inAMU WHERE patID= '{}'".format(id))
     conn.commit()
 
 def getBedListSize():   #get the size of the waitlist
-    c.execute("SELECT COUNT(*) FROM patient_inBed")
+    c.execute("SELECT COUNT(*) FROM patient_inAMU WHERE lounge=0")
+    res= c.fetchone()
+    return res[0]
+
+def getLoungeListSize():   #get the size of the waitlist
+    c.execute("SELECT COUNT(*) FROM patient_inAMU WHERE lounge NOT IN (0)")
+    res= c.fetchone()
+    return res[0]
+
+def getDownstreamListSize():   #get the size of list of patients currently assigned to be sent downstream
+    c.execute("SELECT COUNT(*) FROM patient_inAMU WHERE downstream NOT IN ('Select')")
     res= c.fetchone()
     return res[0]
 
 def bedAvailability():
-    c.execute("SELECT COUNT(*) FROM patient_inBed")
+    c.execute("SELECT COUNT(*) FROM patient_inAMU")
     res = c.fetchone()
     y = 20 - res[0]
     return y
@@ -215,81 +236,33 @@ def bedAvailability():
 # def takenBeds():
 
 
+#---------------- functions for patient status for patients in bed -------------------------
 
-#---------------- patient status for patients in discharge lounge ---------------------
+#import updateCheck_discharge, updateCheck_dischargeLounge, updateCheck_dischargeSum, updateCheck_dischargeMed, updateWard, updateCheck_death
 
-def resetdischargelounge():
-    try:
-        c.execute("""DROP TABLE patient_inLounge""")
-        c.execute("""CREATE TABLE patient_inLounge (
-        patID integer,
-        bed text,
-        discharge integer,
-        lounge integer,
-        dis_sum integer,
-        dis_meds integer)""") 
-    except:
-        c.execute("""CREATE TABLE patient_inLounge (
-        patID integer
-        bed text
-        discharge integer,
-        lounge integer,
-        dis_sum integer,
-        dis_meds integer)""") 
-
-#resetdischargelounge()
-
-def addtoLounge(patID, bed, discharge, lounge, dis_sum, dis_meds, downstream, death):
-    c.execute("INSERT INTO patient_inLounge VALUES (:patID, :bed, :discharge, :lounge, :dis_sum, :dis_meds)", {'patID': patID, 'bed': bed, 'discharge': discharge, 'lounge': lounge, 'dis_sum': dis_sum, 'dis_meds': dis_meds})
+def updateCheck_discharge(patID, check):
+    c.execute("UPDATE patient_inAMU SET discharge='{}' WHERE patID= '{}'".format(check, patID))
     conn.commit()
 
-def getPatientsinLounge():
-    c.execute("SELECT * FROM patient_inLounge")
-    items = c.fetchall()
-    return items
-
-def deletePatfromLounge(id):
-    c.execute("DELETE FROM patient_inLounge WHERE patID= '{}'".format(id))
+def updateCheck_dischargeLounge(patID, check):
+    c.execute("UPDATE patient_inAMU SET lounge='{}' WHERE patID= '{}'".format(check, patID))
     conn.commit()
 
-def getLoungeListSize():   #get the size of the waitlist
-    c.execute("SELECT COUNT(*) FROM patient_inLounge")
-    res= c.fetchone()
-    return res[0]
-
-
-#---------------- patient status for patients in discharge lounge ---------------------
-
-def resetdownstream():
-    try:
-        c.execute("""DROP TABLE patient_downstream""")
-        c.execute("""CREATE TABLE patient_downstream (
-        patID integer,
-        downstream text)""") 
-    except:
-        c.execute("""CREATE TABLE patient_downstream (
-        patID integer,
-        downstream text)""") 
-
-#resetdownstream()
-
-def addtoDownstream(patID, downstream):
-    c.execute("INSERT INTO patient_downstream VALUES (:patID, :downstream)", {'patID': patID, 'downstream': downstream})
+def updateCheck_dischargeSum(patID, check):
+    c.execute("UPDATE patient_inAMU SET dis_sum='{}' WHERE patID= '{}'".format(check, patID))
     conn.commit()
 
-def getPatientsforDownstream():
-    c.execute("SELECT * FROM patient_downstream")
-    items = c.fetchall()
-    return items
-
-def deletePatfromDownstream(id):
-    c.execute("DELETE FROM patient_downstream WHERE patID= '{}'".format(id))
+def updateCheck_dischargeMed(patID, check):
+    c.execute("UPDATE patient_inAMU SET dis_meds='{}' WHERE patID= '{}'".format(check, patID))
     conn.commit()
 
-def getDownstreamListSize():   #get the size of the list of patients assigned downstream
-    c.execute("SELECT COUNT(*) FROM patient_downstream")
-    res= c.fetchone()
-    return res[0]
+def updateWard(patID, ward):
+    c.execute("UPDATE patient_inAMU SET downstream='{}' WHERE patID= '{}'".format(ward, patID))
+
+def updateCheck_death(patID, check):
+    c.execute("UPDATE patient_inAMU SET death='{}' WHERE patID= '{}'".format(check, patID))
+    conn.commit()
+
 
 
 
@@ -313,9 +286,9 @@ def resetwardavailability():
         geri integer,
         resp integer)""") 
 
-resetwardavailability()
+#resetwardavailability()
 
-def getWardAvailability():
+def getWardAvailability():          #THIS WON'T WORK I THINK BUT WHY TF
     c.execute("SELECT * FROM wardAvailability")
     items = c.fetchall()
     return items
@@ -324,4 +297,8 @@ def getWardAvailability():
 def updateWardBeds(cardioNew, endoNew, gastroNew, geriNew, respNew):
     c.execute("UPDATE wardAvailability SET cardio='{}', endo='{}', gastro='{}', geri='{}', resp='{}'".format(cardioNew, endoNew, gastroNew, geriNew, respNew))
     conn.commit()
+
+#def updateCC(patID, check):
+#    c.execute("UPDATE waitlist SET clerkcheck='{}' WHERE patID= '{}'".format(check, patID))
+#    conn.commit()
 # conn.close() #close connections
