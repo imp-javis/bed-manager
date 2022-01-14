@@ -16,14 +16,7 @@ class Ui_LoginWindow(object):
     def openMonitor(self, pp, name, pos):
         self.monitor = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow2()
-        self.ui.setupUi(self.monitor)
-        self.ui.pos= pos
-        self.ui.phototag= pp
-        self.ui.user= name
-        print(self.ui.pos)
-        print(self.ui.phototag)
-        print(self.ui.user)
-
+        self.ui.setupUi(self.monitor, pos, pp, name)
         self.monitor.show()
         LoginWindow.hide()
 

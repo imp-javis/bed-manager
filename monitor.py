@@ -70,12 +70,12 @@ class Ui_MainWindow2(object):
         else: 
                 self.showBox()
 
-    def setupUi(self, MainWindow2):
+    def setupUi(self, MainWindow2, pos, phototag, user):
         MainWindow2.setObjectName("MainWindow2")
         MainWindow2.resize(1440, 847)
-        self.pos= ""
-        self.user= ""
-        self.phototag= ""
+        self.pos= pos
+        self.user= user
+        self.phototag= phototag
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
