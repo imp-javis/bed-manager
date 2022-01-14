@@ -16,7 +16,7 @@ from amu_database import getBedListSize, getPatientsinBed, getPatientInfo, getLo
 
 
 class Ui_patientStatus(object):
-    def setupUi(self, patientStatus):
+    def setupUi(self, patientStatus): #, user, phototag, pos
         patientStatus.setObjectName("patientStatus")
         patientStatus.resize(1429, 883)
         font = QtGui.QFont()
@@ -677,7 +677,7 @@ class Ui_patientStatus(object):
             comboBox_ward.addItem("Gastroenterology")
             comboBox_ward.addItem("Geriatrics")
             comboBox_ward.addItem("Respiratory")
-            comboBox_ward.setCurrentText(pat[6])
+            comboBox_ward.setCurrentText(pat[6]) #
 
             #comboBox_ward.activated.connect(lambda: self.change_ward(pat[0]))
 

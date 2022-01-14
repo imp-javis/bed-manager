@@ -9,13 +9,73 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from amu_database import getColournum, bedAvailability
+from waitlist import Ui_waitlist
+from PyQt5.QtCore import QTimer, QTime, Qt, pyqtPickleProtocol
+import threading 
 
 
 class Ui_MainWindow2(object):
-    def setupUi(self, MainWindow2):
+
+#     def showBlackTime(self):
+        # seconds= getBlack()
+        # mins, secs = divmod(seconds, 60)
+        # hours, minutes = divmod(mins, 60)
+        # self.time.setText('{:02d}:{:02d}:{:02d}'.format(int(hours), int(minutes), int(secs)))
+
+    def showBox(self):
+        msg= QtWidgets.QMessageBox()
+        msg.setIcon(QtWidgets.QMessageBox.Information)
+        msg.setWindowTitle("Access Error")
+        msg.setText("You don't have access to this function.")
+        msg.setStandardButtons(QtWidgets.QMessageBox.Abort)
+        x= msg.exec_()
+        msg.buttonClicked.connect(self.closeBox)
+
+    def closeBox(self, msg):
+            pass
+
+    def showWaitlist(self, monitor, user, phototag, pos):
+        if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
+                self.window = QtWidgets.QMainWindow()
+                self.ui = Ui_waitlist()
+                self.ui.setupUi(self.window, user, phototag, pos)
+                self.ui.phototag= self.phototag
+                self.ui.user= self.user
+                self.ui.pos= self.pos
+                self.window.show()
+                monitor.close()
+        else: 
+                self.showBox()
+
+    def showBed(self, monitor, user, phototag, pos):
+        from bed_allocation import Ui_MainWindow
+        if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
+                self.window = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+                self.ui.setupUi(self.window, user, phototag, pos)
+                self.window.show()
+                monitor.close()
+        else: 
+                self.showBox()
+                
+    def showPatientinBed(self, monitor,  user, phototag, pos):
+        from patientStatus import Ui_patientStatus
+        if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
+                self.window = QtWidgets.QMainWindow()
+                self.ui = Ui_patientStatus()
+                self.ui.setupUi(self.window, user, phototag, pos)
+                self.window.show()
+                monitor.close()
+        else: 
+                self.showBox()
+
+    def setupUi(self, MainWindow2, user, phototag, pos):
         MainWindow2.setObjectName("MainWindow2")
-        MainWindow2.setWindowModality(QtCore.Qt.WindowModal)
         MainWindow2.resize(1440, 847)
+        self.pos= pos
+        self.user= user
+        self.phototag= phototag
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -163,7 +223,7 @@ class Ui_MainWindow2(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox = QtWidgets.QGroupBox(self.layoutWidget)
         font = QtGui.QFont()
-        font.setFamily("Avenir")
+        font.setFamily("Arial")
         font.setPointSize(24)
         self.groupBox.setFont(font)
         self.groupBox.setTitle("")
@@ -172,7 +232,7 @@ class Ui_MainWindow2(object):
         self.bedframe = QtWidgets.QFrame(self.groupBox)
         self.bedframe.setGeometry(QtCore.QRect(0, 340, 599, 431))
         font = QtGui.QFont()
-        font.setFamily("Avenir")
+        font.setFamily("Arial")
         font.setPointSize(14)
         self.bedframe.setFont(font)
         self.bedframe.setStyleSheet("")
@@ -4250,7 +4310,7 @@ class Ui_MainWindow2(object):
         font.setPointSize(24)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
-        self.editbutton = QtWidgets.QPushButton(self.groupBox)
+        self.editbutton = QtWidgets.QPushButton(self.groupBox, clicked= lambda: self.showWaitlist(MainWindow2, self.user, self.phototag, self.pos))
         self.editbutton.setGeometry(QtCore.QRect(30, 70, 151, 191))
         self.editbutton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
@@ -4269,7 +4329,7 @@ class Ui_MainWindow2(object):
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setWordWrap(True)
         self.label_4.setObjectName("label_4")
-        self.allocationbutton = QtWidgets.QPushButton(self.groupBox)
+        self.allocationbutton = QtWidgets.QPushButton(self.groupBox, clicked= lambda: self.showBed(MainWindow2, self.user, self.phototag, self.pos))
         self.allocationbutton.setGeometry(QtCore.QRect(160, 70, 151, 191))
         self.allocationbutton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
@@ -4279,7 +4339,7 @@ class Ui_MainWindow2(object):
 "")
         self.allocationbutton.setText("")
         self.allocationbutton.setObjectName("allocationbutton")
-        self.patientinbedbutton = QtWidgets.QPushButton(self.groupBox)
+        self.patientinbedbutton = QtWidgets.QPushButton(self.groupBox, clicked= lambda: self.showPatientinBed(MainWindow2, self.user, self.phototag, self.pos))
         self.patientinbedbutton.setGeometry(QtCore.QRect(290, 70, 151, 191))
         self.patientinbedbutton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/outline.png);\n"
@@ -4366,6 +4426,23 @@ class Ui_MainWindow2(object):
         font.setPointSize(24)
         self.label_7.setFont(font)
         self.label_7.setObjectName("label_7")
+        self.photo = QtWidgets.QLabel(self.centralwidget)
+        self.photo.setGeometry(QtCore.QRect(1180, 80, 111, 111))
+        self.photo.setStyleSheet("background-image:url(:/graphics/Graphics_Monitor/{});\n"
+        "background-repeat: no-repeat; \n"
+        "background-position: center;\n"
+        "border-radius: 55px;".format(self.phototag))
+        self.photo.setScaledContents(True)
+        self.photo.setObjectName("photo")
+        self.username = QtWidgets.QLabel(self.centralwidget)
+        self.username.setGeometry(QtCore.QRect(1120, 210, 221, 31))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(20)
+        self.username.setFont(font)
+        self.username.setAlignment(QtCore.Qt.AlignCenter)
+        self.username.setObjectName("username")
+        self.username.setText("Dr {}".format(self.user))
         self.widget_6 = QtWidgets.QWidget(self.centralwidget)
         self.widget_6.setGeometry(QtCore.QRect(1060, 670, 371, 131))
         self.widget_6.setStyleSheet("background-color: transparent;\n"
@@ -4374,16 +4451,32 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.widget_6.setObjectName("widget_6")
-        self.label_11 = QtWidgets.QLabel(self.centralwidget)
-        self.label_11.setGeometry(QtCore.QRect(110, 130, 111, 61))
+        # self.label_8 = QtWidgets.QLabel(self.centralwidget)
+        # self.label_8.setGeometry(QtCore.QRect(1070, 460, 341, 61))
         font = QtGui.QFont()
         font.setFamily(".AppleSystemUIFont")
         font.setPointSize(15)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
+        # self.label_8.setFont(font)
+        # self.label_8.setStyleSheet("font: 15pt \"Times New Roman\";\n""")
+        # self.label_8.setObjectName("label_8")
+        # self.time = QtWidgets.QLabel(self.centralwidget)
+        # self.time.setGeometry(QtCore.QRect(1149, 500, 161, 20))
+        # self.time.setAlignment(QtCore.Qt.AlignCenter)
+        # self.time.setObjectName("time")
+        # self.time.setText('time')
+        self.label_11 = QtWidgets.QLabel(self.centralwidget)
+        self.label_11.setGeometry(QtCore.QRect(110, 130, 111, 61))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(15)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.label_11.setFont(font)
-        self.label_11.setStyleSheet("font: 15pt \".AppleSystemUIFont\";\n"
+        self.label_11.setStyleSheet("font: 15pt \"Times New Roman\";\n"
 "")
         self.label_11.setObjectName("label_11")
         self.groupBox_9 = QtWidgets.QGroupBox(self.centralwidget)
@@ -4437,41 +4530,32 @@ class Ui_MainWindow2(object):
         self.bedavailable.setGeometry(QtCore.QRect(240, 70, 121, 81))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
-        font.setPointSize(16)
+        font.setPointSize(15)
         self.bedavailable.setFont(font)
         self.bedavailable.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.bedavailable.setObjectName("bedavailable")
+        x = bedAvailability()
+        self.bedavailable.setText(str(x)) 
         self.waitstatbckground.raise_()
         self.green.raise_()
         self.yellow.raise_()
         self.red.raise_()
         self.black.raise_()
         self.bedavailable.raise_()
-        self.photo = QtWidgets.QLabel(self.centralwidget)
-        self.photo.setGeometry(QtCore.QRect(1180, 80, 111, 111))
-        self.photo.setStyleSheet("background-image:url(:/graphics/Graphics_Monitor/marklee.png);\n"
-"background-repeat: no-repeat; \n"
-"background-position: center;\n"
-"border-radius: 55px;")
-        self.photo.setText("")
-        self.photo.setScaledContents(True)
-        self.photo.setObjectName("photo")
-        self.username = QtWidgets.QLabel(self.centralwidget)
-        self.username.setGeometry(QtCore.QRect(1120, 210, 221, 31))
-        font = QtGui.QFont()
-        font.setFamily("Times New Roman")
-        font.setPointSize(20)
-        self.username.setFont(font)
-        self.username.setAlignment(QtCore.Qt.AlignCenter)
-        self.username.setObjectName("username")
-        MainWindow2.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow2)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 24))
-        self.menubar.setObjectName("menubar")
-        MainWindow2.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow2)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow2.setStatusBar(self.statusbar)
+        # self.time = QtWidgets.QLabel(self.centralwidget)
+        # self.time.setGeometry(QtCore.QRect(1149, 500, 161, 20))
+        # self.time.setAlignment(QtCore.Qt.AlignCenter)
+        # self.time.setObjectName("time")
+        collist= getColournum()
+        self.green.setText(str(collist[0][0]))
+        self.yellow.setText(str(collist[0][1]))
+        self.red.setText(str(collist[0][2]))
+        self.black.setText(str(collist[0][3]))
+
+        MainWindow2.setCentralWidget(self.centralwidget)        
+
+        # x= threading.Thread(target= )
+
 
         self.retranslateUi(MainWindow2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow2)
@@ -4492,13 +4576,8 @@ class Ui_MainWindow2(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'.AppleSystemUIFont\'; font-size:15pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Overview:</p></body></html>"))
-        self.green.setText(_translate("MainWindow2", "Green_label"))
-        self.yellow.setText(_translate("MainWindow2", "Yellow_label"))
-        self.red.setText(_translate("MainWindow2", "Red_label"))
-        self.black.setText(_translate("MainWindow2", "Black_label"))
-        self.bedavailable.setText(_translate("MainWindow2", "bedavailability"))
-        self.username.setText(_translate("MainWindow2", "Name"))
-import mon-graphics_rc
+
+import mongraphics
 
 
 if __name__ == "__main__":

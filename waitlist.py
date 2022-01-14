@@ -16,11 +16,11 @@ import time
 
 
 class Ui_waitlist(object):
-    def back(self, waitlist):
+    def back(self, waitlist, user, phototag, pos):
         from monitor import Ui_MainWindow2 # function is imported here to prevent runtime callback (circular import)
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow2()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window, user, phototag, pos)
         self.window.show()
         waitlist.close()
 
@@ -142,18 +142,17 @@ class Ui_waitlist(object):
             pass
     
 
-
     def deletePatient(self):
         currow= self.tableWidget.currentRow()
         id = self.tableWidget.item(currow, 1).text()
         deletePatfromWaitlist(id)
         self.displayList()
 
-    def setupUi(self, waitlist):
+    def setupUi(self, waitlist, user, phototag, pos):
         waitlist.setObjectName("waitlist")
-        self.user= ""
-        self.phototag = ""
-        self.pos= ""
+        self.user= user
+        self.phototag = phototag
+        self.pos= pos
         # waitlist.resize(800, 600)
         # self.setWindowState(QtCore.Qt.WindowMaximized)
         waitlist.showMaximized()
@@ -165,7 +164,7 @@ class Ui_waitlist(object):
         self.delpatient = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.deletePatient())
         self.delpatient.setGeometry(QtCore.QRect(1130, 30, 113, 32))
         self.delpatient.setObjectName("delpatient")
-        self.backButton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.back(waitlist))
+        self.backButton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.back(waitlist, self.user, self.phototag, self.pos))
         self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 32))
         self.backButton.setObjectName("backButton")
         self.title = QtWidgets.QLabel(self.centralwidget)

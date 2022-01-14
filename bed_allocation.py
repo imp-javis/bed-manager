@@ -28,19 +28,22 @@ isoColumn = 3
 bedColumn = 4
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
-    def showMonitor(self, main_win):
+    def showMonitor(self, main_win, user, phototag, pos):
         from monitor import Ui_MainWindow2
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow2()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window, user, phototag, pos)
         self.window.show()
         main_win.close()               
 
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, user, phototag, pos):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1370, 772)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.user= user
+        self.phototag= phototag
+        self.pos = pos
 
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(50, 120, 580, 580))
@@ -275,7 +278,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.buttAssign.setFont(font)
         self.buttAssign.setObjectName("buttAssign")
 
-        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showMonitor(MainWindow))
+        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showMonitor(MainWindow, self.user, self.phototag, self.pos))
         self.buttBack.setGeometry(QtCore.QRect(50, 30, 141, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
