@@ -13,23 +13,24 @@ from monitor import Ui_MainWindow2
 from amu_database import login, getUser
 
 class Ui_LoginWindow(object):
-    def openMonitor(self, pp, name):
+    def openMonitor(self, pp, name, pos):
         self.monitor = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow2()
         self.ui.setupUi(self.monitor)
-        # self.ui.photo.setPixmap(QtGui.QPixmap(":/graphics/Graphics_Monitor/{}".format(pp)))
-        self.ui.photo.setStyleSheet("background-image:url(:/graphics/Graphics_Monitor/{});\n"
-        "background-repeat: no-repeat; \n"
-        "background-position: center;\n"
-        "border-radius: 55px;".format(pp))
-        self.ui.username.setText("Dr {}".format(name))
+        self.ui.pos= pos
+        self.ui.phototag= pp
+        self.ui.user= name
+        print(self.ui.pos)
+        print(self.ui.phototag)
+        print(self.ui.user)
+
         self.monitor.show()
         LoginWindow.hide()
 
     def loginclicked(self):
         if (login(self.userEdit.text(), self.passEdit.text()) == 2):
-            photo, name= getUser(self.userEdit.text(), self.passEdit.text())
-            self.openMonitor(photo, name)
+            photo, name, pos= getUser(self.userEdit.text(), self.passEdit.text())
+            self.openMonitor(photo, name, pos)
         else: 
             self.validity.setText("Invalid username or password")
 

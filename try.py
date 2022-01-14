@@ -14,6 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow2(object):
     def setupUi(self, MainWindow2):
         MainWindow2.setObjectName("MainWindow2")
+        MainWindow2.setWindowModality(QtCore.Qt.WindowModal)
         MainWindow2.resize(1440, 847)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))

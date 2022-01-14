@@ -151,6 +151,9 @@ class Ui_waitlist(object):
 
     def setupUi(self, waitlist):
         waitlist.setObjectName("waitlist")
+        self.user= ""
+        self.phototag = ""
+        self.pos= ""
         # waitlist.resize(800, 600)
         # self.setWindowState(QtCore.Qt.WindowMaximized)
         waitlist.showMaximized()

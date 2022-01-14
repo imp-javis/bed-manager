@@ -23,32 +23,59 @@ class Ui_MainWindow2(object):
         # hours, minutes = divmod(mins, 60)
         # self.time.setText('{:02d}:{:02d}:{:02d}'.format(int(hours), int(minutes), int(secs)))
 
+    def showBox(self):
+        msg= QtWidgets.QMessageBox()
+        msg.setIcon(QtWidgets.QMessageBox.Information)
+        msg.setWindowTitle("Access Error")
+        msg.setText("You don't have access to this function.")
+        msg.setStandardButtons(QtWidgets.QMessageBox.Abort)
+        x= msg.exec_()
+        msg.buttonClicked.connect(self.closeBox)
+
+    def closeBox(self, msg):
+            pass
+
     def showWaitlist(self, monitor):
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_waitlist()
-        self.ui.setupUi(self.window)
-        self.window.show()
-        monitor.close()
+        if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
+                self.window = QtWidgets.QMainWindow()
+                self.ui = Ui_waitlist()
+                self.ui.setupUi(self.window)
+                self.ui.phototag= self.phototag
+                self.ui.user= self.user
+                self.ui.pos= self.pos
+                self.window.show()
+                monitor.close()
+        else: 
+                self.showBox()
 
     def showBed(self, monitor):
         from bed_allocation import Ui_MainWindow
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self.window)
-        self.window.show()
-        monitor.close()
-
+        if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
+                self.window = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+                self.ui.setupUi(self.window)
+                self.window.show()
+                monitor.close()
+        else: 
+                self.showBox()
+                
     def showPatientinBed(self, monitor):
         from patientStatus import Ui_patientStatus
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_patientStatus()
-        self.ui.setupUi(self.window)
-        self.window.show()
-        monitor.close()
+        if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
+                self.window = QtWidgets.QMainWindow()
+                self.ui = Ui_patientStatus()
+                self.ui.setupUi(self.window)
+                self.window.show()
+                monitor.close()
+        else: 
+                self.showBox()
 
     def setupUi(self, MainWindow2):
         MainWindow2.setObjectName("MainWindow2")
         MainWindow2.resize(1440, 847)
+        self.pos= ""
+        self.user= ""
+        self.phototag= ""
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -4401,6 +4428,10 @@ class Ui_MainWindow2(object):
         self.label_7.setObjectName("label_7")
         self.photo = QtWidgets.QLabel(self.centralwidget)
         self.photo.setGeometry(QtCore.QRect(1180, 80, 111, 111))
+        self.photo.setStyleSheet("background-image:url(:/graphics/Graphics_Monitor/{});\n"
+        "background-repeat: no-repeat; \n"
+        "background-position: center;\n"
+        "border-radius: 55px;".format(self.phototag))
         self.photo.setScaledContents(True)
         self.photo.setObjectName("photo")
         self.username = QtWidgets.QLabel(self.centralwidget)
@@ -4411,6 +4442,7 @@ class Ui_MainWindow2(object):
         self.username.setFont(font)
         self.username.setAlignment(QtCore.Qt.AlignCenter)
         self.username.setObjectName("username")
+        self.username.setText("Dr {}".format(self.user))
         self.widget_6 = QtWidgets.QWidget(self.centralwidget)
         self.widget_6.setGeometry(QtCore.QRect(1060, 670, 371, 131))
         self.widget_6.setStyleSheet("background-color: transparent;\n"
