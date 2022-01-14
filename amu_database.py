@@ -261,6 +261,7 @@ def updateCheck_dischargeMed(patID, check):
 
 def updateWard(patID, ward):
     c.execute("UPDATE patient_inAMU SET downstream='{}' WHERE patID= '{}'".format(ward, patID))
+    conn.commit()
 
 def updateCheck_death(patID, check):
     c.execute("UPDATE patient_inAMU SET death='{}' WHERE patID= '{}'".format(check, patID))

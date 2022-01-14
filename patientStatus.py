@@ -679,7 +679,7 @@ class Ui_patientStatus(object):
             comboBox_ward.addItem("Respiratory")
             comboBox_ward.setCurrentText(pat[6])
 
-            comboBox_ward.activated.connect(lambda: self.change_ward(pat[0]))
+            #comboBox_ward.activated.connect(lambda: self.change_ward(pat[0]))
 
             checkBox_death = QtWidgets.QTableWidgetItem()
             checkBox_death.setCheckState(pat[7])
@@ -732,7 +732,7 @@ class Ui_patientStatus(object):
 
             row = row+1
 
-        table.itemClicked.connect(self.updateDest)
+        table.itemChanged.connect(self.updateDest)      #itemClicked.connect also works
         #table.itemActivated.connect(self.updateDest)   #potential signal for the combobox change?
 
 
