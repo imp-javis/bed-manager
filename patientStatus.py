@@ -58,6 +58,8 @@ class Ui_patientStatus(object):
         self.tabWidget.setFont(font)
         self.tabWidget.setObjectName("tabWidget")
 
+
+
         #----------------------- bed tab ------------------------------------------------------------------------
         self.bedTab = QtWidgets.QWidget()
         self.bedTab.setObjectName("bedTab")
@@ -113,6 +115,7 @@ class Ui_patientStatus(object):
         self.bedTable.setHorizontalHeaderItem(10, item)
         item = QtWidgets.QTableWidgetItem()
         self.bedTable.setHorizontalHeaderItem(11, item)
+
 
         # downstream ward availability on the beds tab
         self.wardFrame = QtWidgets.QFrame(self.bedTab)
@@ -310,6 +313,8 @@ class Ui_patientStatus(object):
         self.bedTable.raise_()
         self.tabWidget.addTab(self.bedTab, "")
 
+
+
         #----------------------- lounge tab --------------------------------------------------------------
         self.loungeTab = QtWidgets.QWidget()
         self.loungeTab.setObjectName("loungeTab")
@@ -359,6 +364,7 @@ class Ui_patientStatus(object):
         self.loungeTable.setHorizontalHeaderItem(8, item)
 
         self.tabWidget.addTab(self.loungeTab, "")
+
 
 
         #----------------------- ward tab -----------------------------------------------------------------
@@ -617,7 +623,7 @@ class Ui_patientStatus(object):
         self.buttConfirm.clicked.connect(self.confirmChanges)
         
 
-        # display patient info in tables on bed, lounge & downstream tabs
+        # display patient info in tables on bed, lounge & downstream tabs + downstream ward bed availability
         self.displayList(self.bedTable)
         self.displayList(self.loungeTable)
         self.displayList(self.wardTable)
@@ -636,11 +642,7 @@ class Ui_patientStatus(object):
             size = getDownstreamListSize()
             listnow = getPatientsDownstream()
 
-        print(listnow)
-        print("^^^^^this is patients in "+table.objectName())
-
-
-        self.defColumn(table)
+        self.defColumn(table)   # define columns based on the table we're displaying now
 
         table.setRowCount(size) #setting the table row size
         row = 0
@@ -656,19 +658,20 @@ class Ui_patientStatus(object):
                 isoStatus = "Y"
                 
             # creating widgets for the table cells
-            checkBox_discharge = QtWidgets.QTableWidgetItem()
+
+            checkBox_discharge = QtWidgets.QTableWidgetItem()           # check box for discharge
             checkBox_discharge.setCheckState(pat[2])
 
-            checkBox_dischargeLounge = QtWidgets.QTableWidgetItem()
+            checkBox_dischargeLounge = QtWidgets.QTableWidgetItem()     # check box for whether patient is headed to discharge lounge
             checkBox_dischargeLounge.setCheckState(pat[3])
 
-            checkBox_dischargeSum = QtWidgets.QTableWidgetItem()
+            checkBox_dischargeSum = QtWidgets.QTableWidgetItem()        # check box for whether discharge summary has been completed
             checkBox_dischargeSum.setCheckState(pat[4])
 
-            checkBox_dischargeMed = QtWidgets.QTableWidgetItem()
+            checkBox_dischargeMed = QtWidgets.QTableWidgetItem()        # check box for whether discharge medicications have been given to patient
             checkBox_dischargeMed.setCheckState(pat[5])
 
-            comboBox_ward = QtWidgets.QComboBox()
+            comboBox_ward = QtWidgets.QComboBox()                       # combo box for selection of downstream wards
             comboBox_ward.addItem("Select")
             comboBox_ward.addItem("Cardiology")
             comboBox_ward.addItem("Endocrinology")
@@ -677,16 +680,17 @@ class Ui_patientStatus(object):
             comboBox_ward.addItem("Respiratory")
             comboBox_ward.setCurrentText(pat[6])
 
-            checkBox_death = QtWidgets.QTableWidgetItem()
+            checkBox_death = QtWidgets.QTableWidgetItem()               # check box for patient death
             checkBox_death.setCheckState(pat[7])
 
-            checkBox_sent = QtWidgets.QTableWidgetItem()
+            checkBox_sent = QtWidgets.QTableWidgetItem()                # check box for whether patient has been sent to their assigned downstream ward
             checkBox_sent.setCheckState(0)
 
             table.setRowHeight(row, 70)
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
 
+            # display patient info
             item.setText(str(patient[0]))
             table.setItem(row, idColumn, item) #id
             table.setItem(row, nameColumn, QtWidgets.QTableWidgetItem("{} {}".format(patient[1], patient[2]))) # name
@@ -694,6 +698,7 @@ class Ui_patientStatus(object):
             table.setItem(row, diagnosisColumn, QtWidgets.QTableWidgetItem(("{}").format(patient[5]))) # diagnosis
             table.setItem(row, isoColumn, QtWidgets.QTableWidgetItem(isoStatus)) # isolation
 
+            # displaying corresponding info as needed for the bedTable, loungeTable & wardTable
             if table == self.bedTable:
                 table.setItem(row, bedColumn, QtWidgets.QTableWidgetItem(pat[1])) # bed
                 table.setItem(row, dischargeColumn, checkBox_discharge) # discharge status
@@ -703,7 +708,6 @@ class Ui_patientStatus(object):
                 table.setCellWidget(row, downstreamColumn, comboBox_ward) # downstream ward
                 table.setItem(row, deathColumn, checkBox_death) # death
 
-
             elif table == self.loungeTable:
                 table.setItem(row, dischargeColumn, checkBox_discharge) # discharge status
                 table.setItem(row, dis_loungeColumn, checkBox_dischargeLounge) # discharge lounge
@@ -712,7 +716,7 @@ class Ui_patientStatus(object):
 
             elif table == self.wardTable:
                 table.setItem(row, bedColumn, QtWidgets.QTableWidgetItem(pat[1])) # bed
-                table.setItem(row, downstreamColumn, QtWidgets.QTableWidgetItem(pat[6])) # downstream ward (display only, edit in beds tab)
+                table.setItem(row, downstreamColumn, QtWidgets.QTableWidgetItem(pat[6])) # downstream ward (display only, edit in bedTable)
                 table.setItem(row, sentColumn, checkBox_sent) # sent (to downstream)
 
             row = row+1
@@ -733,9 +737,9 @@ class Ui_patientStatus(object):
         self.displayList(self.wardTable)
         self.displayWardBeds()
 
-    # confirm changes made on bed table
 
-    def confirmBed(self):
+
+    def confirmBed(self):           # confirm changes made on bed table
         table = self.bedTable
         rowNum = table.rowCount()
         self.defColumn(table)
@@ -780,9 +784,7 @@ class Ui_patientStatus(object):
 
 
 
-    # confirm changes made on lounge table
-
-    def confirmLounge(self):
+    def confirmLounge(self):            # confirm changes made on lounge table
         table = self.loungeTable
         rowNum = table.rowCount()
         self.defColumn(table)
@@ -806,9 +808,7 @@ class Ui_patientStatus(object):
 
 
 
-    # confirm changes made on ward table
-
-    def confirmWard(self):
+    def confirmWard(self):          # confirm changes made on ward table
         table = self.wardTable
         rowNum = table.rowCount()
         self.defColumn(table)
@@ -839,7 +839,7 @@ class Ui_patientStatus(object):
 
 ##----------------- defining columns with variables based on the table in question ------------------------##
 
-    def defColumn(self, table):
+    def defColumn(self, table):     # declaring global variables that will be adjusted locally depending on the table in question using this function
         global bedColumn, idColumn, nameColumn, detailsColumn, diagnosisColumn, isoColumn, dischargeColumn, dis_loungeColumn, dis_sumColumn, dis_medColumn, downstreamColumn, deathColumn, sentColumn
         if table == self.bedTable:
             bedColumn = 0
@@ -882,12 +882,12 @@ class Ui_patientStatus(object):
 
         wards = getWardAvailability() # get the number of free beds in the database as a list
 
-        # set ward free beds as zero if database has no info
-        if wards == []:
-            wardBeds = [0,0,0,0,0]
+        if wards == []:               
+            wardBeds = [0,0,0,0,0]    # set ward free beds as zero if database has no info
         else:
-            wardBeds = wards[0]
+            wardBeds = wards[0]       # otherwise, fetch the first and only list of data in "wards"
 
+        # sets label text to the corresponding number of free beds in each ward
         self.cardio.setText(str(wardBeds[0]))
         self.endo.setText(str(wardBeds[1]))
         self.gastro.setText(str(wardBeds[2]))
@@ -898,7 +898,6 @@ class Ui_patientStatus(object):
         self.gastro_2.setText(str(wardBeds[2]))
         self.geri_2.setText(str(wardBeds[3]))
         self.resp_2.setText(str(wardBeds[4]))
-
 
 
 

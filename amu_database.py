@@ -168,8 +168,7 @@ def resetpatientinamu():
         lounge integer,
         dis_sum integer,
         dis_meds integer,
-        downstream text,
-        death integer)""") 
+        downstream text)""") 
     except:
         c.execute("""CREATE TABLE patient_inAMU (
         patID integer
@@ -178,20 +177,15 @@ def resetpatientinamu():
         lounge integer,
         dis_sum integer,
         dis_meds integer,
-        downstream text
-        death integer)""") 
+        downstream text)""") 
 
 #resetpatientinamu()
 
 
 #--------------- bed allocation functions -----------------
 
-#def addtoBed(patID, bed):
-#    c.execute("INSERT INTO patient_inAMU (patID, bed) VALUES (:patID, :bed)", {'patID': patID, 'bed': bed})
-#    conn.commit()
-
 def addtoBed(patID, bed, discharge, lounge, dis_sum, dis_meds, downstream, death):
-    c.execute("INSERT INTO patient_inAMU VALUES (:patID, :bed, :discharge, :lounge, :dis_sum, :dis_meds, :downstream, :death)", {'patID': patID, 'bed': bed, 'discharge': discharge, 'lounge': lounge, 'dis_sum': dis_sum, 'dis_meds': dis_meds, 'downstream': downstream,'death': death})
+    c.execute("INSERT INTO patient_inAMU VALUES (:patID, :bed, :discharge, :lounge, :dis_sum, :dis_meds, :downstream)", {'patID': patID, 'bed': bed, 'discharge': discharge, 'lounge': lounge, 'dis_sum': dis_sum, 'dis_meds': dis_meds, 'downstream': downstream})
     conn.commit()
 
 def getPatientsinBed():
@@ -240,13 +234,7 @@ def bedAvailability():
     return y
 
 
-# to fetch beds and their current status: occupied, discharge, downstream (if not on list, then free)
-# def takenBeds():
-
-
 #---------------- functions for patient status for patients in bed -------------------------
-
-#import updateCheck_discharge, updateCheck_dischargeLounge, updateCheck_dischargeSum, updateCheck_dischargeMed, updateWard, updateCheck_death
 
 def updateCheck_discharge(patID, check):
     c.execute("UPDATE patient_inAMU SET discharge='{}' WHERE patID= '{}'".format(check, patID))
@@ -297,12 +285,11 @@ def resetwardavailability():
 
 #resetwardavailability()
 
-def getWardAvailability():          #THIS WON'T WORK I THINK BUT WHY TF
+def getWardAvailability():
     c.execute("SELECT * FROM wardAvailability")
     items = c.fetchall()
     return items
 
-#   WHY WON'T IT UPDATE HELPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 def updateWardBeds(cardioNew, endoNew, gastroNew, geriNew, respNew):
     c.execute("INSERT INTO wardAvailability VALUES (:cardio, :endo, :gastro, :geri, :resp)", {'cardio': cardioNew, 'endo': endoNew, 'gastro': gastroNew, 'geri': geriNew, 'resp':respNew})
     conn.commit()
