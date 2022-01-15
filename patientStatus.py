@@ -611,39 +611,43 @@ class Ui_patientStatus(object):
 
         # BUTTON/CHECKBOX CONNECTIONS
 
-        
-
-
+    
 
         # display patient info in tables on both tabs
-        self.displayList(self.bedTable)
-        self.displayList(self.loungeTable)
-        self.displayList(self.wardTable)
+        self.displayBed()
+        # self.displayLounge()
+        # self.displayWard()
+
+    def displayLounge(self):
+        size = getLoungeListSize()
+        listnow = getPatientsinLounge()
+        print(listnow)
+        print("^^^^^this is patients in "+ self.loungeTable.objectName())
+
+        self.defColumn(self.longeTable)
+
+    
+    def displayWard(self):
+        size = getDownstreamListSize()
+        listnow = getPatientsDownstream()
+        print(listnow)
+        print("^^^^^this is patients in "+ self.wardTable.objectName())
+
+        self.defColumn(self.wardTable)
 
 
-
-    def displayList(self, table):      # this function updates the list of patients currently in an AMU bed that is saved in database
-        
+    def displayBed(self):      # this function updates the list of patients currently in an AMU bed that is saved in database
         # listnow = getPatientsinBed, getPatientsinLounge
         # table = bedTable, loungeTable
-
-        if table == self.bedTable:
-            size = getBedListSize()
-            listnow = getPatientsinBed()
-        elif table == self.loungeTable:
-            size = getLoungeListSize()
-            listnow = getPatientsinLounge()
-        elif table == self.wardTable:
-            size = getDownstreamListSize()
-            listnow = getPatientsDownstream()
-
+        size = getBedListSize()
+        listnow = getPatientsinBed()
         print(listnow)
-        print("^^^^^this is patients in "+table.objectName())
+        print("^^^^^this is patients in "+ self.bedTable.objectName())
 
 
-        self.defColumn(table)
+        self.defColumn(self.bedTable)
 
-        table.setRowCount(size) #setting the table row size
+        self.bedTable.setRowCount(size) #setting the table row size
         row = 0
        
         for pat in listnow: #looping through each row of bed list to display each line/patient
@@ -683,11 +687,6 @@ class Ui_patientStatus(object):
 
             checkBox_death = QtWidgets.QTableWidgetItem()
             checkBox_death.setCheckState(pat[7])
-
-            buttDel = QtWidgets.QPushButton()
-            #buttDel.setGeometry(QtCore.QRect(0, 0, 140, 50))
-            #buttDel.setObjectName("buttDel")
-            buttDel.setText("Delete")
 
             #checkBox_discharge.stateChanged.connect(lambda: self.check_discharge(checkBox_discharge.objectName(), checkBox_dischargeLounge, checkBox_dischargeSum, checkBox_dischargeMed, comboBox_ward, checkBox_death, pat[0]))
             #checkBox_dischargeLounge.stateChanged.connect(lambda: self.check_dischargeLounge(checkBox_dischargeLounge, pat[0]))
@@ -732,20 +731,22 @@ class Ui_patientStatus(object):
 
             row = row+1
 
-        table.itemChanged.connect(self.updateDest)      #itemClicked.connect also works
-        #table.itemActivated.connect(self.updateDest)   #potential signal for the combobox change?
-
+        table.itemClicked.connect(self.updateDest)      #itemClicked.connect also works
+        # #table.itemActivated.connect(self.updateDest)   #potential signal for the combobox change?
 
     def updateDest(self, item):
-
-        table = app.sender()        # fetches the table that has been updated
-        self.defColumn(table)
+    # fetches the table that has been updated
+        print("hello")
+        # self.defColumn(table)
         
-        col = table.column(item)    # fetch column/row of checkbox/combobox that has been 
-        row = table.row(item)
-        state = item.checkState()
+        # col = table.column(item)    # fetch column/row of checkbox/combobox that has been 
+        # row = table.row(item)
+        # state = item.checkState()
+        # print(col+ "column")
+        # print(row)
+        # print(state)
 
-        patID = table.item(row, idColumn).text()        
+        # patID = table.item(row, idColumn).text()        
 
         #checkBox_dischargeLounge = table.item(row, dis_loungeColumn)
         #checkBox_dischargeSum = table.item(row, dis_sumColumn)
@@ -753,70 +754,70 @@ class Ui_patientStatus(object):
         #comboBox_ward = table.cellWidget(row, downstreamColumn)
         #checkBox_death = table.item(row, deathColumn)
 
-        if col == downstreamColumn:
-            print("we clicked downstream")
+        # if col == downstreamColumn:
+        #     print("we clicked downstream")
         
 
-        if col == dischargeColumn:
-            if state > 0:
-                updateCheck_discharge(patID, state)     # update database
-                print("discharge checked")
+        # if col == dischargeColumn:
+        #     if state > 0:
+        #         updateCheck_discharge(patID, state)     # update database
+        #         print("discharge checked")
                 
-                #flags = QtCore.Qt.ItemFlags()      # trying to enable/disable other options
-                #flags != Qt.ItemIsCheckable
+        #         #flags = QtCore.Qt.ItemFlags()      # trying to enable/disable other options
+        #         #flags != Qt.ItemIsCheckable
 
-                #checkBox_dischargeLounge.setFlags(flags)
-                #checkBox_dischargeSum.setFlags(flags)
-                #checkBox_dischargeMed.setFlags(flags)
-                #comboBox_ward.hide()                            
-                #checkBox_death.setFlags(flags)
+        #         #checkBox_dischargeLounge.setFlags(flags)
+        #         #checkBox_dischargeSum.setFlags(flags)
+        #         #checkBox_dischargeMed.setFlags(flags)
+        #         #comboBox_ward.hide()                            
+        #         #checkBox_death.setFlags(flags)
             
-            else:
-                updateCheck_discharge(patID, state)     # update database
-                print("discharge not checked")
+        #     else:
+        #         updateCheck_discharge(patID, state)     # update database
+        #         print("discharge not checked")
 
-                #flags = QtCore.Qt.ItemFlags()
-                #flags = QtCore.Qt.ItemIsCheckable
+        #         #flags = QtCore.Qt.ItemFlags()
+        #         #flags = QtCore.Qt.ItemIsCheckable
 
-                #checkBox_dischargeLounge.setFlags(flags)
-                #checkBox_dischargeSum.setFlags(flags)
-                #checkBox_dischargeMed.setFlags(flags)
-                #comboBox_ward.show()
-                #checkBox_death.setFlags(flags)
+        #         #checkBox_dischargeLounge.setFlags(flags)
+        #         #checkBox_dischargeSum.setFlags(flags)
+        #         #checkBox_dischargeMed.setFlags(flags)
+        #         #comboBox_ward.show()
+        #         #checkBox_death.setFlags(flags)
 
-        elif col == dis_loungeColumn:
-            if state > 0:
-                updateCheck_dischargeLounge(patID, state)     # update database
-            elif state == 0:
-                updateCheck_dischargeLounge(patID, state)     # update database
+        # elif col == dis_loungeColumn:
+        #     if state > 0:
+        #         updateCheck_dischargeLounge(patID, state)     # update database
+        #     elif state == 0:
+        #         updateCheck_dischargeLounge(patID, state)     # update database
 
-        elif col == dis_sumColumn:
-            if state > 0:
-                updateCheck_dischargeSum(patID, state)      # update database
-            elif state == 0:
-                updateCheck_dischargeSum(patID, state)      # update database
+        # elif col == dis_sumColumn:
+        #     if state > 0:
+        #         updateCheck_dischargeSum(patID, state)      # update database
+        #     elif state == 0:
+        #         updateCheck_dischargeSum(patID, state)      # update database
 
-        elif col == dis_medColumn:
-            if state > 0:
-                updateCheck_dischargeMed(patID, state)      # update database
-            elif state == 0:
-                updateCheck_dischargeMed(patID, state)      # update database
+        # elif col == dis_medColumn:
+        #     if state > 0:
+        #         updateCheck_dischargeMed(patID, state)      # update database
+        #     elif state == 0:
+        #         updateCheck_dischargeMed(patID, state)      # update database
 
-        elif col == deathColumn:
-            if state > 0:
-                updateCheck_death(patID, state)      # update database
-                #checkBox_discharge.setCheckable(False)
-                #comboBox_ward.hide()
+        # elif col == deathColumn:
+        #     if state > 0:
+        #         updateCheck_death(patID, state)      # update database
+        #         #checkBox_discharge.setCheckable(False)
+        #         #comboBox_ward.hide()
 
-            elif state == 0:
-                updateCheck_death(patID, state)      # update database
-                #checkBox_discharge.setCheckable(True)
-                #comboBox_ward.show()
-        else:
-            pass
+        #     elif state == 0:
+        #         updateCheck_death(patID, state)      # update database
+        #         #checkBox_discharge.setCheckable(True)
+        #         #comboBox_ward.show()
+        # else:
+        #     pass
 
-        patward = getPatientsDownstream()
-        print(patward)
+        # patward = getPatientsDownstream()
+        # print(patward)
 
 
 #-------------------- functions to record changes ------------------------------
