@@ -28,22 +28,19 @@ isoColumn = 3
 bedColumn = 4
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
-    def showMonitor(self, main_win, user, phototag, pos):
+    def showMonitor(self, main_win):
         from monitor import Ui_MainWindow2
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow2()
-        self.ui.setupUi(self.window, user, phototag, pos)
+        self.ui.setupUi(self.window)
         self.window.show()
         main_win.close()               
 
-    def setupUi(self, MainWindow, user, phototag, pos):
+    def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1370, 772)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.user= user
-        self.phototag= phototag
-        self.pos = pos
 
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(50, 120, 580, 580))
@@ -278,7 +275,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.buttAssign.setFont(font)
         self.buttAssign.setObjectName("buttAssign")
 
-        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showMonitor(MainWindow, self.user, self.phototag, self.pos))
+        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showMonitor(MainWindow))
         self.buttBack.setGeometry(QtCore.QRect(50, 30, 141, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -373,7 +370,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.buttBack.setText(_translate("MainWindow", "Back"))
 
 
-        ## FUNCTION TO DISPLAY WAITING LIST ON TABLE ##
+##----------------------- FUNCTION TO DISPLAY WAITING LIST ON TABLE -------------------------##
 
     def displayList(self):
 
@@ -406,7 +403,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
 
 
-    ## FUNCTION TO ASSIGN BED BASED ON BUTTON PRESSED ##
+##--------------------- FUNCTION TO ASSIGN BED BASED ON BUTTON PRESSED ----------------------------##
 
     def chooseBed(self):
 
@@ -440,7 +437,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     noDuplicates = False
         return noDuplicates
 
-    def bedStatusCheck(self, bedIndex):     ## WE NEED THE BED STATUS INFORMATION FROM PATIENT LIST
+    def bedStatusCheck(self, bedIndex): 
         bedAvailable = True
         bedOccupied = self.getOccupiedBeds()
 
@@ -450,7 +447,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 break
         
         return bedAvailable
-        
+    
+    def isolationCheck(self, currRow, isoColumn):
+        isolation = False
+        i_item = self.tableWidget.item(currRow, isoColumn)          # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
+        if i_item:
+            item = self.tableWidget.item(currRow, isoColumn).text()
+            if item == "Y":
+                isolation = True
+            elif item == "N":
+                isolation = False
+        return isolation
+
+
+
+##------------------------- FUNCTIONS TO COLOUR AVAILABLE BEDS ---------------------------##
+
     # fetching for list of beds currently being occupied
     def getOccupiedBeds(self):
         patsBeds = getPatientsinBed()   
@@ -472,23 +484,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                     button.setStyleSheet(brush)
 
 
-    def isolationCheck(self, currRow, isoColumn):
-        isolation = False
-        i_item = self.tableWidget.item(currRow, isoColumn)          # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
-        if i_item:
-            item = self.tableWidget.item(currRow, isoColumn).text()
-            if item == "Y":
-                isolation = True
-            elif item == "N":
-                isolation = False
-        return isolation
+
+##---------------------- FUNCTION TO CONTROL ACTIONS AFTER "ASSIGN" IS PRESSED -------------------------------##             
 
 
-
-
-    ## FUNCTION TO CONTROL ACTIONS AFTER "ASSIGN" IS PRESSED ##             
-
-    def assignBed(self, MainWindow):                                # PROBLEM: TWO RECORDS OF PATIENTS ARE ADDED TO DB UPON "ASSIGN"
+    def assignBed(self, MainWindow):                               
         self.buttAssign.setEnabled(False)
 
         patsWithBeds = self.findPatsWithBeds()      # collect a list of patients that have been assigned beds

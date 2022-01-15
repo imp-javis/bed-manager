@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from amu_database import getColournum, bedAvailability
+from amu_database import getColournum, bedAvailability, getPatientsinBed
 from waitlist import Ui_waitlist
 from PyQt5.QtCore import QTimer, QTime, Qt, pyqtPickleProtocol
 import threading 
@@ -70,152 +70,15 @@ class Ui_MainWindow2(object):
         self.pos= pos
         self.user= user
         self.phototag= phototag
-        palette = QtGui.QPalette()
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Button, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Light, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Midlight, brush)
-        brush = QtGui.QBrush(QtGui.QColor(127, 127, 127))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Dark, brush)
-        brush = QtGui.QBrush(QtGui.QColor(170, 170, 170))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Mid, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Text, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.BrightText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Shadow, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.AlternateBase, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 220))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ToolTipBase, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ToolTipText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Button, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Light, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Midlight, brush)
-        brush = QtGui.QBrush(QtGui.QColor(127, 127, 127))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Dark, brush)
-        brush = QtGui.QBrush(QtGui.QColor(170, 170, 170))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Mid, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Text, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.BrightText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Shadow, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.AlternateBase, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 220))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ToolTipBase, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ToolTipText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(127, 127, 127))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Light, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Midlight, brush)
-        brush = QtGui.QBrush(QtGui.QColor(127, 127, 127))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Dark, brush)
-        brush = QtGui.QBrush(QtGui.QColor(170, 170, 170))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Mid, brush)
-        brush = QtGui.QBrush(QtGui.QColor(127, 127, 127))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Text, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.BrightText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(127, 127, 127))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Shadow, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.AlternateBase, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 220))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipBase, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-        MainWindow2.setPalette(palette)
         self.centralwidget = QtWidgets.QWidget(MainWindow2)
         self.centralwidget.setObjectName("centralwidget")
-        self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        self.label_6.setGeometry(QtCore.QRect(50, -10, 241, 161))
+        self.title_AMU = QtWidgets.QLabel(self.centralwidget)
+        self.title_AMU.setGeometry(QtCore.QRect(50, -10, 241, 161))
         font = QtGui.QFont()
         font.setFamily("Avenir")
         font.setPointSize(24)
-        self.label_6.setFont(font)
-        self.label_6.setObjectName("label_6")
+        self.title_AMU.setFont(font)
+        self.title_AMU.setObjectName("title_AMU")
         self.widget_6 = QtWidgets.QWidget(self.centralwidget)
         self.widget_6.setGeometry(QtCore.QRect(1060, 670, 371, 131))
         self.widget_6.setStyleSheet("background-color: transparent;\n"
@@ -296,6 +159,8 @@ class Ui_MainWindow2(object):
         self.username.setAlignment(QtCore.Qt.AlignCenter)
         self.username.setWordWrap(True)
         self.username.setObjectName("username")
+
+        # waitlist button on side menu
         self.editbutton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showWaitlist(MainWindow2, self.user, self.phototag, self.pos))
         self.editbutton.setGeometry(QtCore.QRect(50, 130, 261, 171))
         self.editbutton.setStyleSheet("background-color: transparent;\n"
@@ -306,6 +171,8 @@ class Ui_MainWindow2(object):
 "")
         self.editbutton.setText("")
         self.editbutton.setObjectName("editbutton")
+
+        # bed allocation button on side menu
         self.allocationbutton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showBed(MainWindow2, self.user, self.phototag, self.pos))
         self.allocationbutton.setGeometry(QtCore.QRect(50, 300, 261, 141))
         self.allocationbutton.setStyleSheet("background-color: transparent;\n"
@@ -316,6 +183,8 @@ class Ui_MainWindow2(object):
 "")
         self.allocationbutton.setText("")
         self.allocationbutton.setObjectName("allocationbutton")
+
+        # patient status button on side menu
         self.patientinbedbutton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showPatientinBed(MainWindow2, self.user, self.phototag, self.pos))
         self.patientinbedbutton.setGeometry(QtCore.QRect(50, 440, 271, 141))
         self.patientinbedbutton.setStyleSheet("background-color: transparent;\n"
@@ -324,16 +193,21 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;\n"
 "")
+        
         self.patientinbedbutton.setObjectName("patientinbedbutton")
-        self.dischargelistbutton = QtWidgets.QPushButton(self.centralwidget)
-        self.dischargelistbutton.setGeometry(QtCore.QRect(50, 580, 271, 141))
-        self.dischargelistbutton.setStyleSheet("background-color: transparent;\n"
+
+        # edit downstream ward bed availability button on side menu
+        self.downWardButton = QtWidgets.QPushButton(self.centralwidget)
+        self.downWardButton.setGeometry(QtCore.QRect(50, 580, 271, 141))
+        self.downWardButton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/New Icon Ward Availability.png);\n"
 "background: none;\n"
 "border:none;\n"
 "background-repeat:none;\n"
 "")
-        self.dischargelistbutton.setObjectName("dischargelistbutton")
+        self.downWardButton.setObjectName("downWardButton")
+
+        # title box for "waitlist status"
         self.groupBox_2 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_2.setGeometry(QtCore.QRect(460, 20, 61, 61))
         self.groupBox_2.setStyleSheet("background-color: transparent;\n"
@@ -342,13 +216,20 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.groupBox_2.setObjectName("groupBox_2")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(530, 360, 311, 41))
+
+        self.title_waitlistStatus = QtWidgets.QLabel(self.centralwidget)
+        self.title_waitlistStatus.setGeometry(QtCore.QRect(540, 30, 311, 41))
+        self.title_waitlistStatus.setObjectName("title_waitlistStatus")
+
+        # title box for "amu bed live monitor"
+        self.title_bedMonitor = QtWidgets.QLabel(self.centralwidget)
+        self.title_bedMonitor.setGeometry(QtCore.QRect(530, 360, 311, 41))
         font = QtGui.QFont()
         font.setFamily("Avenir")
         font.setPointSize(24)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
+        self.title_bedMonitor.setFont(font)
+        self.title_bedMonitor.setObjectName("title_bedMonitor")
+
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(460, 350, 61, 51))
         self.groupBox.setStyleSheet("background-color: transparent;\n"
@@ -357,13 +238,17 @@ class Ui_MainWindow2(object):
 "border:none;\n"
 "background-repeat:none;")
         self.groupBox.setObjectName("groupBox")
-        self.frame_2 = QtWidgets.QFrame(self.centralwidget)
-        self.frame_2.setGeometry(QtCore.QRect(480, 420, 581, 341))
-        self.frame_2.setStyleSheet("background-color:rgba(239, 239, 239, 211)")
-        self.frame_2.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_2.setObjectName("frame_2")
-        self.sr1 = QtWidgets.QFrame(self.frame_2)
+
+        # map of bed layout in amu
+        self.bedlayoutframe = QtWidgets.QFrame(self.centralwidget)
+        self.bedlayoutframe.setGeometry(QtCore.QRect(480, 420, 581, 341))
+        self.bedlayoutframe.setStyleSheet("background-color:rgba(239, 239, 239, 211)")
+        self.bedlayoutframe.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.bedlayoutframe.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.bedlayoutframe.setObjectName("bedlayoutframe")
+
+        # self isolation room 1
+        self.sr1 = QtWidgets.QFrame(self.bedlayoutframe)
         self.sr1.setGeometry(QtCore.QRect(20, 20, 101, 51))
         self.sr1.setStyleSheet("background-color:rgb(31, 127, 90)")
         self.sr1.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -371,10 +256,12 @@ class Ui_MainWindow2(object):
         self.sr1.setObjectName("sr1")
         self.R1 = QtWidgets.QLabel(self.sr1)
         self.R1.setGeometry(QtCore.QRect(10, 10, 81, 31))
-        self.R1.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.R1.setText("")
+        self.R1.setAlignment(QtCore.Qt.AlignCenter)
+        self.R1.setText("R1")
         self.R1.setObjectName("R1")
-        self.sr2 = QtWidgets.QFrame(self.frame_2)
+
+        # self isolation room 2
+        self.sr2 = QtWidgets.QFrame(self.bedlayoutframe)
         self.sr2.setGeometry(QtCore.QRect(20, 100, 101, 51))
         self.sr2.setStyleSheet("background-color:rgb(31, 127, 90)")
         self.sr2.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -382,10 +269,12 @@ class Ui_MainWindow2(object):
         self.sr2.setObjectName("sr2")
         self.R2 = QtWidgets.QLabel(self.sr2)
         self.R2.setGeometry(QtCore.QRect(10, 10, 81, 31))
-        self.R2.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.R2.setText("")
+        self.R2.setAlignment(QtCore.Qt.AlignCenter)
+        self.R2.setText("R2")
         self.R2.setObjectName("R2")
-        self.sr3 = QtWidgets.QFrame(self.frame_2)
+
+        # self isolation room 3
+        self.sr3 = QtWidgets.QFrame(self.bedlayoutframe)
         self.sr3.setGeometry(QtCore.QRect(20, 180, 101, 51))
         self.sr3.setStyleSheet("background-color:rgb(31, 127, 90)")
         self.sr3.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -393,10 +282,12 @@ class Ui_MainWindow2(object):
         self.sr3.setObjectName("sr3")
         self.R3 = QtWidgets.QLabel(self.sr3)
         self.R3.setGeometry(QtCore.QRect(10, 10, 81, 31))
-        self.R3.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.R3.setText("")
+        self.R3.setAlignment(QtCore.Qt.AlignCenter)
+        self.R3.setText("R3")
         self.R3.setObjectName("R3")
-        self.sr4 = QtWidgets.QFrame(self.frame_2)
+
+        # self isolation room 4
+        self.sr4 = QtWidgets.QFrame(self.bedlayoutframe)
         self.sr4.setGeometry(QtCore.QRect(20, 260, 101, 51))
         self.sr4.setStyleSheet("background-color:rgb(31, 127, 90)")
         self.sr4.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -404,136 +295,161 @@ class Ui_MainWindow2(object):
         self.sr4.setObjectName("sr4")
         self.R4 = QtWidgets.QLabel(self.sr4)
         self.R4.setGeometry(QtCore.QRect(10, 10, 81, 31))
-        self.R4.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.R4.setText("")
+        self.R4.setAlignment(QtCore.Qt.AlignCenter)
+        self.R4.setText("R4")
         self.R4.setObjectName("R4")
-        self.bayA = QtWidgets.QFrame(self.frame_2)
+
+        # bay A
+        self.bayA = QtWidgets.QFrame(self.bedlayoutframe)
         self.bayA.setGeometry(QtCore.QRect(160, 20, 181, 131))
         self.bayA.setStyleSheet("background-color:rgb(31, 127, 90)")
         self.bayA.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.bayA.setFrameShadow(QtWidgets.QFrame.Raised)
         self.bayA.setObjectName("bayA")
+
         self.A1 = QtWidgets.QLabel(self.bayA)
         self.A1.setGeometry(QtCore.QRect(25, 10, 31, 51))
-        self.A1.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.A1.setText("")
+        self.A1.setAlignment(QtCore.Qt.AlignCenter)
+        self.A1.setText("A1")
         self.A1.setObjectName("A1")
-        self.A3 = QtWidgets.QLabel(self.bayA)
-        self.A3.setGeometry(QtCore.QRect(120, 10, 31, 51))
-        self.A3.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.A3.setText("")
-        self.A3.setObjectName("A3")
+
         self.A2 = QtWidgets.QLabel(self.bayA)
         self.A2.setGeometry(QtCore.QRect(25, 70, 31, 51))
-        self.A2.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.A2.setText("")
+        self.A2.setAlignment(QtCore.Qt.AlignCenter)
+        self.A2.setText("A2")
         self.A2.setObjectName("A2")
+
+        self.A3 = QtWidgets.QLabel(self.bayA)
+        self.A3.setGeometry(QtCore.QRect(120, 10, 31, 51))
+        self.A3.setAlignment(QtCore.Qt.AlignCenter)
+        self.A3.setText("A3")
+        self.A3.setObjectName("A3")
+
         self.A4 = QtWidgets.QLabel(self.bayA)
         self.A4.setGeometry(QtCore.QRect(120, 70, 31, 51))
-        self.A4.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.A4.setText("")
+        self.A4.setAlignment(QtCore.Qt.AlignCenter)
+        self.A4.setText("A4")
         self.A4.setObjectName("A4")
-        self.bayC = QtWidgets.QFrame(self.frame_2)
-        self.bayC.setGeometry(QtCore.QRect(160, 180, 181, 131))
-        self.bayC.setStyleSheet("background-color:rgb(31, 127, 90)")
-        self.bayC.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.bayC.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.bayC.setObjectName("bayC")
-        self.C1 = QtWidgets.QLabel(self.bayC)
-        self.C1.setGeometry(QtCore.QRect(25, 10, 31, 51))
-        self.C1.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.C1.setText("")
-        self.C1.setObjectName("C1")
-        self.C3 = QtWidgets.QLabel(self.bayC)
-        self.C3.setGeometry(QtCore.QRect(120, 10, 31, 51))
-        self.C3.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.C3.setText("")
-        self.C3.setObjectName("C3")
-        self.C2 = QtWidgets.QLabel(self.bayC)
-        self.C2.setGeometry(QtCore.QRect(25, 70, 31, 51))
-        self.C2.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.C2.setText("")
-        self.C2.setObjectName("C2")
-        self.C4 = QtWidgets.QLabel(self.bayC)
-        self.C4.setGeometry(QtCore.QRect(120, 70, 31, 51))
-        self.C4.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.C4.setText("")
-        self.C4.setObjectName("C4")
-        self.bayB = QtWidgets.QFrame(self.frame_2)
+
+        # bay B
+        self.bayB = QtWidgets.QFrame(self.bedlayoutframe)
         self.bayB.setGeometry(QtCore.QRect(370, 20, 181, 131))
         self.bayB.setStyleSheet("background-color:rgb(31, 127, 90)")
         self.bayB.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.bayB.setFrameShadow(QtWidgets.QFrame.Raised)
         self.bayB.setObjectName("bayB")
+
         self.B1 = QtWidgets.QLabel(self.bayB)
         self.B1.setGeometry(QtCore.QRect(25, 10, 31, 51))
-        self.B1.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.B1.setText("")
+        self.B1.setAlignment(QtCore.Qt.AlignCenter)
+        self.B1.setText("B1")
         self.B1.setObjectName("B1")
-        self.B3 = QtWidgets.QLabel(self.bayB)
-        self.B3.setGeometry(QtCore.QRect(120, 10, 31, 51))
-        self.B3.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.B3.setText("")
-        self.B3.setObjectName("B3")
+
         self.B2 = QtWidgets.QLabel(self.bayB)
         self.B2.setGeometry(QtCore.QRect(25, 70, 31, 51))
-        self.B2.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.B2.setText("")
+        self.B2.setAlignment(QtCore.Qt.AlignCenter)
+        self.B2.setText("B2")
         self.B2.setObjectName("B2")
+
+        self.B3 = QtWidgets.QLabel(self.bayB)
+        self.B3.setGeometry(QtCore.QRect(120, 10, 31, 51))
+        self.B3.setAlignment(QtCore.Qt.AlignCenter)
+        self.B3.setText("B3")
+        self.B3.setObjectName("B3")
+
         self.B4 = QtWidgets.QLabel(self.bayB)
         self.B4.setGeometry(QtCore.QRect(120, 70, 31, 51))
-        self.B4.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.B4.setText("")
+        self.B4.setAlignment(QtCore.Qt.AlignCenter)
+        self.B4.setText("B4")
         self.B4.setObjectName("B4")
-        self.bayD = QtWidgets.QFrame(self.frame_2)
+
+        # bay C
+        self.bayC = QtWidgets.QFrame(self.bedlayoutframe)
+        self.bayC.setGeometry(QtCore.QRect(160, 180, 181, 131))
+        self.bayC.setStyleSheet("background-color:rgb(31, 127, 90)")
+        self.bayC.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.bayC.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.bayC.setObjectName("bayC")
+
+        self.C1 = QtWidgets.QLabel(self.bayC)
+        self.C1.setGeometry(QtCore.QRect(25, 10, 31, 51))
+        self.C1.setAlignment(QtCore.Qt.AlignCenter)
+        self.C1.setText("C1")
+        self.C1.setObjectName("C1")
+
+        self.C2 = QtWidgets.QLabel(self.bayC)
+        self.C2.setGeometry(QtCore.QRect(25, 70, 31, 51))
+        self.C2.setAlignment(QtCore.Qt.AlignCenter)
+        self.C2.setText("C2")
+        self.C2.setObjectName("C2")
+
+        self.C3 = QtWidgets.QLabel(self.bayC)
+        self.C3.setGeometry(QtCore.QRect(120, 10, 31, 51))
+        self.C3.setAlignment(QtCore.Qt.AlignCenter)
+        self.C3.setText("C3")
+        self.C3.setObjectName("C3")
+
+        self.C4 = QtWidgets.QLabel(self.bayC)
+        self.C4.setGeometry(QtCore.QRect(120, 70, 31, 51))
+        self.C4.setAlignment(QtCore.Qt.AlignCenter)
+        self.C4.setText("C4")
+        self.C4.setObjectName("C4")
+
+        # bay D
+        self.bayD = QtWidgets.QFrame(self.bedlayoutframe)
         self.bayD.setGeometry(QtCore.QRect(370, 180, 181, 131))
         self.bayD.setStyleSheet("background-color:rgb(31, 127, 90)")
         self.bayD.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.bayD.setFrameShadow(QtWidgets.QFrame.Raised)
         self.bayD.setObjectName("bayD")
+
         self.D1 = QtWidgets.QLabel(self.bayD)
         self.D1.setGeometry(QtCore.QRect(25, 10, 31, 51))
-        self.D1.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.D1.setText("")
+        self.D1.setAlignment(QtCore.Qt.AlignCenter)
+        self.D1.setText("D1")
         self.D1.setObjectName("D1")
-        self.D3 = QtWidgets.QLabel(self.bayD)
-        self.D3.setGeometry(QtCore.QRect(120, 10, 31, 51))
-        self.D3.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.D3.setText("")
-        self.D3.setObjectName("D3")
+
         self.D2 = QtWidgets.QLabel(self.bayD)
         self.D2.setGeometry(QtCore.QRect(25, 70, 31, 51))
-        self.D2.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.D2.setText("")
+        self.D2.setAlignment(QtCore.Qt.AlignCenter)
+        self.D2.setText("D2")
         self.D2.setObjectName("D2")
+
+        self.D3 = QtWidgets.QLabel(self.bayD)
+        self.D3.setGeometry(QtCore.QRect(120, 10, 31, 51))
+        self.D3.setAlignment(QtCore.Qt.AlignCenter)
+        self.D3.setText("D3")
+        self.D3.setObjectName("D3")
+
         self.D4 = QtWidgets.QLabel(self.bayD)
         self.D4.setGeometry(QtCore.QRect(120, 70, 31, 51))
-        self.D4.setStyleSheet("background-color:rgb(154, 255, 117)")
-        self.D4.setText("")
+        self.D4.setAlignment(QtCore.Qt.AlignCenter)
+        self.D4.setText("D4")
         self.D4.setObjectName("D4")
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(540, 30, 311, 41))
-        self.label_2.setObjectName("label_2")
-        self.label_6.raise_()
+
+        self.title_AMU.raise_()
         self.widget_6.raise_()
         self.frame.raise_()
         self.editbutton.raise_()
         self.allocationbutton.raise_()
         self.patientinbedbutton.raise_()
-        self.dischargelistbutton.raise_()
+        self.downWardButton.raise_()
         self.photo.raise_()
         self.username.raise_()
         self.groupBox_2.raise_()
-        self.label.raise_()
+        self.title_bedMonitor.raise_()
         self.groupBox.raise_()
-        self.frame_2.raise_()
-        self.label_2.raise_()
+        self.bedlayoutframe.raise_()
+        self.title_waitlistStatus.raise_()
 
+        # update number of patients in waitlist of their respective priority categories
         collist= getColournum()
         self.green.setText(str(collist[0][0]))
         self.yellow.setText(str(collist[0][1]))
         self.red.setText(str(collist[0][2]))
         self.black.setText(str(collist[0][3]))
+
+        self.setBedStatusCol()
 
         MainWindow2.setCentralWidget(self.centralwidget)
 
@@ -541,13 +457,67 @@ class Ui_MainWindow2(object):
         self.retranslateUi(MainWindow2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow2)
 
+
+
+## ----------------------------colour coding for bed allocation--------------------------------------------
+
+# occupied      grey    rgb(190, 190, 190)
+# discharge     red     rgb(239, 83, 80)
+# downstream    blue    rgb(79, 195, 247)
+# free          green   rgb(115, 255, 104)
+
+    
+    # fetch list of occupied beds and their corrresponding destination plan status colours
+    def getBedStatus(self):
+        
+        patsBeds = getPatientsinBed()   # pat in patsBeds, pat[1] = bed, pat[2] = discharge, pat[6] = downstream
+        bedStatus = []
+        print(patsBeds)
+
+        for pat in patsBeds:
+
+            if pat[2] > 0:                  # check if discharge is selected
+                brush = "background-color: rgb(239, 83, 80)"
+                bedStatus.append([pat[1],brush])
+            elif pat[6] != "Select":        # check if downstream is selected (by checking if ward has been assigned)
+                brush = "background-color: rgb(79, 195, 247)"
+                bedStatus.append([pat[1],brush])
+            else:                           # else, this bed is marked as occupied
+                brush = "background-color: rgb(190, 190, 190)"
+                bedStatus.append([pat[1],brush])
+            
+        return bedStatus
+
+
+    def setBedStatusCol(self):
+
+        bedStatus = self.getBedStatus()     # gets list of beds that are currently occupied + their status (from function above)
+        print(bedStatus)
+
+        # fetch list of bed labels:
+        bedLabel = self.bedlayoutframe.findChildren(QtWidgets.QLabel)
+        
+        for bed in bedLabel:
+            print(bed.objectName())
+
+        for label in bedLabel:
+            for bed in bedStatus:
+                if label.objectName() == bed[0]:       # for each label, cross check with corresponding info
+                    label.setStyleSheet(bed[1])        # if bed is occupied, update colour accordingly with "brush" (aka. red, blue, or grey)
+                    break
+                else:
+                    label.setStyleSheet("background-color: rgb(115, 255, 104)")  # if bed is not occupied, default is to mark bed as free (aka. green)
+
+
+
     def retranslateUi(self, MainWindow2):
         _translate = QtCore.QCoreApplication.translate
         MainWindow2.setWindowTitle(_translate("MainWindow2", "Bed Manager"))
-        self.label_6.setText(_translate("MainWindow2", "<html><head/><body><p>Acute Medical Unit </p><p>Management Systems</p></body></html>"))
-        self.bedavailable.setText(_translate("MainWindow2", "bedavailability"))
-        self.label.setText(_translate("MainWindow2", "AMU Bed Live Monitoring"))
-        self.label_2.setText(_translate("MainWindow2", "Waitlist Status"))
+        self.title_AMU.setText(_translate("MainWindow2", "<html><head/><body><p>Acute Medical Unit </p><p>Management Systems</p></body></html>"))
+        freeBeds = 20 - len(getPatientsinBed())
+        self.bedavailable.setText(_translate("MainWindow2", str(freeBeds))) ##### need to say actual number of beds available
+        self.title_bedMonitor.setText(_translate("MainWindow2", "AMU Bed Live Monitoring"))
+        self.title_waitlistStatus.setText(_translate("MainWindow2", "Waitlist Status"))
 
 import mongraphics
 

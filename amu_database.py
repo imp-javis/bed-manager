@@ -209,6 +209,11 @@ def getPatientsDownstream():
     items = c.fetchall()
     return items
 
+def getPatientsDischarged():
+    c.execute("SELECT * FROM patient_inAMU WHERE (discharge>0 and dis_sum>0 and dis_meds>0)")
+    items = c.fetchall()
+    return items
+
 def deletePatfromBed(id):
     c.execute("DELETE FROM patient_inAMU WHERE patID= '{}'".format(id))
     conn.commit()
