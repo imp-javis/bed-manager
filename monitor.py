@@ -99,25 +99,25 @@ class Ui_MainWindow2(object):
         self.green = QtWidgets.QLabel(self.frame)
         self.green.setGeometry(QtCore.QRect(70, 60, 81, 21))
         font = QtGui.QFont()
-        font.setFamily("Times New Roman")
+        font.setFamily("Arial")
         self.green.setFont(font)
         self.green.setObjectName("green")
         self.yellow = QtWidgets.QLabel(self.frame)
         self.yellow.setGeometry(QtCore.QRect(70, 110, 91, 16))
         font = QtGui.QFont()
-        font.setFamily("Times New Roman")
+        font.setFamily("Arial")
         self.yellow.setFont(font)
         self.yellow.setObjectName("yellow")
         self.red = QtWidgets.QLabel(self.frame)
         self.red.setGeometry(QtCore.QRect(70, 160, 91, 16))
         font = QtGui.QFont()
-        font.setFamily("Times New Roman")
+        font.setFamily("Arial")
         self.red.setFont(font)
         self.red.setObjectName("red")
         self.black = QtWidgets.QLabel(self.frame)
         self.black.setGeometry(QtCore.QRect(70, 210, 81, 16))
         font = QtGui.QFont()
-        font.setFamily("Times New Roman")
+        font.setFamily("Arial")
         self.black.setFont(font)
         self.black.setObjectName("black")
         self.waitstatbckground = QtWidgets.QLabel(self.frame)
@@ -129,7 +129,7 @@ class Ui_MainWindow2(object):
         self.bedavailable = QtWidgets.QLabel(self.frame)
         self.bedavailable.setGeometry(QtCore.QRect(320, 70, 121, 81))
         font = QtGui.QFont()
-        font.setFamily("Times New Roman")
+        font.setFamily("Arial")
         font.setPointSize(16)
         self.bedavailable.setFont(font)
         self.bedavailable.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
@@ -151,7 +151,7 @@ class Ui_MainWindow2(object):
         self.username = QtWidgets.QLabel(self.centralwidget)
         self.username.setGeometry(QtCore.QRect(1110, 250, 281, 61))
         font = QtGui.QFont()
-        font.setFamily("Times New Roman")
+        font.setFamily("Arial")
         font.setPointSize(20)
         self.username.setText("Dr {}".format(self.user))
         self.username.setFont(font)
@@ -217,9 +217,13 @@ class Ui_MainWindow2(object):
 "background-repeat:none;")
         self.groupBox_2.setObjectName("groupBox_2")
 
-        self.title_waitlistStatus = QtWidgets.QLabel(self.centralwidget)
-        self.title_waitlistStatus.setGeometry(QtCore.QRect(540, 30, 311, 41))
-        self.title_waitlistStatus.setObjectName("title_waitlistStatus")
+        self.title_AMUstatus = QtWidgets.QLabel(self.centralwidget)
+        self.title_AMUstatus.setGeometry(QtCore.QRect(540, 30, 311, 41))
+        font = QtGui.QFont()
+        font.setFamily("Avenir")
+        font.setPointSize(24)
+        self.title_AMUstatus.setFont(font)
+        self.title_AMUstatus.setObjectName("title_AMUstatus")
 
         # title box for "amu bed live monitor"
         self.title_bedMonitor = QtWidgets.QLabel(self.centralwidget)
@@ -440,7 +444,7 @@ class Ui_MainWindow2(object):
         self.title_bedMonitor.raise_()
         self.groupBox.raise_()
         self.bedlayoutframe.raise_()
-        self.title_waitlistStatus.raise_()
+        self.title_AMUstatus.raise_()
 
         # update number of patients in waitlist of their respective priority categories
         collist= getColournum()
@@ -477,13 +481,13 @@ class Ui_MainWindow2(object):
         for pat in patsBeds:
 
             if pat[2] > 0:                  # check if discharge is selected
-                brush = "background-color: rgb(239, 83, 80)"
+                brush = "background-color: rgb(239, 83, 80)"    # set red
                 bedStatus.append([pat[1],brush])
             elif pat[6] != "Select":        # check if downstream is selected (by checking if ward has been assigned)
-                brush = "background-color: rgb(79, 195, 247)"
+                brush = "background-color: rgb(79, 195, 247)"   # set blue
                 bedStatus.append([pat[1],brush])
             else:                           # else, this bed is marked as occupied
-                brush = "background-color: rgb(190, 190, 190)"
+                brush = "background-color: rgb(190, 190, 190)"  # set grey
                 bedStatus.append([pat[1],brush])
             
         return bedStatus
@@ -515,9 +519,9 @@ class Ui_MainWindow2(object):
         MainWindow2.setWindowTitle(_translate("MainWindow2", "Bed Manager"))
         self.title_AMU.setText(_translate("MainWindow2", "<html><head/><body><p>Acute Medical Unit </p><p>Management Systems</p></body></html>"))
         freeBeds = 20 - len(getPatientsinBed())
-        self.bedavailable.setText(_translate("MainWindow2", str(freeBeds))) ##### need to say actual number of beds available
+        self.bedavailable.setText(_translate("MainWindow2", str(freeBeds)))
         self.title_bedMonitor.setText(_translate("MainWindow2", "AMU Bed Live Monitoring"))
-        self.title_waitlistStatus.setText(_translate("MainWindow2", "Waitlist Status"))
+        self.title_AMUstatus.setText(_translate("MainWindow2", "AMU Status"))
 
 import mongraphics
 
