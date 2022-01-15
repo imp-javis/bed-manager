@@ -19,20 +19,22 @@ isoColumn = 3
 bedColumn = 4
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
-    def showMonitor(self, main_win):
+    def showMonitor(self, main_win, user, phototag, pos):
         from monitor import Ui_MainWindow2
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow2()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window, user, phototag, pos)
         self.window.show()
         main_win.close()               
 
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, user, phototag, pos):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1370, 772)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-
+        self.user= user
+        self.phototag= phototag
+        self.position= pos
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(50, 120, 580, 580))
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
@@ -259,14 +261,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.D4.setObjectName("D4")
 
         ## Assign/Back buttons
-        self.buttAssign = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.assignBed(MainWindow))
+        self.buttAssign = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.assignBed(MainWindow, self.user, self.phototag, self.position))
         self.buttAssign.setGeometry(QtCore.QRect(1130, 640, 181, 61))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.buttAssign.setFont(font)
         self.buttAssign.setObjectName("buttAssign")
 
-        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showMonitor(MainWindow))
+        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showMonitor(MainWindow, self.user, self.phototag, self.position))
         self.buttBack.setGeometry(QtCore.QRect(50, 30, 141, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -469,7 +471,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 ##---------------------- FUNCTION TO CONTROL ACTIONS AFTER "ASSIGN" IS PRESSED -------------------------------##             
 
 
-    def assignBed(self, MainWindow):                               
+    def assignBed(self, MainWindow, user, phototag, pos):                               
         self.buttAssign.setEnabled(False)
 
         patsWithBeds = self.findPatsWithBeds()      # collect a list of patients that have been assigned beds
@@ -477,13 +479,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         print(patsWithBeds)
 
         for pat in patsWithBeds:
-            addtoBed(pat[0],pat[1],0,0,0,0,"Select",0) # add patsWithBeds to "patientStatus" table in DB
+            addtoBed(pat[0],pat[1],0,0,0,0,"Select") # add patsWithBeds to "patientStatus" table in DB
             deletePatfromWaitlist(pat[0])         # delete patsWithBeds from "waitlist" table in DB
             print("added patient")
 
         #return to main screen
         print("about to close window")
-        self.showMonitor(MainWindow)
+        self.showMonitor(MainWindow, user, phototag, pos)
      
             
     def findPatsWithBeds(self):

@@ -26,6 +26,7 @@ c = conn.cursor()
 # c.execute("INSERT INTO registered_user VALUES ('javis', '1234javis', 'marklee.png', 'amu', 'Mark Lee')")
 # c.execute("INSERT INTO registered_user VALUES ('new', '1234', 'taeyong.png', 'juniordoc', 'Lee Taeyong')")
 # c.execute("INSERT INTO registered_user VALUES ('nurse', '1234', 'taeyong.png', 'nurse', 'Nurse')")
+# c.execute("INSERT INTO registered_user VALUES ('otherward', '1234', 'taeyong.png', 'staff', 'staff 1')")
 
 # conn.commit()
 def login(email, password): #login function
@@ -179,12 +180,12 @@ def resetpatientinamu():
         dis_meds integer,
         downstream text)""") 
 
-#resetpatientinamu()
+# resetpatientinamu()
 
 
 #--------------- bed allocation functions -----------------
 
-def addtoBed(patID, bed, discharge, lounge, dis_sum, dis_meds, downstream, death):
+def addtoBed(patID, bed, discharge, lounge, dis_sum, dis_meds, downstream):
     c.execute("INSERT INTO patient_inAMU VALUES (:patID, :bed, :discharge, :lounge, :dis_sum, :dis_meds, :downstream)", {'patID': patID, 'bed': bed, 'discharge': discharge, 'lounge': lounge, 'dis_sum': dis_sum, 'dis_meds': dis_meds, 'downstream': downstream})
     conn.commit()
 
@@ -298,4 +299,5 @@ def deleteWardBeds():
     c.execute("DELETE FROM wardAvailability")
     conn.commit()
 
+print(getPatientsinBed())
 # conn.close() #close connections

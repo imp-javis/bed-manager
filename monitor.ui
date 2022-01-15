@@ -431,6 +431,12 @@
   <property name="windowTitle">
    <string>Bed Manager</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: white;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label_6">
     <property name="geometry">
@@ -443,7 +449,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Avenir</family>
+      <family>Times New Roman</family>
       <pointsize>24</pointsize>
      </font>
     </property>
@@ -771,7 +777,7 @@ background-repeat:none;</string>
     </property>
     <property name="font">
      <font>
-      <family>Avenir</family>
+      <family>Times New Roman</family>
       <pointsize>24</pointsize>
      </font>
     </property>
@@ -1295,6 +1301,12 @@ background-repeat:none;</string>
       <width>311</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>24</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Waitlist Status</string>

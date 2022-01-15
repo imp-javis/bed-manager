@@ -20,7 +20,15 @@ freeColumn = 0
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def back(self, waitlist, user, phototag, pos):
+        # from monitor import Ui_MainWindow2 # function is imported here to prevent runtime callback (circular import)
+        # self.window = QtWidgets.QMainWindow()
+        # self.ui = Ui_MainWindow2()
+        # self.ui.setupUi(self.window, user, phototag, pos)
+        # self.window.show()
+        waitlist.close()
+
+    def setupUi(self, MainWindow, user, phototag, pos):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(649, 457)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -66,7 +74,7 @@ class Ui_MainWindow(object):
         self.wardBedEdit.setHorizontalHeaderItem(0, item)
 
         # confirm changes button
-        self.buttConfirm = QtWidgets.QPushButton(self.centralwidget)
+        self.buttConfirm = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.confirmWardBeds)
         self.buttConfirm.setGeometry(QtCore.QRect(480, 20, 140, 50))
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -82,7 +90,7 @@ class Ui_MainWindow(object):
         self.wardAvailTitle.setObjectName("wardAvailTitle")
 
         # back button to return to main
-        self.buttBack = QtWidgets.QPushButton(self.centralwidget)
+        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.back(MainWindow, user, phototag, pos))
         self.buttBack.setGeometry(QtCore.QRect(20, 20, 140, 50))
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -91,9 +99,7 @@ class Ui_MainWindow(object):
         self.buttBack.setObjectName("buttBack")
 
         MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)\

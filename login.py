@@ -352,13 +352,6 @@ class Ui_LoginWindow(object):
         self.nhslogo.setScaledContents(True)
         self.nhslogo.setObjectName("nhslogo")
         LoginWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(LoginWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1440, 24))
-        self.menubar.setObjectName("menubar")
-        LoginWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(LoginWindow)
-        self.statusbar.setObjectName("statusbar")
-        LoginWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(LoginWindow)
         QtCore.QMetaObject.connectSlotsByName(LoginWindow)

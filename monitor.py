@@ -63,21 +63,21 @@ class Ui_MainWindow2(object):
         else: 
                 self.showBox()
 
-    def showdownWard(self, monitor,  user, phototag, pos): # show patient window
+    def showdownWard(self, user, phototag, pos): # show patient window
         from wardBedEdit import Ui_MainWindow
-        if self.pos == 'downward':
+        if self.pos == 'staff' or self.pos == 'amu':
                 self.window = QtWidgets.QMainWindow()
                 self.ui = Ui_MainWindow()
                 self.ui.setupUi(self.window, user, phototag, pos)
                 self.window.show()
-                monitor.close()
         else: 
                 self.showBox()
 
     def setupUi(self, MainWindow2, user, phototag, pos):
         MainWindow2.setObjectName("MainWindow2")
         MainWindow2.setWindowModality(QtCore.Qt.WindowModal)
-        MainWindow2.showMaximized()
+        MainWindow2.resize(1440, 847)
+        MainWindow2.setStyleSheet("background-color: white;")
         self.pos= pos
         self.user= user
         self.phototag= phototag
@@ -86,7 +86,7 @@ class Ui_MainWindow2(object):
         self.title_AMU = QtWidgets.QLabel(self.centralwidget)
         self.title_AMU.setGeometry(QtCore.QRect(50, -10, 241, 161))
         font = QtGui.QFont()
-        font.setFamily("Avenir")
+        font.setFamily("Times New Roman")
         font.setPointSize(24)
         self.title_AMU.setFont(font)
         self.title_AMU.setObjectName("title_AMU")
@@ -164,7 +164,10 @@ class Ui_MainWindow2(object):
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(20)
-        self.username.setText("Dr {}".format(self.user))
+        if self.pos== 'juniordoc' or self.pos== 'consultant':
+                self.username.setText("Dr {}".format(self.user))
+        else: 
+                self.username.setText("{}".format(self.user))
         self.username.setFont(font)
         self.username.setScaledContents(False)
         self.username.setAlignment(QtCore.Qt.AlignCenter)
@@ -208,7 +211,7 @@ class Ui_MainWindow2(object):
         self.patientinbedbutton.setObjectName("patientinbedbutton")
 
         # edit downstream ward bed availability button on side menu
-        self.downWardButton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showdownWard(MainWindow2, self.user, self.phototag, self.pos))
+        self.downWardButton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showdownWard(self.user, self.phototag, self.pos))
         self.downWardButton.setGeometry(QtCore.QRect(50, 580, 271, 141))
         self.downWardButton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/New Icon Ward Availability.png);\n"
@@ -231,7 +234,7 @@ class Ui_MainWindow2(object):
         self.title_AMUstatus = QtWidgets.QLabel(self.centralwidget)
         self.title_AMUstatus.setGeometry(QtCore.QRect(540, 30, 311, 41))
         font = QtGui.QFont()
-        font.setFamily("Avenir")
+        font.setFamily("Times New Roman")
         font.setPointSize(24)
         self.title_AMUstatus.setFont(font)
         self.title_AMUstatus.setObjectName("title_AMUstatus")
@@ -240,7 +243,7 @@ class Ui_MainWindow2(object):
         self.title_bedMonitor = QtWidgets.QLabel(self.centralwidget)
         self.title_bedMonitor.setGeometry(QtCore.QRect(530, 360, 311, 41))
         font = QtGui.QFont()
-        font.setFamily("Avenir")
+        font.setFamily("Times New Roman")
         font.setPointSize(24)
         self.title_bedMonitor.setFont(font)
         self.title_bedMonitor.setObjectName("title_bedMonitor")
@@ -487,7 +490,7 @@ class Ui_MainWindow2(object):
         
         patsBeds = getPatientsinBed()   # pat in patsBeds, pat[1] = bed, pat[2] = discharge, pat[6] = downstream
         bedStatus = []
-        print(patsBeds)
+        # print(patsBeds)
 
         for pat in patsBeds:
 
@@ -507,13 +510,13 @@ class Ui_MainWindow2(object):
     def setBedStatusCol(self):
 
         bedStatus = self.getBedStatus()     # gets list of beds that are currently occupied + their status (from function above)
-        print(bedStatus)
+        # print(bedStatus)
 
         # fetch list of bed labels:
         bedLabel = self.bedlayoutframe.findChildren(QtWidgets.QLabel)
         
-        for bed in bedLabel:
-            print(bed.objectName())
+        # for bed in bedLabel:
+        #     print(bed.objectName())
 
         for label in bedLabel:
             for bed in bedStatus:
@@ -521,7 +524,7 @@ class Ui_MainWindow2(object):
                     label.setStyleSheet(bed[1])        # if bed is occupied, update colour accordingly with "brush" (aka. red, blue, or grey)
                     break
                 else:
-                    label.setStyleSheet("background-color: rgb(115, 255, 104)")  # if bed is not occupied, default is to mark bed as free (aka. green)
+                    label.setStyleSheet("background-color: rgb(154, 255, 117)")  # if bed is not occupied, default is to mark bed as free (aka. green)
 
 
 
