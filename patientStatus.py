@@ -14,9 +14,12 @@ from amu_database import getBedListSize, getPatientsinBed, getPatientInfo, getLo
 
 
 class Ui_patientStatus(object):
-    def setupUi(self, patientStatus):
+    def setupUi(self, patientStatus, user, phototag, pos):
         patientStatus.setObjectName("patientStatus")
         patientStatus.resize(1429, 883)
+        self.user= user
+        self.phototag= phototag
+        self.pos= pos
         font = QtGui.QFont()
         font.setFamily("Arial")
         patientStatus.setFont(font)
@@ -30,7 +33,7 @@ class Ui_patientStatus(object):
         self.patientListTitle.setObjectName("patientListTitle")
 
         # return to main button
-        self.buttBack = QtWidgets.QPushButton(self.centralwidget)
+        self.buttBack = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.back(patientStatus, self.user, self.phototag, self.pos))
         self.buttBack.setGeometry(QtCore.QRect(30, 30, 140, 50))
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -76,18 +79,18 @@ class Ui_patientStatus(object):
 
         # self.bedTable settings
         self.defColumn(self.bedTable)
-        self.bedTable.setColumnWidth(bedColumn,30)
-        self.bedTable.setColumnWidth(idColumn,30)
-        self.bedTable.setColumnWidth(nameColumn,135)
-        self.bedTable.setColumnWidth(detailsColumn,105)
-        self.bedTable.setColumnWidth(diagnosisColumn,155)
-        self.bedTable.setColumnWidth(isoColumn,75)
-        self.bedTable.setColumnWidth(dischargeColumn,75)
-        self.bedTable.setColumnWidth(dis_loungeColumn,75)
-        self.bedTable.setColumnWidth(dis_sumColumn,75)
-        self.bedTable.setColumnWidth(dis_medColumn,75)
-        self.bedTable.setColumnWidth(downstreamColumn,125)
-        self.bedTable.setColumnWidth(deathColumn,45)
+        self.bedTable.setColumnWidth(self.bedColumn,30)
+        self.bedTable.setColumnWidth(self.idColumn,30)
+        self.bedTable.setColumnWidth(self.nameColumn,135)
+        self.bedTable.setColumnWidth(self.detailsColumn,105)
+        self.bedTable.setColumnWidth(self.diagnosisColumn,155)
+        self.bedTable.setColumnWidth(self.isoColumn,75)
+        self.bedTable.setColumnWidth(self.dischargeColumn,75)
+        self.bedTable.setColumnWidth(self.dis_loungeColumn,75)
+        self.bedTable.setColumnWidth(self.dis_sumColumn,75)
+        self.bedTable.setColumnWidth(self.dis_medColumn,75)
+        self.bedTable.setColumnWidth(self.downstreamColumn,125)
+        self.bedTable.setColumnWidth(self.deathColumn,45)
 
         item = QtWidgets.QTableWidgetItem()
         self.bedTable.setHorizontalHeaderItem(0, item)
@@ -383,14 +386,14 @@ class Ui_patientStatus(object):
 
         # self.bedTable settings
         self.defColumn(self.wardTable)
-        self.wardTable.setColumnWidth(bedColumn,30)
-        self.wardTable.setColumnWidth(idColumn,30)
-        self.wardTable.setColumnWidth(nameColumn,135)
-        self.wardTable.setColumnWidth(detailsColumn,105)
-        self.wardTable.setColumnWidth(diagnosisColumn,155)
-        self.wardTable.setColumnWidth(isoColumn,75)
-        self.wardTable.setColumnWidth(downstreamColumn,125)
-        self.wardTable.setColumnWidth(sentColumn,75)
+        self.wardTable.setColumnWidth(self.bedColumn,30)
+        self.wardTable.setColumnWidth(self.idColumn,30)
+        self.wardTable.setColumnWidth(self.nameColumn,135)
+        self.wardTable.setColumnWidth(self.detailsColumn,105)
+        self.wardTable.setColumnWidth(self.diagnosisColumn,155)
+        self.wardTable.setColumnWidth(self.isoColumn,75)
+        self.wardTable.setColumnWidth(self.downstreamColumn,125)
+        self.wardTable.setColumnWidth(self.sentColumn,75)
 
         item = QtWidgets.QTableWidgetItem()
         self.wardTable.setHorizontalHeaderItem(0, item)
@@ -692,28 +695,34 @@ class Ui_patientStatus(object):
 
             # displaying corresponding info as needed for the bedTable, loungeTable & wardTable
             if table == self.bedTable:
-                table.setItem(row, bedColumn, QtWidgets.QTableWidgetItem(pat[1])) # bed
-                table.setItem(row, dischargeColumn, checkBox_discharge) # discharge status
-                table.setItem(row, dis_loungeColumn, checkBox_dischargeLounge) # discharge lounge
-                table.setItem(row, dis_sumColumn, checkBox_dischargeSum) # discharge summary
-                table.setItem(row, dis_medColumn, checkBox_dischargeMed) # discharge medication
-                table.setCellWidget(row, downstreamColumn, comboBox_ward) # downstream ward
-                table.setItem(row, deathColumn, checkBox_death) # death
+                table.setItem(row, self.bedColumn, QtWidgets.QTableWidgetItem(pat[1])) # bed
+                table.setItem(row, self.dischargeColumn, checkBox_discharge) # discharge status
+                table.setItem(row, self.dis_loungeColumn, checkBox_dischargeLounge) # discharge lounge
+                table.setItem(row, self.dis_sumColumn, checkBox_dischargeSum) # discharge summary
+                table.setItem(row, self.dis_medColumn, checkBox_dischargeMed) # discharge medication
+                table.setCellWidget(row, self.downstreamColumn, comboBox_ward) # downstream ward
+                table.setItem(row, self.deathColumn, checkBox_death) # death
 
             elif table == self.loungeTable:
-                table.setItem(row, dischargeColumn, checkBox_discharge) # discharge status
-                table.setItem(row, dis_loungeColumn, checkBox_dischargeLounge) # discharge lounge
-                table.setItem(row, dis_sumColumn, checkBox_dischargeSum) # discharge summary
-                table.setItem(row, dis_medColumn, checkBox_dischargeMed) # discharge medication
+                table.setItem(row, self.dischargeColumn, checkBox_discharge) # discharge status
+                table.setItem(row, self.dis_loungeColumn, checkBox_dischargeLounge) # discharge lounge
+                table.setItem(row, self.dis_sumColumn, checkBox_dischargeSum) # discharge summary
+                table.setItem(row, self.dis_medColumn, checkBox_dischargeMed) # discharge medication
 
             elif table == self.wardTable:
-                table.setItem(row, bedColumn, QtWidgets.QTableWidgetItem(pat[1])) # bed
-                table.setItem(row, downstreamColumn, QtWidgets.QTableWidgetItem(pat[6])) # downstream ward (display only, edit in bedTable)
-                table.setItem(row, sentColumn, checkBox_sent) # sent (to downstream)
+                table.setItem(row, self.bedColumn, QtWidgets.QTableWidgetItem(pat[1])) # bed
+                table.setItem(row, self.downstreamColumn, QtWidgets.QTableWidgetItem(pat[6])) # downstream ward (display only, edit in bedTable)
+                table.setItem(row, self.sentColumn, checkBox_sent) # sent (to downstream)
 
             row = row+1
 
-
+    def back(self, waitlist, user, phototag, pos):
+        from monitor import Ui_MainWindow2 # function is imported here to prevent runtime callback (circular import)
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindow2()
+        self.ui.setupUi(self.window, user, phototag, pos)
+        self.window.show()
+        waitlist.close()
 
 #-------------------- functions to CONFIRM changes ------------------------------
 
@@ -737,22 +746,22 @@ class Ui_patientStatus(object):
         self.defColumn(table)
         for row in range(rowNum):
             # fetch patID
-            patID = table.item(row,idColumn).text()
+            patID = table.item(row,self.idColumn).text()
             print("patID:"+patID)
 
             # fetch discharge, downstream, death
-            checkBox_discharge = table.item(row,dischargeColumn)
-            comboBox_ward = table.cellWidget(row,downstreamColumn)
-            checkBox_death = table.item(row,deathColumn)
+            checkBox_discharge = table.item(row,self.dischargeColumn)
+            comboBox_ward = table.cellWidget(row,self.downstreamColumn)
+            checkBox_death = table.item(row,self.deathColumn)
 
             n_dis = checkBox_discharge.checkState()
             n_ward = comboBox_ward.currentText()
             n_death = checkBox_death.checkState()
 
             if n_dis > 0 and n_ward == "Select" and n_death == 0:
-                dis_lounge = table.item(row,dis_loungeColumn)
-                dis_sum = table.item(row,dis_sumColumn)
-                dis_med = table.item(row,dis_medColumn)
+                dis_lounge = table.item(row,self.dis_loungeColumn)
+                dis_sum = table.item(row,self.dis_sumColumn)
+                dis_med = table.item(row,self.dis_medColumn)
 
                 n_disL = dis_lounge.checkState()
                 n_disS = dis_sum.checkState()
@@ -782,15 +791,15 @@ class Ui_patientStatus(object):
         self.defColumn(table)
         for row in range(rowNum):
             
-            patID = table.item(row,idColumn).text()     # fetch patID
+            patID = table.item(row,self.idColumn).text()     # fetch patID
 
-            checkBox_discharge = table.item(row,dischargeColumn)    # fetch discharge checkbox
+            checkBox_discharge = table.item(row,self.dischargeColumn)    # fetch discharge checkbox
             n_dis = checkBox_discharge.checkState()
 
             if n_dis > 0:   # ensure discharge instruction is still in place
-                dis_lounge = table.item(row,dis_loungeColumn)
-                dis_sum = table.item(row,dis_sumColumn)
-                dis_med = table.item(row,dis_medColumn)
+                dis_lounge = table.item(row,self.dis_loungeColumn)
+                dis_sum = table.item(row,self.dis_sumColumn)
+                dis_med = table.item(row,self.dis_medColumn)
 
                 # update database
                 updateCheck_discharge(patID, n_dis)     
@@ -806,8 +815,8 @@ class Ui_patientStatus(object):
         self.defColumn(table)
 
         for row in range(rowNum):
-            patID = table.item(row,idColumn).text()
-            checkBox_sent = table.item(row,sentColumn)
+            patID = table.item(row,self.idColumn).text()
+            checkBox_sent = table.item(row,self.sentColumn)
             n_sent = checkBox_sent.checkState()
 
             if n_sent > 0:
@@ -857,14 +866,14 @@ class Ui_patientStatus(object):
             self.dis_sumColumn = 7
             self.dis_medColumn = 8
         elif table == self.wardTable:
-            bedColumn = 0
-            idColumn = 1
-            nameColumn = 2
-            detailsColumn = 3
-            diagnosisColumn = 4
-            isoColumn = 5
-            downstreamColumn = 6
-            sentColumn = 7
+            self.bedColumn = 0
+            self.idColumn = 1
+            self.nameColumn = 2
+            self.detailsColumn = 3
+            self.diagnosisColumn = 4
+            self.isoColumn = 5
+            self.downstreamColumn = 6
+            self.sentColumn = 7
 
 
 

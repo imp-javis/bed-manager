@@ -63,6 +63,17 @@ class Ui_MainWindow2(object):
         else: 
                 self.showBox()
 
+    def showdownWard(self, monitor,  user, phototag, pos): # show patient window
+        from wardBedEdit import Ui_MainWindow
+        if self.pos == 'downward':
+                self.window = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+                self.ui.setupUi(self.window, user, phototag, pos)
+                self.window.show()
+                monitor.close()
+        else: 
+                self.showBox()
+
     def setupUi(self, MainWindow2, user, phototag, pos):
         MainWindow2.setObjectName("MainWindow2")
         MainWindow2.setWindowModality(QtCore.Qt.WindowModal)
@@ -197,7 +208,7 @@ class Ui_MainWindow2(object):
         self.patientinbedbutton.setObjectName("patientinbedbutton")
 
         # edit downstream ward bed availability button on side menu
-        self.downWardButton = QtWidgets.QPushButton(self.centralwidget)
+        self.downWardButton = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.showdownWard(MainWindow2, self.user, self.phototag, self.pos))
         self.downWardButton.setGeometry(QtCore.QRect(50, 580, 271, 141))
         self.downWardButton.setStyleSheet("background-color: transparent;\n"
 "border-image: url(:/graphics/Graphics_Monitor/New Icon Ward Availability.png);\n"
