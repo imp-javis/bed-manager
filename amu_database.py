@@ -304,10 +304,11 @@ def getWardAvailability():          #THIS WON'T WORK I THINK BUT WHY TF
 
 #   WHY WON'T IT UPDATE HELPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 def updateWardBeds(cardioNew, endoNew, gastroNew, geriNew, respNew):
-    c.execute("UPDATE wardAvailability SET cardio='{}', endo='{}', gastro='{}', geri='{}', resp='{}'".format(cardioNew, endoNew, gastroNew, geriNew, respNew))
+    c.execute("INSERT INTO wardAvailability VALUES (:cardio, :endo, :gastro, :geri, :resp)", {'cardio': cardioNew, 'endo': endoNew, 'gastro': gastroNew, 'geri': geriNew, 'resp':respNew})
     conn.commit()
 
-#def updateCC(patID, check):
-#    c.execute("UPDATE waitlist SET clerkcheck='{}' WHERE patID= '{}'".format(check, patID))
-#    conn.commit()
+def deleteWardBeds():
+    c.execute("DELETE FROM wardAvailability")
+    conn.commit()
+
 # conn.close() #close connections

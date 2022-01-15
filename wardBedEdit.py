@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from amu_database import getWardAvailability, updateWardBeds
+from amu_database import getWardAvailability, updateWardBeds, deleteWardBeds
 
 cardioRow = 0
 endoRow = 1
@@ -105,11 +105,13 @@ class Ui_MainWindow(object):
 
     def displayList(self):
         
-        wardBeds = getWardAvailability() # get the number of free beds in the database as a list
-        print(wardBeds)
+        wards = getWardAvailability() # get the number of free beds in the database as a list
+
         # set ward free beds as zero if database has no info
-        if wardBeds == []:
+        if wards == []:
             wardBeds = [0,0,0,0,0]
+        else:
+            wardBeds = wards[0]
 
         item = QtWidgets.QTableWidgetItem()
         item.setTextAlignment(QtCore.Qt.AlignCenter)
@@ -122,15 +124,19 @@ class Ui_MainWindow(object):
 
 
     def confirmWardBeds(self):
-
+        
+        deleteWardBeds()        # wipe bed availability database
+        
         wardUpdate = []
         for ward in range(5):
             item = self.wardBedEdit.item(ward, freeColumn)          # item(row, 0) Returns the item for the given row and column if one has been set; otherwise returns nullptr.
             if item:
                 item = self.wardBedEdit.item(ward, freeColumn).text()
                 wardUpdate.append(item)
-        
+
         updateWardBeds(wardUpdate[0], wardUpdate[1], wardUpdate[2], wardUpdate[3], wardUpdate[4])
+        self.displayList()
+
 
 
     def retranslateUi(self, MainWindow):

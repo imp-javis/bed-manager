@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
-from amu_database import getBedListSize, getPatientsinBed, getPatientInfo, getLoungeListSize, getPatientsinLounge, getPatientsDownstream, getDownstreamListSize, getPatientsDischarged, deletePatfromBed, updateCheck_discharge, updateCheck_dischargeLounge, updateCheck_dischargeSum, updateCheck_dischargeMed, updateWard, updateCheck_death
+from amu_database import getBedListSize, getPatientsinBed, getPatientInfo, getLoungeListSize, getPatientsinLounge, getPatientsDownstream, getDownstreamListSize, getPatientsDischarged, deletePatfromBed, updateCheck_discharge, updateCheck_dischargeLounge, updateCheck_dischargeSum, updateCheck_dischargeMed, updateWard, updateCheck_death, getWardAvailability
 
 
 
@@ -170,7 +170,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.cardio.setFont(font)
-        self.cardio.setText("")
+        self.cardio.setText("N/A")
         self.cardio.setAlignment(QtCore.Qt.AlignCenter)
         self.cardio.setObjectName("cardio")
 
@@ -203,7 +203,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.endo.setFont(font)
-        self.endo.setText("")
+        self.endo.setText("N/A")
         self.endo.setAlignment(QtCore.Qt.AlignCenter)
         self.endo.setObjectName("endo")
 
@@ -236,7 +236,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.gastro.setFont(font)
-        self.gastro.setText("")
+        self.gastro.setText("N/A")
         self.gastro.setAlignment(QtCore.Qt.AlignCenter)
         self.gastro.setObjectName("gastro")
 
@@ -269,7 +269,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.geri.setFont(font)
-        self.geri.setText("")
+        self.geri.setText("N/A")
         self.geri.setAlignment(QtCore.Qt.AlignCenter)
         self.geri.setObjectName("geri")
 
@@ -302,7 +302,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.resp.setFont(font)
-        self.resp.setText("")
+        self.resp.setText("N/A")
         self.resp.setAlignment(QtCore.Qt.AlignCenter)
         self.resp.setObjectName("resp")
 
@@ -461,7 +461,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.cardio_2.setFont(font)
-        self.cardio_2.setText("")
+        self.cardio_2.setText("N/A")
         self.cardio_2.setAlignment(QtCore.Qt.AlignCenter)
         self.cardio_2.setObjectName("cardio_2")
 
@@ -494,7 +494,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.endo_2.setFont(font)
-        self.endo_2.setText("")
+        self.endo_2.setText("N/A")
         self.endo_2.setAlignment(QtCore.Qt.AlignCenter)
         self.endo_2.setObjectName("endo_2")
 
@@ -521,8 +521,12 @@ class Ui_patientStatus(object):
         self.gastro_2 = QtWidgets.QLabel(self.gastroFrame_2)
         self.gastro_2.setGeometry(QtCore.QRect(40, 40, 81, 31))
         font = QtGui.QFont()
-
-        self.gastro_2.setText("")
+        font.setFamily("Arial")
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setUnderline(False)
+        font.setWeight(50)
+        self.gastro_2.setText("N/A")
         self.gastro_2.setAlignment(QtCore.Qt.AlignCenter)
         self.gastro_2.setObjectName("gastro_2")
 
@@ -555,7 +559,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.geri_2.setFont(font)
-        self.geri_2.setText("")
+        self.geri_2.setText("N/A")
         self.geri_2.setAlignment(QtCore.Qt.AlignCenter)
         self.geri_2.setObjectName("geri_2")
 
@@ -588,7 +592,7 @@ class Ui_patientStatus(object):
         font.setUnderline(False)
         font.setWeight(50)
         self.resp_2.setFont(font)
-        self.resp_2.setText("")
+        self.resp_2.setText("N/A")
         self.resp_2.setAlignment(QtCore.Qt.AlignCenter)
         self.resp_2.setObjectName("resp_2")
 
@@ -613,11 +617,11 @@ class Ui_patientStatus(object):
         self.buttConfirm.clicked.connect(self.confirmChanges)
         
 
-        # display patient info in tables on both tabs
+        # display patient info in tables on bed, lounge & downstream tabs
         self.displayList(self.bedTable)
         self.displayList(self.loungeTable)
         self.displayList(self.wardTable)
-
+        self.displayWardBeds()
 
 
     def displayList(self, table):      # this function updates the list of patients currently in an AMU bed that is saved in database
@@ -727,7 +731,7 @@ class Ui_patientStatus(object):
         self.displayList(self.bedTable)
         self.displayList(self.loungeTable)
         self.displayList(self.wardTable)
-
+        self.displayWardBeds()
 
     # confirm changes made on bed table
 
@@ -832,11 +836,6 @@ class Ui_patientStatus(object):
 
 
 
-##---------------------- function to display wardAvailability --------------------##
-
-    #def displayWardBeds(self):
-
-
 
 ##----------------- defining columns with variables based on the table in question ------------------------##
 
@@ -874,6 +873,31 @@ class Ui_patientStatus(object):
             isoColumn = 5
             downstreamColumn = 6
             sentColumn = 7
+
+
+
+##---------------------- function to display wardAvailability --------------------##
+
+    def displayWardBeds(self):
+
+        wards = getWardAvailability() # get the number of free beds in the database as a list
+
+        # set ward free beds as zero if database has no info
+        if wards == []:
+            wardBeds = [0,0,0,0,0]
+        else:
+            wardBeds = wards[0]
+
+        self.cardio.setText(str(wardBeds[0]))
+        self.endo.setText(str(wardBeds[1]))
+        self.gastro.setText(str(wardBeds[2]))
+        self.geri.setText(str(wardBeds[3]))
+        self.resp.setText(str(wardBeds[4]))
+        self.cardio_2.setText(str(wardBeds[0]))
+        self.endo_2.setText(str(wardBeds[1]))
+        self.gastro_2.setText(str(wardBeds[2]))
+        self.geri_2.setText(str(wardBeds[3]))
+        self.resp_2.setText(str(wardBeds[4]))
 
 
 
@@ -959,6 +983,7 @@ class Ui_patientStatus(object):
         self.respTitle_2.setText(_translate("patientStatus", "Respiratory"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.wardTab), _translate("patientStatus", "Downstream"))
 
+        
 
 if __name__ == "__main__":
     import sys
