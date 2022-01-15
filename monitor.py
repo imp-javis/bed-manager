@@ -138,12 +138,12 @@ class Ui_MainWindow2(object):
         self.waitstatbckground.setScaledContents(True)
         self.waitstatbckground.setObjectName("waitstatbckground")
         self.bedavailable = QtWidgets.QLabel(self.frame)
-        self.bedavailable.setGeometry(QtCore.QRect(320, 70, 121, 81))
+        self.bedavailable.setGeometry(QtCore.QRect(320, 80, 121, 81))
         font = QtGui.QFont()
-        font.setFamily("Arial")
-        font.setPointSize(16)
+        font.setFamily("Times New Roman")
+        font.setPointSize(50)
         self.bedavailable.setFont(font)
-        self.bedavailable.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.bedavailable.setAlignment(QtCore.Qt.AlignCenter)
         self.bedavailable.setObjectName("bedavailable")
         self.waitstatbckground.raise_()
         self.green.raise_()
@@ -515,16 +515,17 @@ class Ui_MainWindow2(object):
         # fetch list of bed labels:
         bedLabel = self.bedlayoutframe.findChildren(QtWidgets.QLabel)
         
-        # for bed in bedLabel:
-        #     print(bed.objectName())
-
-        for label in bedLabel:
-            for bed in bedStatus:
-                if label.objectName() == bed[0]:       # for each label, cross check with corresponding info
-                    label.setStyleSheet(bed[1])        # if bed is occupied, update colour accordingly with "brush" (aka. red, blue, or grey)
-                    break
-                else:
+        if bedStatus== []: #if AMU is empty
+                for label in bedLabel:
                     label.setStyleSheet("background-color: rgb(154, 255, 117)")  # if bed is not occupied, default is to mark bed as free (aka. green)
+        else:
+                for label in bedLabel:
+                        for bed in bedStatus:
+                                if label.objectName() == bed[0]:       # for each label, cross check with corresponding info
+                                        label.setStyleSheet(bed[1])        # if bed is occupied, update colour accordingly with "brush" (aka. red, blue, or grey)
+                                        break
+                                else:
+                                        label.setStyleSheet("background-color: rgb(154, 255, 117)")  # if bed is not occupied, default is to mark bed as free (aka. green)
 
 
 

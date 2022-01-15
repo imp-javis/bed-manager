@@ -656,7 +656,8 @@ class Ui_patientStatus(object):
                 isoStatus = "N"
             elif patient[6] != 0:
                 isoStatus = "Y"
-                
+            
+
             # creating widgets for the table cells
 
             checkBox_discharge = QtWidgets.QTableWidgetItem()           # check box for discharge
@@ -686,6 +687,10 @@ class Ui_patientStatus(object):
             checkBox_sent = QtWidgets.QTableWidgetItem()                # check box for whether patient has been sent to their assigned downstream ward
             checkBox_sent.setCheckState(0)
 
+            isoStat= QtWidgets.QTableWidgetItem()
+            isoStat.setText(isoStatus)
+            # isoStat.setTextAlignment(QtCore.Qt.AlignCentre)
+
             table.setRowHeight(row, 70)
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
@@ -695,7 +700,7 @@ class Ui_patientStatus(object):
             table.setItem(row, self.idColumn, item) #id
             table.setItem(row, self.nameColumn, QtWidgets.QTableWidgetItem("{} {}".format(patient[1], patient[2]))) # name
             table.setItem(row, self.detailsColumn, QtWidgets.QTableWidgetItem(("Age: {} \nGender: {}").format(patient[3],patient[4]))) #age and gender
-            table.setItem(row, self.isoColumn, QtWidgets.QTableWidgetItem(isoStatus))
+            table.setItem(row, self.isoColumn, isoStat)
             table.setItem(row, self.diagnosisColumn, QtWidgets.QTableWidgetItem(patient[5]))
 
             # displaying corresponding info as needed for the bedTable, loungeTable & wardTable

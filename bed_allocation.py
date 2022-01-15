@@ -36,13 +36,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.phototag= phototag
         self.position= pos
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(50, 120, 580, 580))
+        self.tableWidget.setGeometry(QtCore.QRect(50, 120, 580, 570))
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(5)
         # row length set in displayList() function
         self.tableWidget.setColumnWidth(idColumn,50)
-        self.tableWidget.setColumnWidth(nameColumn,180)
+        self.tableWidget.setColumnWidth(nameColumn,200)
         self.tableWidget.setColumnWidth(detailsColumn,135)
         self.tableWidget.setColumnWidth(isoColumn,90)
         self.tableWidget.setColumnWidth(bedColumn,90)
@@ -375,7 +375,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.tableWidget.setRowHeight(row, 70)
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
-
             item.setText(str(patient[0]))
             self.tableWidget.setItem(row, idColumn, item) #id
             self.tableWidget.setItem(row, nameColumn, QtWidgets.QTableWidgetItem("{} {}".format(patient[1], patient[2]))) # name

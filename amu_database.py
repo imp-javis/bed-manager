@@ -299,5 +299,4 @@ def deleteWardBeds():
     c.execute("DELETE FROM wardAvailability")
     conn.commit()
 
-print(getPatientsinBed())
 # conn.close() #close connections
