@@ -16,7 +16,7 @@ import threading
 
 class Ui_MainWindow2(object):
         
-    def showBox(self):
+    def showBox(self): #display access error message
         msg= QtWidgets.QMessageBox()
         msg.setIcon(QtWidgets.QMessageBox.Information)
         msg.setWindowTitle("Access Error")
@@ -25,10 +25,10 @@ class Ui_MainWindow2(object):
         x= msg.exec_()
         msg.buttonClicked.connect(self.closeBox)
 
-    def closeBox(self, msg):
+    def closeBox(self, msg): #close message box
             pass
 
-    def showWaitlist(self, monitor, user, phototag, pos):
+    def showWaitlist(self, monitor, user, phototag, pos): #show waitlist window
         if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
                 self.window = QtWidgets.QMainWindow()
                 self.ui = Ui_waitlist()
@@ -41,7 +41,7 @@ class Ui_MainWindow2(object):
         else: 
                 self.showBox()
 
-    def showBed(self, monitor, user, phototag, pos):
+    def showBed(self, monitor, user, phototag, pos): #show Bed allocation window
         from bed_allocation import Ui_MainWindow
         if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
                 self.window = QtWidgets.QMainWindow()
@@ -52,7 +52,7 @@ class Ui_MainWindow2(object):
         else: 
                 self.showBox()
                 
-    def showPatientinBed(self, monitor,  user, phototag, pos):
+    def showPatientinBed(self, monitor,  user, phototag, pos): # show patient window
         from patientStatus import Ui_patientStatus
         if self.pos == 'amu' or self.pos == 'juniordoc' or self.pos == 'consultant'  :
                 self.window = QtWidgets.QMainWindow()

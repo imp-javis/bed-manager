@@ -24,10 +24,10 @@ class Ui_waitlist(object):
         self.window.show()
         waitlist.close()
 
-    def addPatient(self, waitlist):
+    def addPatient(self, waitlist, user, phototag, pos):
         self.window = QtWidgets.QGroupBox()
         self.ui = regform.Ui_registerform()
-        self.ui.setupUi(self.window, waitlist)
+        self.ui.setupUi(self.window, waitlist, user, phototag, pos)
         self.window.show()
     
     def timing(self, seconds):
@@ -70,13 +70,6 @@ class Ui_waitlist(object):
                 black = black+1
                 brush = QtGui.QBrush(QtGui.QColor(0, 0, 0)) # set background to black
                 brush.setStyle(QtCore.Qt.SolidPattern)
-            
-            # if timeelapsing>blacktime:
-            #     toBlack(timeelapsing)
-            # elif timeelapsing<blacktime:
-            #     pass
-            # elif timeelapsing> 14400:
-            #     toBlack(0)
 
             item = QtWidgets.QTableWidgetItem()
             item.setTextAlignment(QtCore.Qt.AlignCenter)
@@ -158,7 +151,7 @@ class Ui_waitlist(object):
         waitlist.showMaximized()
         self.centralwidget = QtWidgets.QWidget(waitlist)
         self.centralwidget.setObjectName("centralwidget")
-        self.newpatient = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.addPatient(waitlist))
+        self.newpatient = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.addPatient(waitlist, self.user, self.phototag, self.pos))
         self.newpatient.setGeometry(QtCore.QRect(1250, 30, 131, 32))
         self.newpatient.setObjectName("newpatient")
         self.delpatient = QtWidgets.QPushButton(self.centralwidget, clicked= lambda: self.deletePatient())

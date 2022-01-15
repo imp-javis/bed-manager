@@ -13,7 +13,7 @@ from amu_database import addtowaitlist, register, getPatientID
 
 
 class Ui_registerform(object):
-    def addedPatient(self, reg_win, wait_win):
+    def addedPatient(self, reg_win, wait_win, user, phototag, pos):
         import waitlist
         import time
         seconds = time.time()
@@ -35,12 +35,12 @@ class Ui_registerform(object):
             addtowaitlist(patID[0], int(seconds))
             self.window = QtWidgets.QMainWindow()
             self.ui = waitlist.Ui_waitlist()
-            self.ui.setupUi(self.window)
+            self.ui.setupUi(self.window, user, phototag, pos)
             self.window.show()
             wait_win.close()
             reg_win.close()
             
-    def setupUi(self, registerform, waitlist):
+    def setupUi(self, registerform, waitlist, user, phototag, pos):
         registerform.setObjectName("registerform")
         registerform.setWindowModality(QtCore.Qt.WindowModal)
         registerform.resize(588, 469)
@@ -95,7 +95,7 @@ class Ui_registerform(object):
         self.dlabel.setScaledContents(False)
         self.dlabel.setWordWrap(False)
         self.dlabel.setObjectName("dlabel")
-        self.pushButton = QtWidgets.QPushButton(registerform,  clicked = lambda: self.addedPatient(registerform, waitlist))
+        self.pushButton = QtWidgets.QPushButton(registerform,  clicked = lambda: self.addedPatient(registerform, waitlist, user, phototag, pos))
         self.pushButton.setGeometry(QtCore.QRect(240, 420, 113, 32))
         self.pushButton.setObjectName("pushButton")
         self.genderBox.addItem("Select")
